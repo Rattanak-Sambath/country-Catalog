@@ -1,18 +1,20 @@
 <script setup>
-import {  onMounted } from 'vue';
-import axios from 'axios';
-const getTable = async ()=>{  
-     let res = await axios.get('http://localhost:3001/api/auth/getUser')
-     console.log(res.data);
-}
-onMounted(()=>{
-    getTable();
-})
+// import {  onMounted } from 'vue';
+// import axios from 'axios';
+// const getTable = async ()=>{  
+//      let res = await axios.get('http://localhost:3001/api/auth/getUser')
+//      console.log(res.data);
+// }
+// onMounted(()=>{
+//     getTable();
+// })
 </script>
 
 <template>
   <div>
-    <p>{{ $t('title.dashboard') }}</p>
+    <q-app>
+          <router-view/>
+    </q-app>
   </div>
 </template>
 

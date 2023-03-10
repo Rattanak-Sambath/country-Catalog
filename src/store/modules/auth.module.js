@@ -56,7 +56,7 @@ const actions = {
   login({ commit }, credential) {
     return new Promise((resolve, reject) => {
       axios
-        .post("/api/users/login", credential)
+        .post("/api/auth/login", credential)
         .then((response) => {
           commit("SET_AUTHENTICATED", true);
           commit("SET_AUTH_TOKEN", response.data);
@@ -83,14 +83,14 @@ const actions = {
     });
   },
 
-/*   logout({ commit }) {
+logout({ commit }) {
     commit("SET_AUTHENTICATED", false);
     commit("REMOVE_AUTH_TOKEN");
     commit("REMOVE_AUTH_USER");
 
     router.push({ name: "login" });
     // router.replace({ name: 'login' })
-  }, */
+  }, 
 };
 
 export default {

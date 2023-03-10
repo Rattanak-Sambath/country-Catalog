@@ -7,8 +7,11 @@ import { Quasar } from 'quasar'
 import '@quasar/extras/material-icons/material-icons.css'
 import 'quasar/dist/quasar.css'
 import i18n from './plugins/i18n';
-// app.use(store)
+import router from './router'
+import store from './store';
+app.use(store)
 app.use(Quasar)
+app.use(router)
 app.use(i18n)
 app.mount('#app')
 

@@ -14,6 +14,7 @@ const routes = [
           name: 'home',
           component: () => import('../view/Dashboard.vue')
       },
+      
       ...user,
       ],
         meta: {
@@ -44,7 +45,7 @@ router.beforeEach((to, from, next) => {
       if (guestRoute.includes(to.name)) next({ name: 'home' })
       else next()
   } else {
-      if (guestRoute.includes(to.name) || to.name == 'farm.monitoring') next()
+      if (guestRoute.includes(to.name)) next()
       else next({ name: 'login'})
   }
 })

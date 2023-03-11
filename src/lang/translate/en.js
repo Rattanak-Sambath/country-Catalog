@@ -1,5 +1,5 @@
 export default {
-    title: {
-        dashboard: "Hey"
+    dashboard: {
+        title: "Dashboard"
     }
 }

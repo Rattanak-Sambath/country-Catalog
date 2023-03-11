@@ -1,6 +1,8 @@
 import axios from "axios";
 // import constants from '../../constants'see
 import api from "../../utils/utility";
+import Toast from '../../Helper/Toast';
+import router from '../../router/index';
 
 const state = {
   authenticated: false,
@@ -10,11 +12,10 @@ const state = {
     lastName: null,
     name: null,
     email: null,
-    isAdmin: null,
+    admin: null,
+    location : null
   },
   accessToken: null,
-  refreshToken: null,
-  isTokenRefreshing: false,
 };
 
 const getters = {
@@ -40,12 +41,8 @@ const mutations = {
   SET_AUTHENTICATED(state, value) {
     state.authenticated = value;
   },
-  SET_REFRESHING(state, value) {
-    state.isTokenRefreshing = value;
-  },
   REMOVE_AUTH_TOKEN(state) {
     state.accessToken = null;
-    state.refreshToken = null;
   },
   REMOVE_AUTH_USER(state) {
     state.user = {};
@@ -54,15 +51,22 @@ const mutations = {
 
 const actions = {
   login({ commit }, credential) {
+    // console.log(credential);
     return new Promise((resolve, reject) => {
-      axios
-        .post("/api/auth/login", credential)
-        .then((response) => {
+      api
+        .post("http://localhost:3001/api/auth/login", credential)
+        .then((response) => {        
           commit("SET_AUTHENTICATED", true);
-          commit("SET_AUTH_TOKEN", response.data);
+          commit("SET_AUTH_TOKEN", response.data);       
           resolve(response);
+          router.push({ name: "home" });
+          // Toast.fire({
+          //   icon:'success',
+          //   title:"Logout successfully"
+          // })
+         
         })
-        .catch((response) => {
+        .catch((response) => {        
           reject(response);
         });
     });
@@ -87,10 +91,21 @@ logout({ commit }) {
     commit("SET_AUTHENTICATED", false);
     commit("REMOVE_AUTH_TOKEN");
     commit("REMOVE_AUTH_USER");
-
+    // Toast.fire({
+    //   icon:'success',
+    //   title:"Logout successfully"
+    // })
     router.push({ name: "login" });
     // router.replace({ name: 'login' })
   }, 
+  unauthorized({commit}, state) {        
+    return new Promise((resolve, reject) => {
+        commit('SET_AUTHENTICATED', false)
+        commit('REMOVE_AUTH_TOKEN')
+        router.push({ name: 'login' })
+        resolve()
+    })
+}
 };
 
 export default {

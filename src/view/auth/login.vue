@@ -2,12 +2,12 @@
     <q-layout >
         <q-page-container>
             <q-page >
-                <q-card class="q-pa-lg " style="margin-top: 60px;">
+                <q-card class="q-pa-lg q-mx-auto" style="margin-top: 60px; max-width: 450px;" >
                     <q-form @submit.prevent.stop="onLogin()"   ref="refForm"
-                        class="mt-4"
+                        class="mt-4 text-center"
                         lazy-validation
 >
-                        <q-img style="" src="../../../public/logo.png"/>
+                        <q-img style="width: 250px;"  src="../../../public/logo.png"/>
                         <div class="section q-my-lg">
                             <q-input color="orange-14" type="email" filled v-model="email" label="Username" :rules="[val => !!val || 'email is required']">
                                 <template v-slot:prepend>
@@ -47,8 +47,8 @@ import Toast from '../../Helper/Toast';
 // import Toast from '../../Helper/Toast';
     const refForm = ref('');
     const loading = ref(false)
-    const email = ref('')
-    const password = ref('')
+    const email = ref('admin@email.com')
+    const password = ref('admin123')
     const store = useStore();
     const onLogin = async () => {
         const {valid} = await refForm.value?.validate()

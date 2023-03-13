@@ -21,7 +21,7 @@
           round
           @click="$q.dark.toggle()"
           :icon="$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"
-        />
+          />
         <q-toggle
         style="margin-right:25px ;"
           v-model="value"
@@ -34,7 +34,7 @@
         ></q-switch> -->
         <img           
               :src="isTranslate === false ? '../../public/download.png' : '../../public/istockphoto-652225546-612x612.jpg'  "
-              style="width: 90px; height: 50px; text-align: right; margin-right: 10px;"       
+              style="width: 90px; height: 45px; text-align: right; margin-right: 10px;"       
         />
 
         <!-- <img style="width: 70px;" src="istockphoto-652225546-612x612.jpg" /> -->
@@ -51,8 +51,9 @@
                   </q-avatar>
                 </q-item-section>
                 <q-item-section>
-                  <q-item-label> admin@email.com </q-item-label>
-                  <q-item-label caption lines="1">admin</q-item-label>
+                  <q-item-label> {{ user.name }}</q-item-label>
+                  <q-item-label> {{ user.email }}</q-item-label>
+                  <q-item-label caption lines="1">{{ user.role }}</q-item-label>
                 </q-item-section>
               </q-item>
               <q-separator />
@@ -86,59 +87,76 @@
                     <q-icon name=" home" />
                 </q-item-section>
 
-                <q-item-section class="text-center">
+                <q-item-section>
                    {{ $t("dashboard.title") }}
                 </q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple :to="{ name: 'goodsTransfer.index' }">
+            <q-item clickable  v-ripple :to="{ name: 'goodsTransfer.index' }">
                 <q-item-section avatar>
-                    <q-icon name="dataset" />
+                    <q-icon name="category" />
                 </q-item-section>
 
-                <q-item-section class="text-center">
+                <q-item-section>
                     Good Transfers
                 </q-item-section>
             </q-item>
 
             <q-item clickable class="text-custome" v-ripple :to="{ name: 'subject.index' }">
                 <q-item-section avatar>
-                    <q-icon name="menu_book" />
+                    <q-icon name="directions_walk" />
                 </q-item-section>
 
-                <q-item-section class="text-center">
-                    Subjects
+                <q-item-section >
+                    Customer Receive Goods
                 </q-item-section>
             </q-item>
+            <q-item clickable class="text-custome" v-ripple :to="{ name: 'subject.index' }">
+                <q-item-section avatar>
+                    <q-icon name="content_paste_search" />
+                </q-item-section>
 
-            <q-expansion-item group="link-dialog" style="border-radius: 20px" expand-separator icon="dataset"
-                label="Study Years">
+                <q-item-section >
+                    Search Goods transfer
+                </q-item-section>
+            </q-item>
+            <q-item clickable class="text-custome" v-ripple :to="{ name: 'subject.index' }">
+                <q-item-section avatar>
+                    <q-icon name="settings_phone" />
+                </q-item-section>
+
+                <q-item-section >
+                    Call Customer
+                </q-item-section>
+            </q-item>
+            <q-expansion-item group="link-dialog" style="border-radius: 20px" expand-separator icon="local_shipping"
+                label="Shipping Info">
                 <q-card-section>
-                    <q-item clickable v-ripple :to="{ name: 'studyyear.index' }" class="text-center">
+                    <q-item clickable v-ripple menu_book:to="{ name: 'studyyear.index' }" >
                         <q-item-section avatar>
-                            <q-icon name="schedule_send" />
+                            <q-icon name="local_shipping" />
                         </q-item-section>
 
                         <q-item-section class="">
-                            Years
+                            Car
                         </q-item-section>
                     </q-item>
                     <q-item clickable v-ripple>
                         <q-item-section avatar>
-                            <q-icon name="calendar_month" />
+                            <q-icon name="accessible" />
                         </q-item-section>
 
                         <q-item-section class="">
-                            Months
+                            Driver
                         </q-item-section>
                     </q-item>
                     <q-item clickable v-ripple>
                         <q-item-section avatar>
-                            <q-icon name="alarm_on" />
+                            <q-icon name="tune" />
                         </q-item-section>
 
                         <q-item-section class="">
-                            Time
+                            Car Config
                         </q-item-section>
                     </q-item>
                 </q-card-section>
@@ -165,13 +183,64 @@
                     </q-item>
                     <q-item clickable v-ripple @click="logout">
                         <q-item-section avatar>
+                            <q-icon name="apartment" />                                
+                        </q-item-section>
+
+                        <q-item-section>
+                            BranchId
+                        </q-item-section>
+                    </q-item>
+                    <q-item clickable v-ripple @click="logout">
+                        <q-item-section avatar>
+                            <q-icon name="badge" />                                
+                        </q-item-section>
+
+                        <q-item-section>
+                            Staff
+                        </q-item-section>
+                    </q-item>
+                    <q-item clickable v-ripple @click="logout">
+                        <q-item-section avatar>
+                            <q-icon name="move_to_inbox" />                                
+                        </q-item-section>
+
+                        <q-item-section>
+                            Location_Desk
+                        </q-item-section>
+                    </q-item>
+                  
+                </q-card-section>
+            </q-expansion-item>
+            <q-expansion-item group="link-dialog" expand-separator icon="assignment_late" label="Reports">
+                <q-card-section>
+                    <q-item clickable v-ripple>
+                        <q-item-section avatar>
+                            <q-icon name="gpp_good" />
+                        </q-item-section>
+
+                        <q-item-section>
+                            Role
+                        </q-item-section>
+                    </q-item>
+                    <q-item clickable v-ripple :to="{ name: 'user.index' }">
+                        <q-item-section avatar>
+                            <q-icon name="person" />
+                        </q-item-section>
+
+                        <q-item-section>
+                            User
+                        </q-item-section>
+                    </q-item>
+                   
+                    <!-- <q-item clickable v-ripple @click="logout">
+                        <q-item-section avatar>
                             <q-icon name="logout" />                                
                         </q-item-section>
 
                         <q-item-section>
                             Log-out
                         </q-item-section>
-                    </q-item>
+                    </q-item> -->
                 </q-card-section>
             </q-expansion-item>
             <q-item clickable v-ripple>
@@ -186,7 +255,7 @@
         </q-list>
     </q-scroll-area>
 
-    <q-img class="absolute-top" src="../../public/material.png" style="height: 198px">
+    <q-img class="absolute-top bg-grey-10" src=""  style="height: 198px;">
         <div class="absolute-bottom bg-transparent">
             <q-avatar size="96px" class="q-mb-sm">
                 <img src="../../../public/logo.png">
@@ -197,8 +266,13 @@
     </q-img>
 </q-drawer>     
 <q-page-container> 
-     <q-page >
-        <router-view></router-view>
+     <q-page class="q-pa-md">
+      <router-view v-slot="{ Component }">
+          <transition name="slide">
+            <component :is="Component" />
+          </transition>
+        </router-view>
+        <!-- <router-view></router-view> -->
      </q-page> 
 </q-page-container> 
 
@@ -206,10 +280,11 @@
 </div>
 </template>
 <script setup>
-import { ref , nextTick} from 'vue';
+import { ref , nextTick, } from 'vue';
 import { mapGetters } from 'vuex';
 import store from '../store'
 import { useI18n } from 'vue-i18n'
+
 const isTranslate  = ref(false)
 const leftDrawerOpen =ref(true)
 const t = useI18n();
@@ -225,66 +300,73 @@ const changeLanguage =(lang)=>{
     t.locale.value = lang
   })
 }
-// export default {
-//   data: () => ({
-//       leftDrawerOpen: false,
-//       isTranslate: false
-//   }),
-//   computed: {
+// const res= computed(()=> 
 //   ...mapGetters("auth", {
-//     user: "user",
-//   }),
-// },
-
-// beforeCreate() {    
-//   this.$store.dispatch("auth/getUser").catch(() => {});
-// },
-
-// methods: {
-//   logout() {
-//     this.$store.dispatch("auth/logout");
-//   },
-//   toggleLeftDrawer() {
-//           this.leftDrawerOpen = !this.leftDrawerOpen;
-//   },
- 
-//   changeLanguage (lang) {
-//   this.isTranslate.value =! this.isTranslate.value
-// // console.log(lang);
-// // console.log(isTranslate.value);
-//   nextTick(() => {
-//     t.locale.value = lang
+//       user: user
+//       console.log(user);
 //   })
-//   }
-
-// },
+// )
+// beforeCreate =() =>{
+//     store.dispatch("auth/getUser")
 // }
+
 </script>
-<style scoped>
-/* .app-menu {
-  .q-item {
-    color: #ffffff !important;
-    letter-spacing: 0.5px;
-    font-size: 12px;
-    font-weight: 700;
-    box-sizing: border-box;
-    letter-spacing: 0.5px;
+<style scoped lang="scss">
+.wrapper {
+  width: 100%;
+  min-height: 100vh;
+}
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.3s ease-out;
+}
 
-    .q-focus-helper {
-      width: 100%;
-      color: rgba(255, 255, 255, 0.23);
-    }
+.slide-enter-to {
+  position: absolute;
+  right: 0;
+}
 
-    .q-item__section--avatar {
-      color: #fff;
-      min-width: auto;
-      padding-right: 10px;
-      padding-left: 5px;
-      i {
-        font-size: 16px !important;
-      }
-    }
-  }
+.slide-enter-from {
+  position: absolute;
+  right: -100%;
+}
+
+.slide-leave-to {
+  position: absolute;
+  left: -100%;
+}
+
+.slide-leave-from {
+  position: absolute;
+  left: 0;
+}
+
+
+
+.app-menu {
+  // .q-item {
+  //   color: #161515 !important;
+  //   letter-spacing: 0.5px;
+  //   font-size: 12px;
+  //   font-weight: 700;
+  //   box-sizing: border-box;
+  //   letter-spacing: 0.5px;
+
+  //   .q-focus-helper {
+  //     width: 100%;
+  //     color: rgba(255, 255, 255, 0.23);
+  //   }
+
+  //   .q-item__section--avatar {
+  //     color: #000000;
+  //     min-width: auto;
+  //     padding-right: 10px;
+  //     padding-left: 5px;
+  //     i {
+  //       font-size: 26px !important;
+  //     }
+  //   }
+  // }
 
   .q-item--active {
     color: #ffd04b !important;
@@ -300,57 +382,57 @@ const changeLanguage =(lang)=>{
   }
 
   .q-expansion-item {
-    :deep(.q-expansion-item__container) {
-      .q-item {
-        color: #ffffff !important;
-        letter-spacing: 0.5px;
-        font-size: 12px;
-        font-weight: 700;
-        box-sizing: border-box;
-        letter-spacing: 0.5px;
+  //   :deep(.q-expansion-item__container) {
+  //     .q-item {
+  //       color: #ffffff !important;
+  //       letter-spacing: 0.5px;
+  //       font-size: 12px;
+  //       font-weight: 700;
+  //       box-sizing: border-box;
+  //       letter-spacing: 0.5px;
 
-        .q-focus-helper {
-          width: 100%;
-          color: rgba(255, 255, 255, 0.23);
-        }
+  //       .q-focus-helper {
+  //         width: 100%;
+  //         color: rgba(255, 255, 255, 0.23);
+  //       }
 
-        .q-item__section--avatar {
-          color: #fff;
-          min-width: auto;
-          padding-right: 10px;
-          padding-left: 5px;
-          i {
-            font-size: 16px !important;
-          }
-        }
-      }
+  //       .q-item__section--avatar {
+  //         color: #fff;
+  //         min-width: auto;
+  //         padding-right: 10px;
+  //         padding-left: 5px;
+  //         i {
+  //           font-size: 16px !important;
+  //         }
+  //       }
+  //     }
 
-      .q-expansion-item__content {
-        background-color: rgba(0, 0, 0, 0.12) !important;
-        .is-sub-item {
-          padding-left: 40px;
-        }
-      }
-    }
+  //     .q-expansion-item__content {
+  //       background-color: rgba(0, 0, 0, 0.12) !important;
+  //       .is-sub-item {
+  //         padding-left: 40px;
+  //       }
+  //     }
+  //   }
 
     &.expansion-item--active {
       :deep(.q-expansion-item__container) {
         .q-item {
-          // .q-item__section--avatar {
-          //   color: #ffd04b !important;
-          // }
+          .q-item__section--avatar {
+            color: #ffd04b !important;
+          }
 
           &:not(.is-sub-item) {
             font-weight: bold;
             color: #ffd04b !important;
-            background: rgba(255, 255, 255, 0.23);
+            background: rgba(3, 3, 3, 0.23);
 
             &.disabled {
               color: #212121;
               font-weight: normal;
             }
             &:before {
-              background: rgba(255, 255, 255, 0.23);
+              background: rgba(26, 19, 19, 0.23);
             }
 
             .q-item__section--avatar {
@@ -368,5 +450,5 @@ const changeLanguage =(lang)=>{
       }
     }
   }
-} */
+}
 </style>

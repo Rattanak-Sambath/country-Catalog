@@ -2,13 +2,13 @@
     <div>
        <q-card>
                 <q-card-section>
-                <div class="text-h6">Transfers</div>
-                <div class="text-subtitle2">list of Goods transfers</div>
+                <div class="text-h6">Car</div>
+                <div class="text-subtitle2">list of car</div>
                 </q-card-section>
        </q-card>
        <q-card class="q-my-sm">
             <q-table
-                    title="Treats"
+                    title="Cars"
                     :rows="rows"
                     :columns="columns"
                     row-key="id"
@@ -17,7 +17,7 @@
                     >
 
                     <template v-slot:top>
-                        <q-btn  push color="primary" :disable="loading"  @click="addRow" class="q-mx-md" icon="add">Add New</q-btn>
+                        <q-btn  push color="primary" :disable="loading" label="Add row" @click="addRow" class="q-mx-md" />
 
                         <q-btn
                         push 
@@ -43,7 +43,6 @@
 
 <script>
 import { exportFile, useQuasar } from 'quasar'
-import { ref } from 'vue'
     export default {
         setup (){
 
@@ -94,13 +93,9 @@ import { ref } from 'vue'
                                 'table-export.csv',
                                 content,
                                 'text/csv'
-                           )
+                                )
                 }
-                const loading = ref(false)
-                const filter = ref('')
             return {
-                filter,
-                loading,
                 rows,
                 exportTable,
                 columns

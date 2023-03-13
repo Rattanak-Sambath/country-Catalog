@@ -1,8 +1,8 @@
 <template>
   <div class="">
-    
-        sadas
-     
+      <q-card>
+        asddas
+      </q-card>     
   </div>
 </template>
 

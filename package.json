@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@brenoroosevelt/toast": "^2.0.3",
     "@quasar/extras": "^1.15.11",
     "axios": "^1.3.4",
     "quasar": "^2.11.7",

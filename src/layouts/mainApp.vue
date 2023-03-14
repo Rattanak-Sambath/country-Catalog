@@ -284,6 +284,7 @@ import { ref , nextTick, } from 'vue';
 import { mapGetters } from 'vuex';
 import store from '../store'
 import { useI18n } from 'vue-i18n'
+import Toast from '../Helper/Toast';
 
 const isTranslate  = ref(false)
 const leftDrawerOpen =ref(true)
@@ -298,6 +299,10 @@ const changeLanguage =(lang)=>{
   isTranslate.value =! isTranslate.value;
   nextTick(() => {
     t.locale.value = lang
+    Toast.fire({
+      title:"Language switch to ",
+      
+    })
   })
 }
 // const res= computed(()=> 
@@ -312,6 +317,7 @@ const changeLanguage =(lang)=>{
 
 </script>
 <style scoped lang="scss">
+
 .wrapper {
   width: 100%;
   min-height: 100vh;

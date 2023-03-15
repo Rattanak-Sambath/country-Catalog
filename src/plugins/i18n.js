@@ -1,15 +1,15 @@
 
 import { createI18n } from 'vue-i18n'
-import en from '../lang/translate/en.js';
-import kh from '../lang/translate/kh.js';
+import En from '../lang/translate/en.js';
+import Kh from '../lang/translate/kh.js';
 const messages = {
-       en,
-       kh
+       En,
+       Kh
   }
   // 2. Create i18n instance with options
   const i18n = createI18n({
-    locale: 'en', 
-    fallbackLocale: 'en', 
+    locale: 'En', 
+    fallbackLocale: 'En', 
     messages, 
     legacy: false
   

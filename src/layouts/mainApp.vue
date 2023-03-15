@@ -3,7 +3,7 @@
 <div>
   <q-layout view="lHh LpR lff" >
 
-<q-header elevated class="bg-grey-10" >
+<q-header elevated class="bg-grey-10 " >
     <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
@@ -26,7 +26,7 @@
         style="margin-right:25px ;"
           v-model="value"
           :label="isTranslate === true ? 'Kh' : 'En'"
-          @click="changeLanguage(isTranslate == false ? 'kh' : 'en')"
+          @click="changeLanguage(isTranslate == false ? 'Kh' : 'En')"
           />
         <!-- <q-switch       
           :label="isTranslate === true ? 'Kh' : 'En'"
@@ -51,9 +51,9 @@
                   </q-avatar>
                 </q-item-section>
                 <q-item-section>
-                  <q-item-label> {{ user.name }}</q-item-label>
-                  <q-item-label> {{ user.email }}</q-item-label>
-                  <q-item-label caption lines="1">{{ user.role }}</q-item-label>
+                  <q-item-label></q-item-label>
+                  <q-item-label> </q-item-label>
+                  <q-item-label caption lines="1"></q-item-label>
                 </q-item-section>
               </q-item>
               <q-separator />
@@ -280,14 +280,15 @@
 </div>
 </template>
 <script setup>
-import { ref , nextTick, } from 'vue';
-import { mapGetters } from 'vuex';
-import store from '../store'
+import { ref , nextTick, onBeforeMount } from 'vue';
+import { mapGetters, useStore } from 'vuex';
+// import store from '../store'
 import { useI18n } from 'vue-i18n'
-import Toast from '../Helper/Toast';
-
+import toast from '../Helper/toast';
 const isTranslate  = ref(false)
 const leftDrawerOpen =ref(true)
+const user = ref([]);
+const store = useStore();
 const t = useI18n();
 const logout =()=>{
   store.dispatch("auth/logout");
@@ -299,21 +300,16 @@ const changeLanguage =(lang)=>{
   isTranslate.value =! isTranslate.value;
   nextTick(() => {
     t.locale.value = lang
-    Toast.fire({
-      title:"Language switch to ",
-      
-    })
+    toast.success({message:"Language switch to" + ' ' + lang})
   })
 }
-// const res= computed(()=> 
-//   ...mapGetters("auth", {
-//       user: user
-//       console.log(user);
-//   })
-// )
-// beforeCreate =() =>{
-//     store.dispatch("auth/getUser")
-// }
+// console.log();
+onBeforeMount(()=>{
+      store.dispatch("auth/getCurrentUser").then((res)=>{
+          user.value = res
+      })
+
+})
 
 </script>
 <style scoped lang="scss">

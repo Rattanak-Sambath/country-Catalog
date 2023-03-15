@@ -36,39 +36,31 @@
 
 <script setup>
     // import router from '../../router';
-    import toast from '../../Helper/Toast'
+    import toast from '../../Helper/toast'
     import {ref, onMounted,} from 'vue';
     // import store from '../../store/';
     import api from '../../utils/utility'
 
     import { useStore } from 'vuex';
-import router from '../../router';
-import Toast from '../../Helper/Toast';
-// import Toast from '../../Helper/Toast';
+    import router from '../../router';
     const refForm = ref('');
     const loading = ref(false)
-    const email = ref('admin@email.com')
-    const password = ref('admin123')
+    const email = ref('guest@email.com')
+    const password = ref('guest123')
     const store = useStore();
     const onLogin = async () => {
         const {valid} = await refForm.value?.validate()
         if(!valid){
-            try{
                 let form = {
                     email: email.value,
                     password : password.value
-                }      
-                //     Toast.fire({
-                //     icon: 'success',
-                //     title: 'Login successfully'
-                // })         
-                 store.dispatch('auth/login', form);
-                 router.push({name: 'home'})
-                
-                // console.log(form);
-            }catch(err){
-                console.log(err);
-            }
+                }     
+
+                store.dispatch('auth/login', form).catch(()=>{
+                    toast.error({message:"Email or Password is not correct"})
+                });               
+                router.push({name: 'home'})
+            
         }  
     }
 </script>

@@ -32,7 +32,7 @@ const getters = {
 
 const mutations = {
   SET_AUTH_USER(state, value) {
-    state.user = value;
+    state.user = value;   
   },
   SET_AUTH_TOKEN(state, payload) {
     state.accessToken = payload.token;
@@ -43,9 +43,12 @@ const mutations = {
   },
   REMOVE_AUTH_TOKEN(state) {
     state.accessToken = null;
+    console.log('remove token');
+
   },
   REMOVE_AUTH_USER(state) {
     state.user = {};
+    console.log('remove user');
   },
 };
 
@@ -57,8 +60,10 @@ const actions = {
         .post("http://localhost:3001/api/auth/login", credential)
         .then((response) => {        
           commit("SET_AUTHENTICATED", true);
-          commit("SET_AUTH_TOKEN", response.data);       
+          commit("SET_AUTH_TOKEN", response.data); 
+          commit("SET_AUTH_USER", response.data.user)      
           resolve(response);
+          
           router.push({ name: "home" });
           // Toast.fire({
           //   icon:'success',
@@ -72,29 +77,38 @@ const actions = {
     });
   },
 
-  getUser({ commit, dispatch }) {
-    return new Promise((resolve, reject) => {
-      api
-        .get("/users/profile")
-        .then((response) => {
-          //   console.log(response.data, "profile");
-          commit("SET_AUTH_USER", response.data);
-          resolve();
-        })
-        .catch(() => {
-          reject();
-        });
-    });
+
+  getCurrentUser({commit})
+  {
+      return new Promise((resolve, reject) => {
+          api.get('http://localhost:3001/api/auth/getCurrentUser').then((response) => {                
+              commit('SET_AUTH_USER', response.data.user)
+              // console.log('response', response);
+              resolve(response)
+          }).catch(()=> {
+              reject()
+          })
+      })
   },
+  // getCurrentUser({ commit, dispatch }) {
+  //   return new Promise((resolve, reject) => {
+  //     api
+  //       .get("/auth/getCurrentUser")
+  //       .then((response) => {
+  //         //   console.log(response.data, "profile");
+  //         commit("SET_AUTH_USER", response.data);
+  //         resolve();
+  //       })
+  //       .catch(() => {
+  //         reject();
+  //       });
+  //   });
+  // },
 
 logout({ commit }) {
     commit("SET_AUTHENTICATED", false);
     commit("REMOVE_AUTH_TOKEN");
     commit("REMOVE_AUTH_USER");
-    // Toast.fire({
-    //   icon:'success',
-    //   title:"Logout successfully"
-    // })
     router.push({ name: "login" });
     // router.replace({ name: 'login' })
   }, 

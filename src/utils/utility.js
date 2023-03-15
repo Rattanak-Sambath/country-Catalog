@@ -5,7 +5,7 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL + "/api",
   headers: {
     "content-type": "application/json",
-    accept: "application/json",
+    "accept": "application/json",
   },
 });
 
@@ -26,26 +26,25 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response.status === 401) {
-      console.log(error.response.status);
+    if (error.response?.status === 401) {
+      // console.log(error.response.status);
       store.dispatch("auth/logout");
 
     }
     return Promise.reject(error);
   }
 );
-api.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
-    if ([401].includes(error.response.status)) {
-      // console.log(error.response.status);
-      store.dispatch("auth/logout");
-    } else {
-      return Promise.reject(error);
-    }
-  }
-);
+// api.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   (error) => {
+//     if ([401].includes(error.response.status)) {     
+//       store.dispatch("auth/logout");
+//     } else {
+//       return Promise.reject(error);
+//     }
+//   }
+// );
 
 export default api;

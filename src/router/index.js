@@ -41,12 +41,16 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const guestRoute = ['login', 'register', 'forget', 'password.reset']
-  if (store.state.auth.authenticated) {
-      if (guestRoute.includes(to.name)) next({ name: 'home' })
+  console.log(store.state.auth.authenticated);
+  if (store.state.auth.authenticated ) {
+    console.log('login');
+        if (guestRoute.includes(to.name)) {
+            router.push({ name: 'home' })
+        } 
       else next()
   } else {
-      if (guestRoute.includes(to.name)) next()
-      else next({ name: 'login'})
+    if (guestRoute.includes(to.name) || to.name == 'farm.monitoring') next()
+          else next({ name: 'login',query: { redirect: to.fullPath }  })
   }
 })
 

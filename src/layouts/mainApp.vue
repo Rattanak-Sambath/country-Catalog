@@ -51,9 +51,9 @@
                   </q-avatar>
                 </q-item-section>
                 <q-item-section>
-                  <q-item-label></q-item-label>
-                  <q-item-label> </q-item-label>
-                  <q-item-label caption lines="1"></q-item-label>
+                  <q-item-label>{{ user.name }}</q-item-label>
+                  <q-item-label>{{ user.email }} </q-item-label>
+                  <q-item-label caption lines="1">{{ user.role }}</q-item-label>
                 </q-item-section>
               </q-item>
               <q-separator />
@@ -132,7 +132,7 @@
             <q-expansion-item group="link-dialog" style="border-radius: 20px" expand-separator icon="local_shipping"
                 label="Shipping Info">
                 <q-card-section>
-                    <q-item clickable v-ripple menu_book:to="{ name: 'studyyear.index' }" >
+                    <q-item clickable v-ripple menu_book :to="{ name: 'car.index' }" >
                         <q-item-section avatar>
                             <q-icon name="local_shipping" />
                         </q-item-section>
@@ -287,7 +287,7 @@ import { useI18n } from 'vue-i18n'
 import toast from '../Helper/toast';
 const isTranslate  = ref(false)
 const leftDrawerOpen =ref(true)
-const user = ref([]);
+const user = ref({});
 const store = useStore();
 const t = useI18n();
 const logout =()=>{
@@ -306,7 +306,9 @@ const changeLanguage =(lang)=>{
 // console.log();
 onBeforeMount(()=>{
       store.dispatch("auth/getCurrentUser").then((res)=>{
-          user.value = res
+        // console.log(res.data);
+          user.value = res.data
+          // console.log(user.value.email);
       })
 
 })

@@ -1,9 +1,10 @@
 <template>
     <div>
        <q-card>
-                <q-card-section v-if="loading === false">
-                    <div class="text-h6">Car</div>
-                    <div class="text-subtitle2">list of car</div>
+                <q-card-section v-if="loading === false" class="flex ">
+                    <q-breadcrumbs v-for="(i, index) in breadcrumbs" :key="index" class="q-mx-md">                           
+                            <q-breadcrumbs-el :label="i.label" :icon="i.icon" :to="i.route" />                      
+                    </q-breadcrumbs>
                 </q-card-section>
                 <q-skeleton style="100%" height="100px" v-else>
                     <q-skeleton class="text-h6 q-mb-md"></q-skeleton>
@@ -15,20 +16,29 @@
                     title="Cars"
                     :rows="dataTable"
                     :columns="columns"
-                    row-key="id"
+                    row-key="_id"
                     :filter="filter"
                     :loading="loading"
-                     @request="onChangePagination"
-                     :v-model:pagination="pagination"
+                     @request="onChangePagination"                               
+                     :pagination="pagination"
+                     >
 
-                    >
-
+                     <template #body-cell-name="props">
+                        <q-td :props="props">
+                            <span
+                            class="ra-text-link"
+                            @click="edit(props.row.name)"
+                            >
+                            {{ props.row.name }}
+                            </span>
+                        </q-td>
+                        </template>
                     <template v-slot:top>
-                        <q-btn  push color="primary"  label="Add row" @click="addRow" class="q-mx-md" :to="{name: 'car.create'}" />
+                        <q-btn   color="blue-10" icon="add" label="Add row" @click="addRow" class="q-mx-md" :to="{name: 'car.create'}" />
 
                         <q-btn
-                        push 
-                        color="primary"
+                         
+                        color="green-14"
                         icon-right="archive"
                         label="Export to csv"
                         no-caps
@@ -52,14 +62,27 @@
     import { onMounted, ref } from 'vue';
 import api from '../../utils/utility';
             const pagination = ref({
-            sortBy: 'name',
-            descending: false,
-            page: 1,
-            rowsPerPage: 10,
-            rowsNumber: 0,
+                sortBy: 'name',
+                descending: false,
+                page: 1,
+                rowsPerPage: 5,
+                rowsNumber: 0,
             })
             const filter = ref('')
             const loading = ref(false)
+            const showId = ref('')
+            const breadcrumbs = ref([
+                {
+                    label: 'Dashboard / Car',
+                    icon:'dashboard',
+                    route:'/dashboard'
+                },
+                // {
+                //     label: 'Car',
+                //     icon:'local_shippings',
+                //     route:'/car/create'
+                // }
+            ])
              const columns = [
                 {
                     name: 'name',
@@ -77,81 +100,34 @@ import api from '../../utils/utility';
                 { name: '', label: 'Action', field: 'date' },
                 ]
 
-                const dataTable = ref([
-                    {
-                        name:'G1',
-                        model: 'Hyundia',
-                        weight: 14,
-                        color:'Orange',
-                        date:122
-                    },
-                    {
-                        name:'G1',
-                        model: 'Hyundia',
-                        weight: 14,
-                        color:'Orange',
-                        date:122
-                    },
-                    {
-                        name:'G1',
-                        model: 'Hyundia',
-                        weight: 14,
-                        color:'Orange',
-                        date:122
-                    },
-                    {
-                        name:'G2',
-                        model: 'Hyundia',
-                        weight: 14,
-                        color:'Orange',
-                        date:122
-                    },
-                    {
-                        name:'G1',
-                        model: 'Hyundia',
-                        weight: 14,
-                        color:'Orange',
-                        date:122
-                    },
-                    {
-                        name:'G5',
-                        model: 'Hyundia',
-                        weight: 14,
-                        color:'Orange',
-                        date:122
-                    },
-                    {
-                        name:'G7',
-                        model: 'Hyundia',
-                        weight: 14,
-                        color:'Orange',
-                        date:122
-                    }
-                    
-                ])     
-                const getDataTable = async ()=>{
+                const dataTable = ref([])     
+                const getDataTable = async()=>{
                     loading.value = true
                     dataTable.value = []
                     const { page, rowsPerPage } = pagination.value
-                    const selector = {
-                    // branchId: currentBranchId.value,
+                    
+                    const selector = {                 
                         page,
                         rowsPerPage,
                         search: filter.value,
                     }
-                    let res = await api.get('/car/getCar')
-                    if(res){
-                        console.log(res);
-                    }
+                    // console.log('selector', selector);
+                     let data = await api.get('/car/getCar', selector)
+                     if(data){
+                        loading.value = false
+                        dataTable.value = data.data.items
+                     }
+                         
                 }               
                 const onChangePagination = (val) => {
+                    console.log('row', val);
                     pagination.value = val.pagination
                     getDataTable()
                 }
-
-
-                
-
+                const edit  = (param)=>{
+                    showId.value = param
+                    // console.log(param);
+                }
                 const exportTable = () =>{
                     // const content = [columns.map(col => wrapCsvValue(col.label))].concat(
                     //             rows.map(row => columns.map(col => wrapCsvValue(
@@ -171,6 +147,9 @@ import api from '../../utils/utility';
                 }
                 onMounted(()=>{
                     getDataTable()
+                    if(!dataTable){
+                        loading.value=true
+                    }
                 })
 </script>
 

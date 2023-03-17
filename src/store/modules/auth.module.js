@@ -57,7 +57,7 @@ const actions = {
     // console.log(credential);
     return new Promise((resolve, reject) => {
       api
-        .post("http://localhost:3001/api/auth/login", credential)
+        .post("http://localhost:5001/api/auth/login", credential)
         .then((response) => {        
           commit("SET_AUTHENTICATED", true);
           commit("SET_AUTH_TOKEN", response.data); 
@@ -81,7 +81,7 @@ const actions = {
   getCurrentUser({commit})
   {
       return new Promise((resolve, reject) => {
-          api.get('http://localhost:3001/api/auth/getCurrentUser').then((response) => {                
+          api.get('http://localhost:5001/api/auth/getCurrentUser').then((response) => {                
               commit('SET_AUTH_USER', response.data.user)
               // console.log('response', response);
               resolve(response)

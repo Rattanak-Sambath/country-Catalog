@@ -3,18 +3,19 @@
 <div>
   <q-layout view="lHh LpR lff" >
 
-<q-header elevated class="bg-grey-10 " >
-    <q-toolbar>
+<q-header  class=""  >
+    <q-toolbar class=" shadow-none absolute-top text-black" >
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-
-        <q-toolbar-title align="left">
+        <q-btn dense flat round icon="search" @click="toggleLeftDrawer" />
+        <q-space />
+        <!-- <q-toolbar-title align="left">
             <q-avatar>
                 <img style="width: 40px;" src="logo.png">
             </q-avatar> 
             <span class="title">
                 VET LOGISTIC
             </span>
-        </q-toolbar-title>
+        </q-toolbar-title> -->
         <q-btn
     class="q-mr-xs"
           flat
@@ -34,17 +35,17 @@
         ></q-switch> -->
         <img           
               :src="isTranslate === false ? '../../public/download.png' : '../../public/istockphoto-652225546-612x612.jpg'  "
-              style="width: 90px; height: 45px; text-align: right; margin-right: 10px;"       
+              style="width: 60px; height: 35px; text-align: right; margin-right: 10px;"       
         />
 
         <!-- <img style="width: 70px;" src="istockphoto-652225546-612x612.jpg" /> -->
-        <q-btn round flat color="white" icon="notifications_active" />
+        <q-btn round flat color="black" icon="notifications_active" />
         <q-btn round flat color="white">
         <q-avatar color="primary" class="q-ma-sm">
           <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
           <q-menu>
             <q-list style="min-width: 10px">
-              <q-item>
+              <q-item >
                 <q-item-section avatar>
                   <q-avatar>
                     <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
@@ -57,9 +58,9 @@
                 </q-item-section>
               </q-item>
               <q-separator />
-              <q-item clickable v-ripple :to="{ name: 'setting' }" exact>
+              <q-item   :to="{ name: 'setting' }" exact>
                 <q-item-section avatar>
-                  <q-icon name="settings" />
+                  <q-icon name="settings" color="primary" />
                 </q-item-section>
 
                 <q-item-section>Setting</q-item-section>
@@ -67,7 +68,7 @@
               <q-separator />
               <q-item clickable v-ripple @click="logout()" exact>
                 <q-item-section avatar>
-                  <q-icon name="logout" />
+                  <q-icon name="logout " color="red" />
                 </q-item-section>
 
                 <q-item-section>Logout</q-item-section>
@@ -79,12 +80,12 @@
   </q-btn>
     </q-toolbar>
 </q-header>
-<q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered class="white"   :width="250">
-    <q-scroll-area style="height: calc(100% - 200px); margin-top: 198px;">
+<q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered class="white"   :width="250" style="background-color: grey; color:white">
+    <q-scroll-area style="height: calc(100% - 20px); margin-top:0px;" class="app-sidebar-scroll-area" >
         <q-list padding class="app-menu">
-            <q-item clickable v-ripple :to="{ name: 'home' }">
+            <q-item  :to="{ name: 'home' }"  exact-active-class="q-item--active ">
                 <q-item-section avatar>
-                    <q-icon name=" home" />
+                    <q-icon name=" home" size="16px"/>
                 </q-item-section>
 
                 <q-item-section>
@@ -92,7 +93,7 @@
                 </q-item-section>
             </q-item>
 
-            <q-item clickable  v-ripple :to="{ name: 'goodsTransfer.index' }">
+            <q-item clickable    exact-active-class="q-item--active " v-ripple :to="{ name: 'goodsTransfer.index' }">
                 <q-item-section avatar>
                     <q-icon name="category" />
                 </q-item-section>
@@ -102,7 +103,7 @@
                 </q-item-section>
             </q-item>
 
-            <q-item clickable class="text-custome" v-ripple :to="{ name: 'subject.index' }">
+            <q-item   exact-active-class="q-item--active " clickable v-ripple :to="{ name: 'subject.index' }">
                 <q-item-section avatar>
                     <q-icon name="directions_walk" />
                 </q-item-section>
@@ -111,7 +112,7 @@
                     Customer Receive Goods
                 </q-item-section>
             </q-item>
-            <q-item clickable class="text-custome" v-ripple :to="{ name: 'subject.index' }">
+            <q-item   exact-active-class="q-item--active"    v-ripple :to="{ name: 'subject.index' }">
                 <q-item-section avatar>
                     <q-icon name="content_paste_search" />
                 </q-item-section>
@@ -120,7 +121,7 @@
                     Search Goods transfer
                 </q-item-section>
             </q-item>
-            <q-item clickable class="text-custome" v-ripple :to="{ name: 'subject.index' }">
+            <q-item exact-active-class="q-item--active"  v-ripple :to="{ name: 'subject.index' }">
                 <q-item-section avatar>
                     <q-icon name="settings_phone" />
                 </q-item-section>
@@ -132,7 +133,7 @@
             <q-expansion-item group="link-dialog" style="border-radius: 20px" expand-separator icon="local_shipping"
                 label="Shipping Info">
                 <q-card-section>
-                    <q-item clickable v-ripple menu_book :to="{ name: 'car.index' }" >
+                    <q-item exact-active-class="q-item--active"  v-ripple menu_book :to="{ name: 'car.index' }" >
                         <q-item-section avatar>
                             <q-icon name="local_shipping" />
                         </q-item-section>
@@ -141,7 +142,7 @@
                             Car
                         </q-item-section>
                     </q-item>
-                    <q-item clickable v-ripple>
+                    <q-item clickable v-ripple exact-active-class="q-item--active" > 
                         <q-item-section avatar>
                             <q-icon name="accessible" />
                         </q-item-section>
@@ -150,7 +151,7 @@
                             Driver
                         </q-item-section>
                     </q-item>
-                    <q-item clickable v-ripple>
+                    <!-- <q-item clickable v-ripple>
                         <q-item-section avatar>
                             <q-icon name="tune" />
                         </q-item-section>
@@ -158,12 +159,12 @@
                         <q-item-section class="">
                             Car Config
                         </q-item-section>
-                    </q-item>
+                    </q-item> -->
                 </q-card-section>
             </q-expansion-item>
             <q-expansion-item group="link-dialog" expand-separator icon="settings" label="Setting">
                 <q-card-section>
-                    <q-item clickable v-ripple>
+                    <q-item clickable v-ripple exact-active-class="q-item--active" >
                         <q-item-section avatar>
                             <q-icon name="gpp_good" />
                         </q-item-section>
@@ -172,7 +173,7 @@
                             Role
                         </q-item-section>
                     </q-item>
-                    <q-item clickable v-ripple :to="{ name: 'user.index' }">
+                    <q-item  v-ripple :to="{ name: 'user.index' }" exact-active-class="q-item--active" >
                         <q-item-section avatar>
                             <q-icon name="person" />
                         </q-item-section>
@@ -181,7 +182,7 @@
                             User
                         </q-item-section>
                     </q-item>
-                    <q-item clickable v-ripple @click="logout">
+                    <q-item clickable v-ripple @click="logout" exact-active-class="q-item--active" >
                         <q-item-section avatar>
                             <q-icon name="apartment" />                                
                         </q-item-section>
@@ -190,7 +191,7 @@
                             BranchId
                         </q-item-section>
                     </q-item>
-                    <q-item clickable v-ripple @click="logout">
+                    <q-item clickable v-ripple @click="logout" exact-active-class="q-item--active"  >
                         <q-item-section avatar>
                             <q-icon name="badge" />                                
                         </q-item-section>
@@ -199,7 +200,7 @@
                             Staff
                         </q-item-section>
                     </q-item>
-                    <q-item clickable v-ripple @click="logout">
+                    <q-item clickable v-ripple @click="logout" exact-active-class="q-item--active" >
                         <q-item-section avatar>
                             <q-icon name="move_to_inbox" />                                
                         </q-item-section>
@@ -213,7 +214,7 @@
             </q-expansion-item>
             <q-expansion-item group="link-dialog" expand-separator icon="assignment_late" label="Reports">
                 <q-card-section>
-                    <q-item clickable v-ripple>
+                    <q-item clickable v-ripple exact-active-class="q-item--active" >
                         <q-item-section avatar>
                             <q-icon name="gpp_good" />
                         </q-item-section>
@@ -222,7 +223,7 @@
                             Role
                         </q-item-section>
                     </q-item>
-                    <q-item clickable v-ripple :to="{ name: 'user.index' }">
+                    <q-item clickable v-ripple :to="{ name: 'user.index' }" exact-active-class="q-item--active" >
                         <q-item-section avatar>
                             <q-icon name="person" />
                         </q-item-section>
@@ -243,7 +244,7 @@
                     </q-item> -->
                 </q-card-section>
             </q-expansion-item>
-            <q-item clickable v-ripple>
+            <q-item clickable v-ripple exact-active-class="q-item--active" > 
                 <q-item-section avatar>
                     <q-icon name="info" />
                 </q-item-section>
@@ -255,41 +256,69 @@
         </q-list>
     </q-scroll-area>
 
-    <q-img class="absolute-top bg-grey-10" src=""  style="height: 198px;">
+    <!-- <q-img class="absolute-top bg-grey-10" src=""  style="height: 130px;">
         <div class="absolute-bottom bg-transparent">
-            <q-avatar size="96px" class="q-mb-sm">
+            <q-avatar size="60px" class="q-mb-sm">
                 <img src="../../../public/logo.png">
             </q-avatar>
             <div class="text-weight-bold">Razvan Stoenescu</div>
             <div>@rstoenescu</div>
         </div>
-    </q-img>
+    </q-img> -->
+
 </q-drawer>     
+    <!-- <q-page-container class="bg-grey-2">
+       Page content -->
+      <!-- <q-page class="overflow-hidden q-pa-md">
+        <router-view v-slot="{ Component, route }">
+          <transition
+            name="fade-x"
+            mode="out-in"
+          >
+            <component
+              :is="Component"
+              :key="route.fullPath"
+            />
+          </transition>
+        </router-view>
+      </q-page>
+    </q-page-container> --> 
+
 <q-page-container> 
-     <q-page class="q-pa-md">
+     <q-page class="q-pa-md" style="margin-top: 50px;" >
       <router-view v-slot="{ Component }">
           <transition name="slide">
             <component :is="Component" />
           </transition>
-        </router-view>
-        <!-- <router-view></router-view> -->
+        </router-view>      
      </q-page> 
-</q-page-container> 
+</q-page-container>  
 
 </q-layout>
 </div>
 </template>
 <script setup>
-import { ref , nextTick, onBeforeMount } from 'vue';
+import { ref , nextTick, onBeforeMount, onMounted } from 'vue';
 import { mapGetters, useStore } from 'vuex';
 // import store from '../store'
 import { useI18n } from 'vue-i18n'
 import toast from '../Helper/toast';
+import router from '../router';
 const isTranslate  = ref(false)
 const leftDrawerOpen =ref(true)
 const user = ref({});
 const store = useStore();
 const t = useI18n();
+// const transitionName = ref('fade-out') 
+//     onMounted(() => {
+      
+//       router.beforeEach((to, from, next) => {
+//         if (to.name === from.name) {
+//           transitionName.value = ''
+//         } else transitionName.value = 'fade-out'
+//         next()
+//       })
+//     })
 const logout =()=>{
   store.dispatch("auth/logout");
 }
@@ -315,14 +344,21 @@ onBeforeMount(()=>{
 
 </script>
 <style scoped lang="scss">
+// .active {
+//     color: #cebe2d;
+// }
 
+// .exact-active-link {
+//   color: #cebe2d;
+//     font-weight: bold;
+// }
 .wrapper {
   width: 100%;
   min-height: 100vh;
 }
 .slide-enter-active,
 .slide-leave-active {
-  transition: all 0.3s ease-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .slide-enter-to {
@@ -346,37 +382,86 @@ onBeforeMount(()=>{
 }
 
 
+.app-sidebar-header {
+  background-color: #212121;
+  border-bottom: 1px solid rgba(229, 229, 229, 0.25);
+  color: #ffff;
+  align-items: center;
+}
+.app-sidebar-scroll-area {
+  height: calc(100% - 50px);
+  margin-top: 50px;
+  background-color: #2e323a !important;
+}
+.app-icon{
+    font-size: 40px;
+}
+
+.app-sidebar-sub-level-item {
+  min-width: 150px;
+  border-radius: 0;
+  background-color: #2e323a !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.32);
+
+  .q-item {
+    color: #ffffff !important;
+    letter-spacing: 0.5px;
+    font-size: 12px;
+    font-weight: 700;
+    box-sizing: border-box;
+    letter-spacing: 0.5px;
+
+    .q-focus-helper {
+      width: 100%;
+      color: rgba(255, 255, 255, 0.23);
+    }
+
+    // &.q-item--active {
+    //   color: #ffd04b !important;
+    //   font-weight: bold;
+    //   background: rgba(255, 255, 255, 0.23);
+    //   &:before {
+    //     background: rgba(255, 255, 255, 0.23);
+    //   }
+    // }
+  }
+}
 
 .app-menu {
-  // .q-item {
-  //   color: #161515 !important;
-  //   letter-spacing: 0.5px;
-  //   font-size: 12px;
-  //   font-weight: 700;
-  //   box-sizing: border-box;
-  //   letter-spacing: 0.5px;
+  .q-icon:{
+      font-size: 20px;
+  }
+  .q-item {
+    color: #ffffff !important;
+    letter-spacing: 0.5px;
+    font-size: 12px;
+   
+    font-weight: 700;
+    box-sizing: border-box;
+    letter-spacing: 0.5px;
 
-  //   .q-focus-helper {
-  //     width: 100%;
-  //     color: rgba(255, 255, 255, 0.23);
-  //   }
+    .q-focus-helper {
+      width: 100%;
+      color: rgba(255, 255, 255, 0.23);
+    }
 
-  //   .q-item__section--avatar {
-  //     color: #000000;
-  //     min-width: auto;
-  //     padding-right: 10px;
-  //     padding-left: 5px;
-  //     i {
-  //       font-size: 26px !important;
-  //     }
-  //   }
-  // }
+    .q-item__section--avatar {
+      color: #fff;
+      min-width: auto;
+      padding-right: 10px;
+      padding-left: 5px;
+      i {
+        font-size: 16px !important;
+      }
+    }
+  }
 
   .q-item--active {
-    color: #ffd04b !important;
+    color: #fdf911 ;
     font-weight: bold;
     background: rgba(255, 255, 255, 0.23);
     &:before {
+      color: #ffd04b;
       background: rgba(255, 255, 255, 0.23);
     }
 
@@ -386,57 +471,59 @@ onBeforeMount(()=>{
   }
 
   .q-expansion-item {
-  //   :deep(.q-expansion-item__container) {
-  //     .q-item {
-  //       color: #ffffff !important;
-  //       letter-spacing: 0.5px;
-  //       font-size: 12px;
-  //       font-weight: 700;
-  //       box-sizing: border-box;
-  //       letter-spacing: 0.5px;
+    :deep(.q-expansion-item__container) {
+      .q-item {
+        color: #ffffff !important;
+        letter-spacing: 0.5px;
+        font-size: 12px;
+        font-weight: 700;
+        box-sizing: border-box;
+        letter-spacing: 0.5px;
 
-  //       .q-focus-helper {
-  //         width: 100%;
-  //         color: rgba(255, 255, 255, 0.23);
-  //       }
+        .q-focus-helper {
+          width: 100%;
+         
+          color: rgba(255, 255, 255, 0.23);
+        }
 
-  //       .q-item__section--avatar {
-  //         color: #fff;
-  //         min-width: auto;
-  //         padding-right: 10px;
-  //         padding-left: 5px;
-  //         i {
-  //           font-size: 16px !important;
-  //         }
-  //       }
-  //     }
+        .q-item__section--avatar {
+          color: #fff;
+          min-width: auto;
+          padding-right: 10px;
+          padding-left: 5px;
+          i {
+            font-size: 16px !important;
+          }
+        }
+      }
 
-  //     .q-expansion-item__content {
-  //       background-color: rgba(0, 0, 0, 0.12) !important;
-  //       .is-sub-item {
-  //         padding-left: 40px;
-  //       }
-  //     }
-  //   }
+      .q-expansion-item__content {
+        background-color: rgba(0, 0, 0, 0.12) !important;
+        .is-sub-item {
+          padding-left: 40px;
+        }
+      }
+    }
 
     &.expansion-item--active {
       :deep(.q-expansion-item__container) {
         .q-item {
           .q-item__section--avatar {
-            color: #ffd04b !important;
+            color: #ffffff !important;
           }
 
           &:not(.is-sub-item) {
             font-weight: bold;
             color: #ffd04b !important;
-            background: rgba(3, 3, 3, 0.23);
+            background: rgba(255, 255, 255, 0.23);
 
             &.disabled {
               color: #212121;
               font-weight: normal;
             }
             &:before {
-              background: rgba(26, 19, 19, 0.23);
+              
+              background: rgba(255, 255, 255, 0.23);
             }
 
             .q-item__section--avatar {

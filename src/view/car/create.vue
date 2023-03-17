@@ -27,6 +27,21 @@
                             <div class="col-12">
                               <validate-field
                                 v-slot="{ value, field, errorMessage }"
+                                v-model="form.date"
+                                name="date"
+                              >
+                                <q-input color="orange-14" type="date"  outlined :model-value="value" v-bind="field"
+                                  :error="!!errorMessage"
+                                  :error-message="errorMessage">
+                                        <template v-slot:prepend>
+                                            <q-icon name="calendar_month" color="indigo-10" />
+                                        </template>
+                                    </q-input>
+                              </validate-field>
+                            </div>
+                            <div class="col-12">
+                              <validate-field
+                                v-slot="{ value, field, errorMessage }"
                                 v-model="form.name"
                                 name="name"
                               >
@@ -42,6 +57,30 @@
                             <div class="col-12">
                               <validate-field
                                 v-slot="{ value, field, errorMessage }"
+                                v-model="form.driver"
+                                name="driver"
+                              >
+                                <q-input color="orange-14" type="text"  outlined :model-value="value" label="Driver"  v-bind="field"
+                                  :error="!!errorMessage"
+                                  :error-message="errorMessage">
+                                        <template v-slot:prepend>
+                                            <q-icon name="engineering" color="indigo-10" />
+                                        </template>
+                                    </q-input>
+                              </validate-field>
+                            </div>
+                            
+                           
+                          </div>
+                          <!-- end-left-side  -->
+                        </div>
+
+                        <div class="col-xs-12 col-md-6 col-lg-6">
+                          <div class="row  q-col-gutter-y-md ">
+                            <!-- right-side  -->
+                            <div class="col-12">
+                              <validate-field
+                                v-slot="{ value, field, errorMessage }"
                                 v-model="form.model"
                                 name="model"
                               >
@@ -54,30 +93,6 @@
                                     </q-input>
                               </validate-field>
                             </div>
-                            <div class="col-12">
-                              <validate-field
-                                v-slot="{ value, field, errorMessage }"
-                                v-model="form.date"
-                                name="date"
-                              >
-                                <q-input color="orange-14" type="date"  outlined :model-value="value" v-bind="field"
-                                  :error="!!errorMessage"
-                                  :error-message="errorMessage">
-                                        <template v-slot:prepend>
-                                            <q-icon name="calendar_month" color="indigo-10" />
-                                        </template>
-                                    </q-input>
-                              </validate-field>
-                            </div>
-                           
-                          </div>
-                          <!-- end-left-side  -->
-                        </div>
-
-                        <div class="col-xs-12 col-md-6 col-lg-6">
-                          <div class="row  q-col-gutter-y-md ">
-                            <!-- right-side  -->
-
                             <div class="col-12">
                               <validate-field
                                 v-slot="{ value, field, errorMessage }"
@@ -122,6 +137,7 @@
                           :label="showId ? 'Update' : 'Save'"
                           color="primary"
                           no-caps
+                          :loading="loading"
                           @click="onSubmit()"
                         />
                         <q-btn
@@ -131,6 +147,7 @@
                           icon="remove"
                           label="Remove"
                           no-caps
+                          :loading="loading"
                           @click="onRemove()"
                         />
                         <q-btn
@@ -138,6 +155,7 @@
                           icon="cancel"
                           label="Cancel"
                           no-caps
+                          :loading="loading"
                           @click="cancel()"
                         />
                       </div>
@@ -160,13 +178,15 @@
   import router from '../../router';
   import dayjs from 'dayjs'
 import api from '../../utils/utility';
+import axios from 'axios';
   const formRef = ref('');
   const loading = ref(false)
   const form = ref({
-    name: 'G1',
-    model: 'Hyundia',
-    weight: '5',
-    color: 'Orange',
+    name: '',
+    model: '',
+    weight: '',
+    color: '',
+    driver: 'Sopheak',
     date: dayjs(new Date()).format('YYYY-MM-DD')
   })
   const rules = object({
@@ -175,10 +195,19 @@ import api from '../../utils/utility';
     model: string().required().label('Model'),
     weight: string().required().label('Weight'),
     color: string().required().label('Color'),
+    driver: string().required().label('Driver'),
     date: string().required().label('Date'),
   })
   const showId = ref('');
-  
+  const concel = ()=>{
+      showId.value = null
+      form.value.name = ""
+      form.value.model = ""
+      form.value.weight = ""
+      form.value.color= ""
+      form.value.driver= ""
+      loading.value = false
+  }
   const onSubmit =async ()=>{
     const { valid } = await formRef.value.validate()
       if(valid){
@@ -186,10 +215,12 @@ import api from '../../utils/utility';
           if(showId.value){
             methods = 'car/updateCar'
           }
-          let res = await api.post(methods, form.value)
-          if(!res){
+          loading.value =true
+          let res = await api.post('car/createCar', form.value)
+          if(res){
             toast.success({message:"Add car successfully"})
-            console.log('hhi');
+            concel();
+            router.go(-1)
           }
           else {
             toast.error({message:"There was somehting wrong to add car"})

@@ -227,7 +227,7 @@ import { useRoute } from 'vue-router';
         // console.log('find', id);
         let data = await api.get('/car/getCarbyId/' + showId.value  )
         if(data){
-            form.value = data.data.data
+            // form.value = data.data.data
             // console.log(data);
         }
     }

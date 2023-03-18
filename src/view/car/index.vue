@@ -12,6 +12,31 @@
                 </q-skeleton>
        </q-card>
        <q-card class="q-my-sm">
+            <q-dialog v-model="diaglogDelete" max-width="500">
+                        <q-card>
+                                <q-card-section>
+                                    <div class="text-h6">Confirm</div>
+                                    <div class="text-subtitle2">are you sure you want to remove ?</div>
+                                </q-card-section>
+
+
+                                <q-separator dark />
+                                
+                                <div class="text-right q-mx-md q-my-lg" >
+                                    <q-btn
+                                        name="remove"
+                                            color="secondary"
+                                            outlined
+                                            :disabled="deleting"
+                                            @click="diaglogDelete = false"
+                                            >Cancel</q-btn >
+                                        <q-btn class="q-mx-md" name="confirm" color="negative"  @click="onConfirmDelete"
+                                            >Confirm</q-btn
+                                >
+                            
+                                </div>
+                        </q-card>
+                </q-dialog>
             <q-table
                     title="Cars"
                     :rows="dataTable"
@@ -25,10 +50,8 @@
 
                      <template #body-cell-action="props">
                         <q-td :props="props">
-                         <q-btn icon="delete"  color="negative" @click="onRemove(props.row)" ></q-btn>
-                         <q-btn icon="edit"  color="primary" class="q-mx-md"   @click="onEdit(props.row._id)"></q-btn>
-
-                          
+                         <q-btn icon="delete"  color="negative" @click="onRemove(props.row._id)" ></q-btn>
+                         <q-btn icon="edit"  color="primary" class="q-mx-md"   @click="onEdit(props.row._id)"></q-btn>                        
                             <!-- <span
                             class="ra-text-link "
                             @click="editCompo(props.row.id)"
@@ -64,7 +87,7 @@
 </template>
 
 <script setup>
-    import { success } from '@brenoroosevelt/toast/lib/cjs/toast';
+import { success } from '@brenoroosevelt/toast/lib/cjs/toast';
 import { onMounted, ref } from 'vue';
 import toast from '../../Helper/toast';
 import router from '../../router';
@@ -79,6 +102,7 @@ import api from '../../utils/utility';
             const filter = ref('')
             const loading = ref(false)
             const showId = ref('')
+            const diaglogDelete = ref(false)
             const breadcrumbs = ref([
                 {
                     label: 'Dashboard / Car',
@@ -102,7 +126,7 @@ import api from '../../utils/utility';
                     sortable: true
                 },
                 { name: 'model', align: 'center', label: 'Model', field: 'model', sortable: true },
-                { name: 'weight', label: 'weight', field: 'name', sortable: true },
+                { name: 'weight', label: 'weight', field: 'weight', sortable: true },
                 { name: 'color', label: 'Color', field: 'color' },
                 { name: 'date', label: 'Date', field: 'date' },
                 { name: 'action', label: 'Action', field: '' },
@@ -139,14 +163,20 @@ import api from '../../utils/utility';
                     // console.log(param);
                 }
                 const onRemove = async(param) =>{ 
-                    let data = await api.delete('/car/removeCar/' +  param._id)
-                    if(data){
-                       toast.success({message:data.data.status})
+                    showId.value = param;
+                    diaglogDelete.value = true                    
+                }
+                const onConfirmDelete = async()=>{
+                    
+                    let data = await api.delete('/car/removeCar/' +  showId.value)
+                    if(data){                      
+                       toast.success({message: ''})                    
                        getDataTable()
+                       diaglogDelete.value = false  
                     }      
                     else {
                         toast.error(err.data.status)
-                    }                     
+                    }               
                 }
                 const onEdit = async(param)=>{
                     router.push({name: 'car.edit', params:{ car:param}})      

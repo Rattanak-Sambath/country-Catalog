@@ -283,7 +283,7 @@
         </router-view>
       </q-page>
     </q-page-container> --> 
-
+    
 <q-page-container style="margin-top: 50px;"> 
      <q-page class="q-pa-md"  >
       <router-view v-slot="{ Component }">

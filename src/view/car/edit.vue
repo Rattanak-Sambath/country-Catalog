@@ -147,7 +147,7 @@
                             icon="cancel"
                             label="Cancel"
                             no-caps
-                            :loading="loading"
+                            
                             @click="cancel()"
                           />
                         </div>
@@ -206,14 +206,12 @@ import { useRoute } from 'vue-router';
     const onUpdate =async ()=>{
       const { valid } = await formRef.value.validate()
         if(valid){
-            let methods = '/car/createCar';
-            if(showId.value){
-              methods = 'car/updateCar'
-            }
+       
+            // let  methods = 'car/updateCar'          
             loading.value =true
-            let res = await api.post('car/createCar', form.value)
+            const res = await api.put(`car/updateCar/`+$route.params.car,form.value )
             if(res){
-              toast.success({message:"Add car successfully"})
+              toast.success({message:"Update car successfully"})
               cancel();
             }
             else {
@@ -225,16 +223,20 @@ import { useRoute } from 'vue-router';
     const findDatabyId = async ()=>{
         let id = showId.value;
         // console.log('find', id);
-        let data = await api.get('/car/getCarbyId/' + showId.value  )
-        if(data){
-            // form.value = data.data.data
-            // console.log(data);
+        let res = await api.get(`/car/getCarbyId/`+$route.params.car)
+        if(res){
+            form.value.name = res.data.name
+            form.value.model = res.data.model
+            form.value.weight = res.data.weight
+            form.value.color = res.data.color
+            console.log(res.data);
         }
     }
     onMounted(()=>{
       findDatabyId()
         if($route.params.car){
             showId.value = $route.params.car
+            // console.log(showId.value);
             // console.log($route.params.car);
         }
     })

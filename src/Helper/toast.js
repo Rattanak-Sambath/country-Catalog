@@ -4,6 +4,7 @@ import toast from '@brenoroosevelt/toast';
 const  success = ({message})=>{
   message = message || "Your transaction is success"
   toast.create (message, {  
+    maxWidth:'200px',
     align: 'center',
     bgColor: '#39ad3c',
     color:'#fff',
@@ -34,6 +35,7 @@ const  warning = ({message})=>{
 const  error = ({message})=>{
   message = message || "Your transaction is success"
   toast.create (message, {  
+    maxWidth:'200px',
     align: 'center',
     bgColor: '#a60319',
     color:'#fff',

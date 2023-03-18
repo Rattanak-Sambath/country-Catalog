@@ -218,7 +218,8 @@ import axios from 'axios';
           loading.value =true
           let res = await api.post('car/createCar', form.value)
           if(res){
-            toast.success({message:"Add car successfully"})
+            // console.log(res);
+            toast.success(res.data.status)
             concel();
             router.go(-1)
           }

@@ -19,4 +19,9 @@ export default [
       name: "car.create",
       component: () => import("../../view/car/create.vue"),
     },
+    {
+      path: "/car/:car/edit",
+      name: "car.edit",
+      component: () => import("../../view/car/edit.vue"),
+    },
 ]

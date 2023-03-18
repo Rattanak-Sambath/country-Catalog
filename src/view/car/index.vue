@@ -23,14 +23,19 @@
                      :pagination="pagination"
                      >
 
-                     <template #body-cell-name="props">
+                     <template #body-cell-action="props">
                         <q-td :props="props">
-                            <span
-                            class="ra-text-link"
-                            @click="edit(props.row.name)"
+                         <q-btn icon="delete"  color="negative" @click="onRemove(props.row)" ></q-btn>
+                         <q-btn icon="edit"  color="primary" class="q-mx-md"   @click="onEdit(props.row._id)"></q-btn>
+
+                          
+                            <!-- <span
+                            class="ra-text-link "
+                            @click="editCompo(props.row.id)"
+                            style="color: dodgerblue;"
                             >
                             {{ props.row.name }}
-                            </span>
+                            </span> -->
                         </q-td>
                         </template>
                     <template v-slot:top>
@@ -59,7 +64,10 @@
 </template>
 
 <script setup>
-    import { onMounted, ref } from 'vue';
+    import { success } from '@brenoroosevelt/toast/lib/cjs/toast';
+import { onMounted, ref } from 'vue';
+import toast from '../../Helper/toast';
+import router from '../../router';
 import api from '../../utils/utility';
             const pagination = ref({
                 sortBy: 'name',
@@ -97,7 +105,7 @@ import api from '../../utils/utility';
                 { name: 'weight', label: 'weight', field: 'name', sortable: true },
                 { name: 'color', label: 'Color', field: 'color' },
                 { name: 'date', label: 'Date', field: 'date' },
-                { name: '', label: 'Action', field: 'date' },
+                { name: 'action', label: 'Action', field: '' },
                 ]
 
                 const dataTable = ref([])     
@@ -114,6 +122,7 @@ import api from '../../utils/utility';
                     // console.log('selector', selector);
                      let data = await api.get('/car/getCar', selector)
                      if(data){
+                        // console.log(data);
                         loading.value = false
                         dataTable.value = data.data.items
                      }
@@ -124,9 +133,23 @@ import api from '../../utils/utility';
                     pagination.value = val.pagination
                     getDataTable()
                 }
-                const edit  = (param)=>{
+                const editCompo  = (param)=>{
                     showId.value = param
+                    router.push({name: 'car.edit'})
                     // console.log(param);
+                }
+                const onRemove = async(param) =>{ 
+                    let data = await api.delete('/car/removeCar/' +  param._id)
+                    if(data){
+                       toast.success({message:data.data.status})
+                       getDataTable()
+                    }      
+                    else {
+                        toast.error(err.data.status)
+                    }                     
+                }
+                const onEdit = async(param)=>{
+                    router.push({name: 'car.edit', params:{ car:param}})      
                 }
                 const exportTable = () =>{
                     // const content = [columns.map(col => wrapCsvValue(col.label))].concat(

@@ -1,5 +1,6 @@
 export default {
     dashboard: {
-        title: "Dashboard"
-    }
+        title: "Dashboard",
+    },
+    goodtransfer: 'Good Transfers'
 }

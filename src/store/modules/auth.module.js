@@ -33,6 +33,7 @@ const getters = {
 const mutations = {
   SET_AUTH_USER(state, value) {
     state.user = value;   
+    // console.log(state.user);
   },
   SET_AUTH_TOKEN(state, payload) {
     state.accessToken = payload.token;
@@ -81,7 +82,8 @@ const actions = {
   getCurrentUser({commit})
   {
       return new Promise((resolve, reject) => {
-          api.get('http://localhost:5001/api/auth/getCurrentUser').then((response) => {                
+          api.get('/auth/getCurrentUser').then((response) => {   
+              console.log(response);             
               commit('SET_AUTH_USER', response.data.user)
               // console.log('response', response);
               resolve(response)

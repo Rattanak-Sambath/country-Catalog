@@ -3,8 +3,8 @@
 <div>
   <q-layout view="lHh LpR lff" >
 
-<q-header  class=""  >
-    <q-toolbar class=" shadow-none absolute-top text-black" >
+<q-header   >
+    <q-toolbar class=" shadow-none absolute-top text-black" style=" border-bottom: 1px solid rgba(0, 0, 0, 0.08); "  >
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
         <q-btn dense flat round icon="search" @click="toggleLeftDrawer" />
         <q-space />
@@ -52,9 +52,9 @@
                   </q-avatar>
                 </q-item-section>
                 <q-item-section>
-                  <q-item-label>{{ user.name }}</q-item-label>
-                  <q-item-label>{{ user.email }} </q-item-label>
-                  <q-item-label caption lines="1">{{ user.role }}</q-item-label>
+                  <q-item-label>{{ $store.state.auth.user.name }}</q-item-label>
+                  <q-item-label>{{  $store.state.auth.user.email }} </q-item-label>
+                  <q-item-label caption lines="1"> {{  $store.state.auth.user.location  }}</q-item-label>
                 </q-item-section>
               </q-item>
               <q-separator />
@@ -78,7 +78,11 @@
           </q-menu>
         </q-avatar>
   </q-btn>
+  
     </q-toolbar>
+ 
+  
+    
 </q-header>
 <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered class="white"   :width="250" style="background-color: grey; color:white">
     <q-scroll-area style="height: calc(100% - 20px); margin-top:0px;" class="app-sidebar-scroll-area" >
@@ -89,7 +93,7 @@
                 </q-item-section>
 
                 <q-item-section>
-                   {{ $t("dashboard.title") }}
+                   {{ $t('dashboard.title') }}
                 </q-item-section>
             </q-item>
 
@@ -99,7 +103,7 @@
                 </q-item-section>
 
                 <q-item-section>
-                    Good Transfers
+                     {{ $t('goodtransfer') }}
                 </q-item-section>
             </q-item>
 
@@ -142,7 +146,7 @@
                             Car
                         </q-item-section>
                     </q-item>
-                    <q-item clickable v-ripple exact-active-class="q-item--active" > 
+                    <q-item clickable v-ripple exact-active-class="q-item--active" :to="{ name: 'driver.index' }" > 
                         <q-item-section avatar>
                             <q-icon name="accessible" />
                         </q-item-section>
@@ -182,7 +186,7 @@
                             User
                         </q-item-section>
                     </q-item>
-                    <q-item clickable v-ripple @click="logout" exact-active-class="q-item--active" >
+                    <q-item clickable v-ripple :to="{name: 'branch.index'}" exact-active-class="q-item--active" >
                         <q-item-section avatar>
                             <q-icon name="apartment" />                                
                         </q-item-section>
@@ -284,8 +288,8 @@
       </q-page>
     </q-page-container> --> 
     
-<q-page-container style="margin-top: 50px;"> 
-     <q-page class="q-pa-md"  >
+<q-page-container class="" style=""> 
+     <q-page class="q-pa-md"  style="margin-top: 50px" >
       <router-view v-slot="{ Component }">
           <transition name="slide">
             <component :is="Component" />
@@ -304,6 +308,8 @@ import { mapGetters, useStore } from 'vuex';
 import { useI18n } from 'vue-i18n'
 import toast from '../Helper/toast';
 import router from '../router';
+import _BreadCrumb from './_BreadCrumb.vue';
+
 const isTranslate  = ref(false)
 const leftDrawerOpen =ref(true)
 const user = ref({});
@@ -334,11 +340,11 @@ const changeLanguage =(lang)=>{
 }
 // console.log();
 onBeforeMount(()=>{
-      store.dispatch("auth/getCurrentUser").then((res)=>{
-        // console.log(res.data);
-          user.value = res.data
-          // console.log(user.value.email);
-      })
+      // store.dispatch("auth/getCurrentUser").then((res)=>{
+      //     console.log(res.data);
+      //     user.value = res.data
+      //     // console.log(user.value.email);
+      // })
 
 })
 
@@ -352,6 +358,10 @@ onBeforeMount(()=>{
 //   color: #cebe2d;
 //     font-weight: bold;
 // }
+.app-breadcrumb-toolbar {
+  min-height: 40px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
 .wrapper {
   width: 100%;
   min-height: 100vh;
@@ -428,9 +438,7 @@ onBeforeMount(()=>{
 }
 
 .app-menu {
-  .q-icon:{
-      font-size: 20px;
-  }
+
   .q-item {
     color: #ffffff !important;
     letter-spacing: 0.5px;
@@ -439,7 +447,9 @@ onBeforeMount(()=>{
     font-weight: 700;
     box-sizing: border-box;
     letter-spacing: 0.5px;
-
+    .q-icon {
+      font-size: 0px;
+  }
     .q-focus-helper {
       width: 100%;
       color: rgba(255, 255, 255, 0.23);
@@ -451,7 +461,7 @@ onBeforeMount(()=>{
       padding-right: 10px;
       padding-left: 5px;
       i {
-        font-size: 16px !important;
+        font-size: 20px !important;
       }
     }
   }
@@ -492,7 +502,7 @@ onBeforeMount(()=>{
           padding-right: 10px;
           padding-left: 5px;
           i {
-            font-size: 16px !important;
+            font-size: 20px !important;
           }
         }
       }

@@ -46,12 +46,9 @@
                     :loading="loading"
                     
                      @request="onChangePagination"                               
-                     v-model:pagination="pagination"
+                  v-model:pagination="pagination"
                      >
-                     <!-- <template #body-cell-name="props">
-                        <q-td :props="props" @click=""showMap(props.row.name)>
-                        {{ props.row.name }}</q-td>
-                    </template> -->
+
                      <template #body-cell-action="props">
                         <q-td :props="props">
                          <q-btn icon="delete"  color="negative" @click="onRemove(props.row._id)" ></q-btn>
@@ -66,7 +63,7 @@
                         </q-td>
                         </template>
                     <template v-slot:top>
-                        <q-btn   color="blue-10" icon="add" label="Add row" @click="addRow" class="q-mx-md" :to="{name: 'car.create'}" />
+                        <q-btn   color="blue-10" icon="add" label="Add Driver" @click="addRow" class="q-mx-md" :to="{name: 'driver.create'}" />
 
                         <q-btn
                          
@@ -111,9 +108,9 @@ import { Loading } from 'quasar';
             const diaglogDelete = ref(false)
             const breadcrumbs = ref([
                 {
-                    label: 'Dashboard / Car',
-                    icon:'dashboard',
-                    route:'/dashboard'
+                    label: 'Dashboard / Driver',
+                    icon:'local_shippings',
+                    route:'/driver'
                 },
                 // {
                 //     label: 'Car',
@@ -131,10 +128,10 @@ import { Loading } from 'quasar';
                     format: val => `${val}`,
                     sortable: true
                 },
-                { name: 'model', align: 'center', label: 'Model', field: 'model', sortable: true },
-                { name: '', align: 'center', label: 'Driver', field: 'driverName', sortable: true },
-                { name: 'weight', label: 'weight', field: 'weight', sortable: true },
-                { name: 'color', label: 'Color', field: 'color' },
+                { name: 'address', align: 'center', label: 'Address', field: 'address', sortable: true },
+                { name: 'position', label: 'Position', field: 'position', sortable: true },
+                { name: 'gender', label: 'Gender', field: 'gender' },
+                { name: 'salary', label: 'Salary', field: 'salary' },
                 { name: 'date', label: 'Date', field: 'date' },
                 { name: 'action', label: 'Action', field: '' },
                 ]
@@ -147,8 +144,14 @@ import { Loading } from 'quasar';
                     // loading.value = true
                     dataTable.value = []
                     const { page, rowsPerPage } = pagination.value
-                
-                     let data = await api.get('/car/getCar',{
+                    
+                    const selector = {                 
+                        page,
+                        rowsPerPage,
+                        search: filter.value,
+                    }
+                    // console.log('selector', selector);
+                     let data = await api.get('/driver/getDriver',{
                         params: {
                             page,
                             rowsPerPage,
@@ -164,7 +167,7 @@ import { Loading } from 'quasar';
                          
                 }               
                 const onChangePagination = (val) => {
-                    console.log('kdmbro', val);
+                    // console.log('kdmbro', val);
 
                     pagination.value.page = val.pagination.page
                     pagination.value.rowsPerPage = val.pagination.rowsPerPage
@@ -172,7 +175,7 @@ import { Loading } from 'quasar';
                 }
                 const editCompo  = (param)=>{
                     showId.value = param
-                    router.push({name: 'car.edit'})
+                    router.push({name: 'driver.edit'})
                     // console.log(param);
                 }
                 const onRemove = async(param) =>{ 
@@ -181,9 +184,9 @@ import { Loading } from 'quasar';
                 }
                 const onConfirmDelete = async()=>{
                     
-                    let data = await api.delete('/car/removeCar/' +  showId.value)
+                    let data = await api.delete('/driver/removeDriver/' +  showId.value)
                     if(data){                      
-                       toast.success({message: ''})                    
+                       toast.success({message: data.data.status})                    
                        getDataTable()
                        diaglogDelete.value = false  
                     }      
@@ -192,8 +195,7 @@ import { Loading } from 'quasar';
                     }               
                 }
                 const onEdit = async(param)=>{
-                    // console.log(param);
-                    router.push({name: 'car.edit', params:{ car:param}})      
+                    router.push({name: 'driver.edit', params:{ driver:param}})      
                 }
                 const exportTable = () =>{
                     // const content = [columns.map(col => wrapCsvValue(col.label))].concat(

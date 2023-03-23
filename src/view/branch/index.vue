@@ -48,10 +48,6 @@
                      @request="onChangePagination"                               
                      v-model:pagination="pagination"
                      >
-                     <!-- <template #body-cell-name="props">
-                        <q-td :props="props" @click=""showMap(props.row.name)>
-                        {{ props.row.name }}</q-td>
-                    </template> -->
                      <template #body-cell-action="props">
                         <q-td :props="props">
                          <q-btn icon="delete"  color="negative" @click="onRemove(props.row._id)" ></q-btn>
@@ -66,7 +62,7 @@
                         </q-td>
                         </template>
                     <template v-slot:top>
-                        <q-btn   color="blue-10" icon="add" label="Add row" @click="addRow" class="q-mx-md" :to="{name: 'car.create'}" />
+                        <q-btn   color="blue-10" icon="add" label="Add Branch" @click="addRow" class="q-mx-md" :to="{name: 'branch.create'}" />
 
                         <q-btn
                          
@@ -111,7 +107,7 @@ import { Loading } from 'quasar';
             const diaglogDelete = ref(false)
             const breadcrumbs = ref([
                 {
-                    label: 'Dashboard / Car',
+                    label: 'Dashboard / Branch',
                     icon:'dashboard',
                     route:'/dashboard'
                 },
@@ -123,19 +119,17 @@ import { Loading } from 'quasar';
             ])
              const columns = [
                 {
-                    name: 'name',
+                    name: 'code',
                     required: true,
-                    label: 'Name',
+                    label: 'Code',
                     align: 'left',
-                    field: row => row.name,
+                    field: row => row.code,
                     format: val => `${val}`,
                     sortable: true
                 },
-                { name: 'model', align: 'center', label: 'Model', field: 'model', sortable: true },
-                { name: '', align: 'center', label: 'Driver', field: 'driverName', sortable: true },
-                { name: 'weight', label: 'weight', field: 'weight', sortable: true },
-                { name: 'color', label: 'Color', field: 'color' },
-                { name: 'date', label: 'Date', field: 'date' },
+                { name: 'address', align: 'center', label: 'Address', field: 'address', sortable: true },
+                { name: 'map', align: 'center', label: 'Map', field: 'map', sortable: true },
+                { name: 'date', align: 'center', label: 'Date', field: 'date', sortable: true },
                 { name: 'action', label: 'Action', field: '' },
                 ]
                 watch(filter, _.debounce(function (val) {
@@ -217,6 +211,7 @@ import { Loading } from 'quasar';
                     if(!dataTable){
                         loading.value=true
                     }
+                  
                 })
 </script>
 

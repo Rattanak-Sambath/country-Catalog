@@ -1,5 +1,6 @@
 import axios from "axios";
 import store from "../store/index";
+import  toast from '../Helper/toast.js';
 
 const api = axios.create({
   baseURL: "/api",
@@ -27,9 +28,8 @@ api.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
-      // console.log(error.response.status);
+      toast.error({message:"Unauthorization !!"})
       store.dispatch("auth/logout");
-
     }
     return Promise.reject(error);
   }

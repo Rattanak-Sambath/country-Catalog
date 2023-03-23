@@ -22,7 +22,7 @@
                             <q-btn style="background-color: #de5d0a; color: white; font-weight: bold;" class="full-width" label="Login" :loading="loading" push  type="submit" />
                         </div>
                         <div class="footer" style="margin-top: 80px;">
-                            © copyright and reserved by Rattanak and Viva 
+                            © copyright and reserved by <a href="https://www.facebook.com/nak.khochjit.756/" class=""  style="font-weight: bold;" >CodeNeverSleep</a>
                         </div>
                     </q-form>                  
                   </q-card>
@@ -45,8 +45,8 @@
     import router from '../../router';
     const refForm = ref('');
     const loading = ref(false)
-    const email = ref('guest@email.com')
-    const password = ref('guest123')
+    const email = ref('admin@email.com')
+    const password = ref('admin123')
     const store = useStore();
     const onLogin = async () => {
         const {valid} = await refForm.value?.validate()

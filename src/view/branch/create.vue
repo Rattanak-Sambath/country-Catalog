@@ -45,11 +45,26 @@
                                   v-model="form.code"
                                   name="code"
                                   >
-                                  <q-input color="orange-14" type="text"  outlined :model-value="value" label="Code"  v-bind="field"
+                                  <q-input color="orange-14"  readonly type="text"  outlined :model-value="value" label="Code"  v-bind="field"
                                     :error="!!errorMessage"
                                     :error-message="errorMessage">
                                           <template v-slot:prepend>
                                               <q-icon name="qr_code" color="indigo-10" />
+                                          </template>
+                                      </q-input>
+                                </validate-field>
+                              </div>
+                              <div class="col-12">
+                                <validate-field
+                                  v-slot="{ value, field, errorMessage }"
+                                  v-model="form.name"
+                                  name="name"
+                                >
+                                <q-input color="orange-14" type="text" label="Name"  outlined :model-value="value" v-bind="field"
+                                    :error="!!errorMessage"
+                                    :error-message="errorMessage">
+                                          <template v-slot:prepend>
+                                              <q-icon name="account_balance" color="indigo-10" />
                                           </template>
                                       </q-input>
                                 </validate-field>
@@ -178,11 +193,12 @@
     const loading = ref(false)
     // const name = ref('')
     const form = ref({
-      code:'001',
+      code: Date.now() +Math.random().toString(36).substring(2,3).toUpperCase(),
+      name: '',
       address: '',
       map: '',
       type:'',
-      date: dayjs(new Date()).format('YYYY-MM-DD')
+      date: dayjs(new Date()).format('YYYY-MM-DD'),
     })
     const typeOpt = ref([
       {
@@ -198,6 +214,7 @@
     const invisibleBtn = ref(false)
     const rules = object({
       code: string().required().label('Code'),
+      name: string().required().label('Name'),
       address: string().required().label('Address'),
       date: string().required().label('Date'),    
       type: string().required().label('Type'),    
@@ -241,10 +258,11 @@
         }
     }
     const getDataTable = async()=>{
-                     let data = await api.get('/branch/countDriver', [])
+                     let data = await api.get('/branch/countDriver', )
                      if(data){
-                        console.log(data);
-                        dataTable.value = data.data.items
+                        console.log(data.data.length);
+                        // form.value.code = data.data.length + 1
+                        // form.code= data.data.length + 1
                      }
                          
     }   
@@ -254,7 +272,7 @@
     const findDriver = async()=>{
        await api.get('/driver/getDriver').then((res)=>{
           if(res){
-            console.log(res.data.items);
+            // console.log(res.data.items);
           driverOpt.value = res.data.items
   
           }

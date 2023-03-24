@@ -162,7 +162,7 @@ import { Loading } from 'quasar';
                     dataTable.value = []
                     const { page, rowsPerPage } = pagination.value
                 
-                     let data = await api.get('/branch/getBranch',{
+                     let data = await api.get('/auth/getUser',{
                         params: {
                             page,
                             rowsPerPage,

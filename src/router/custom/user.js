@@ -59,4 +59,22 @@ export default [
       name: "branch.edit",
       component: () => import("../../view/branch/edit.vue"),
     },
+
+    // user
+
+    {
+      path: "/user",
+      name: "user.index",
+      component: () => import("../../view/user/index.vue"),
+    },
+    {
+      path: "/user/create",
+      name: "user.create",
+      component: () => import("../../view/user/create.vue"),
+    },
+    {
+      path: "/user/:user/edit",
+      name: "user.edit",
+      component: () => import("../../view/user/edit.vue"),
+    },
 ]

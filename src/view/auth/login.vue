@@ -6,8 +6,10 @@
                     <q-form @submit.prevent.stop="onLogin()"   ref="refForm"
                         class="mt-4 text-center"
                         lazy-validation
->
-                        <q-img style="width: 250px;"  src="../../../public/logo.png"/>
+>                        
+                        <q-avatar  size="200px" font-size="52px">
+                            <q-img style="width: 250px;"  src="../../../public/360_F_251110238_OQHxvZLgcfj6Dbm5JmVdfNSggRCG4hsI.jpg"/>
+                        </q-avatar>
                         <div class="section q-my-lg">
                             <q-input color="orange-14" type="email" filled v-model="email" label="Username" :rules="[val => !!val || 'email is required']">
                                 <template v-slot:prepend>

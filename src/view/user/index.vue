@@ -76,8 +76,8 @@
                                         </q-td>
                                 </template>
                             <template v-slot:top>
-                                <q-btn   color="blue-10" icon="add" label="Add Branch" @click="addRow" class="q-mx-md" :to="{name: 'branch.create'}" />
-
+                                <q-btn   color="blue-10" icon="add" label="Add Branch" @click="addRow" class="q-mx-md" :to="{name: 'user.create'}" />
+                             
                                 <q-btn
                                 
                                 color="green-14"
@@ -135,22 +135,23 @@ import { Loading } from 'quasar';
              const columns = [
                 // { name: 'index', align: 'center', label: 'Index', field: 'index', sortable: true },
 
-                {
-                    name: 'code',
-                    required: true,
-                    label: 'Code',
-                    align: 'left',
-                    field: row => row.code,
-                    format: val => `${val}`,
-                    sortable: true
-                },
-                { name: 'name', align: 'center', label: 'Name', field: 'name', sortable: true },
+                // {
+                //     name: 'code',
+                //     required: true,
+                //     label: 'Code',
+                //     align: 'left',
+                //     field: row => row.code,
+                //     format: val => `${val}`,
+                //     sortable: true
+                // },
+                { name: 'username', align: 'center', label: 'Username', field: 'username', sortable: true },
 
-                { name: 'address', align: 'center', label: 'Address', field: 'address', sortable: true },
-                { name: 'type', align: 'center', label: 'Type', field: 'type', sortable: true },
-                { name: 'map', align: 'center', label: 'Map', field: 'map', sortable: true },
-                { name: 'date', align: 'center', label: 'Date', field: 'date', sortable: true },
-                { name: 'action', label: 'Action', field: '' },
+                { name: 'fullname', align: 'center', label: 'Full Name', field: 'fullname', sortable: true },
+                { name: 'email', align: 'center', label: 'Email', field: 'email', sortable: true },
+                { name: 'allowBranch', align: 'center', label: 'Allows Branch', field: 'allowBranch', sortable: true },
+                { name: 'roleGroup', align: 'center', label: 'RoleGroup', field: 'roleGroup', sortable: true },
+                { name: 'status', align: 'center', label: 'Status', field: 'status', sortable: true },
+                { name: 'expired', label: 'Expired',  field: 'expired' },
                 ]
                 watch(filter, _.debounce(function (val) {
                     Loading.value = false

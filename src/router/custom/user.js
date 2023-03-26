@@ -77,4 +77,40 @@ export default [
       name: "user.edit",
       component: () => import("../../view/user/edit.vue"),
     },
+
+    // group 
+
+    {
+      path: "/roleGroup",
+      name: "roleGroup.index",
+      component: () => import("../../view/roleGroup/index.vue"),
+    },
+    {
+      path: "/roleGroup/create",
+      name: "roleGroup.create",
+      component: () => import("../../view/roleGroup/create.vue"),
+    },
+    {
+      path: "/roleGroup/:roleGroup/edit",
+      name: "roleGroup.edit",
+      component: () => import("../../view/roleGroup/edit.vue"),
+    },
+    // role
+    {
+      path: "/role",
+      name: "role.index",
+      component: () => import("../../view/role/index.vue"),
+    },
+    {
+      path: "/role/create",
+      name: "role.create",
+      component: () => import("../../view/role/create.vue"),
+    },
+    {
+      path: "/role/:role/edit",
+      name: "role.edit",
+      component: () => import("../../view/role/edit.vue"),
+    },
+
+
 ]

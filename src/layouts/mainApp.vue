@@ -23,11 +23,18 @@
           @click="$q.dark.toggle()"
           :icon="$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"
           />
+          <!-- <q-btn
+              flat
+              round
+              dense
+              :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
+              @click="$q.fullscreen.toggle()"
+            /> -->
         <q-toggle
-        style="margin-right:25px ;"
-          v-model="value"
-          :label="isTranslate === true ? 'Kh' : 'En'"
-          @click="changeLanguage(isTranslate == false ? 'Kh' : 'En')"
+          style="margin-right:25px ;"
+            v-model="value"
+            :label="isTranslate === true ? 'Kh' : 'En'"
+            @click="changeLanguage(isTranslate == false ? 'Kh' : 'En')"
           />
         <!-- <q-switch       
           :label="isTranslate === true ? 'Kh' : 'En'"
@@ -85,6 +92,19 @@
     
 </q-header>
 <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered class="white"   :width="250" style="background-color: grey; color:white">
+  <q-toolbar class="app-sidebar-header shadow-none  ">
+      <q-avatar  size="50px" font-size="90px" class="q-my-sm">
+        <img
+        src="../../public/360_F_251110238_OQHxvZLgcfj6Dbm5JmVdfNSggRCG4hsI.jpg"
+        width="50"
+        height="50"
+        class="q-ml-xs "
+      />
+      </q-avatar>
+      <q-toolbar-title class="text-white text-subtitle1 text-weight-medium">
+        FreeCoder TC
+      </q-toolbar-title>
+    </q-toolbar>
     <q-scroll-area style="height: calc(100% - 20px); margin-top:0px;" class="app-sidebar-scroll-area" >
         <q-list padding class="app-menu">
             <q-item  :to="{ name: 'home' }"  exact-active-class="q-item--active ">
@@ -168,7 +188,7 @@
             </q-expansion-item>
             <q-expansion-item group="link-dialog" expand-separator icon="settings" label="Setting">
                 <q-card-section>
-                    <q-item clickable v-ripple exact-active-class="q-item--active" >
+                    <q-item clickable v-ripple exact-active-class="q-item--active" :to="{name:'role.index'}" >
                         <q-item-section avatar>
                             <q-icon name="gpp_good" />
                         </q-item-section>
@@ -184,6 +204,15 @@
 
                         <q-item-section>
                             User
+                        </q-item-section>
+                    </q-item>
+                    <q-item clickable v-ripple :to="{name: 'roleGroup.index'}" exact-active-class="q-item--active" >
+                        <q-item-section avatar>
+                            <q-icon name="payments" />                                
+                        </q-item-section>
+
+                        <q-item-section>
+                            Group
                         </q-item-section>
                     </q-item>
                     <q-item clickable v-ripple :to="{name: 'branch.index'}" exact-active-class="q-item--active" >

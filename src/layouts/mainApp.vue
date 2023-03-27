@@ -1,14 +1,27 @@
- 
 <template>
-<div>
-  <q-layout view="lHh LpR lff" >
-
-<q-header   >
-    <q-toolbar class=" shadow-none absolute-top text-black" style=" border-bottom: 1px solid rgba(0, 0, 0, 0.08); "  >
-        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-        <q-btn dense flat round icon="search" @click="toggleLeftDrawer" />
-        <q-space />
-        <!-- <q-toolbar-title align="left">
+  <div>
+    <q-layout view="lHh LpR lff">
+      <q-header>
+        <q-toolbar
+          class="shadow-none absolute-top text-black"
+          style="border-bottom: 1px solid rgba(0, 0, 0, 0.08)"
+        >
+          <q-btn
+            dense
+            flat
+            round
+            icon="menu"
+            @click="toggleLeftDrawer"
+          />
+          <q-btn
+            dense
+            flat
+            round
+            icon="search"
+            @click="toggleLeftDrawer"
+          />
+          <q-space />
+          <!-- <q-toolbar-title align="left">
             <q-avatar>
                 <img style="width: 40px;" src="logo.png">
             </q-avatar> 
@@ -16,12 +29,12 @@
                 VET LOGISTIC
             </span>
         </q-toolbar-title> -->
-        <q-btn
-    class="q-mr-xs"
-          flat
-          round
-          @click="$q.dark.toggle()"
-          :icon="$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"
+          <q-btn
+            class="q-mr-xs"
+            flat
+            round
+            @click="$q.dark.toggle()"
+            :icon="$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"
           />
           <!-- <q-btn
               flat
@@ -30,152 +43,239 @@
               :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
               @click="$q.fullscreen.toggle()"
             /> -->
-        <q-toggle
-          style="margin-right:25px ;"
+          <q-toggle
+            style="margin-right: 25px"
             v-model="value"
             :label="isTranslate === true ? 'Kh' : 'En'"
             @click="changeLanguage(isTranslate == false ? 'Kh' : 'En')"
           />
-        <!-- <q-switch       
+          <!-- <q-switch       
           :label="isTranslate === true ? 'Kh' : 'En'"
           @click="changeLanguage(isTranslate == false ? 'kh' : 'en')"
         ></q-switch> -->
-        <img           
-              :src="isTranslate === false ? '../../public/download.png' : '../../public/istockphoto-652225546-612x612.jpg'  "
-              style="width: 60px; height: 35px; text-align: right; margin-right: 10px;"       
-        />
+          <img
+            :src="
+              isTranslate === false
+                ? '../../public/download.png'
+                : '../../public/istockphoto-652225546-612x612.jpg'
+            "
+            style="
+              width: 60px;
+              height: 35px;
+              text-align: right;
+              margin-right: 10px;
+            "
+          />
 
-        <!-- <img style="width: 70px;" src="istockphoto-652225546-612x612.jpg" /> -->
-        <q-btn round flat color="black" icon="notifications_active" />
-        <q-btn round flat color="white">
-        <q-avatar color="primary" class="q-ma-sm">
-          <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-          <q-menu>
-            <q-list style="min-width: 10px">
-              <q-item >
-                <q-item-section avatar>
-                  <q-avatar>
-                    <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-                  </q-avatar>
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label>{{ $store.state.auth.user.name }}</q-item-label>
-                  <q-item-label>{{  $store.state.auth.user.email }} </q-item-label>
-                  <q-item-label caption lines="1"> {{  $store.state.auth.user.location  }}</q-item-label>
-                </q-item-section>
-              </q-item>
-              <q-separator />
-              <q-item   :to="{ name: 'setting' }" exact>
-                <q-item-section avatar>
-                  <q-icon name="settings" color="primary" />
-                </q-item-section>
+          <!-- <img style="width: 70px;" src="istockphoto-652225546-612x612.jpg" /> -->
+          <q-btn
+            round
+            flat
+            color="black"
+            icon="notifications_active"
+          />
+          <q-btn
+            round
+            flat
+            color="white"
+          >
+            <q-avatar
+              color="primary"
+              class="q-ma-sm"
+            >
+              <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+              <q-menu>
+                <q-list style="min-width: 10px">
+                  <q-item>
+                    <q-item-section avatar>
+                      <q-avatar>
+                        <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+                      </q-avatar>
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label>{{
+                        $store.state.auth.user.name
+                      }}</q-item-label>
+                      <q-item-label
+                        >{{ $store.state.auth.user.email }}
+                      </q-item-label>
+                      <q-item-label
+                        caption
+                        lines="1"
+                      >
+                        {{ $store.state.auth.user.location }}</q-item-label
+                      >
+                    </q-item-section>
+                  </q-item>
+                  <q-separator />
+                  <q-item
+                    :to="{ name: 'setting' }"
+                    exact
+                  >
+                    <q-item-section avatar>
+                      <q-icon
+                        name="settings"
+                        color="primary"
+                      />
+                    </q-item-section>
 
-                <q-item-section>Setting</q-item-section>
-              </q-item>
-              <q-separator />
-              <q-item clickable v-ripple @click="logout()" exact>
-                <q-item-section avatar>
-                  <q-icon name="logout " color="red" />
-                </q-item-section>
+                    <q-item-section>Setting</q-item-section>
+                  </q-item>
+                  <q-separator />
+                  <q-item
+                    clickable
+                    v-ripple
+                    @click="logout()"
+                    exact
+                  >
+                    <q-item-section avatar>
+                      <q-icon
+                        name="logout "
+                        color="red"
+                      />
+                    </q-item-section>
 
-                <q-item-section>Logout</q-item-section>
-              </q-item>
-              <q-separator />
-            </q-list>
-          </q-menu>
-        </q-avatar>
-  </q-btn>
-  
-    </q-toolbar>
- 
-  
-    
-</q-header>
-<q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered class="white"   :width="250" style="background-color: grey; color:white">
-  <q-toolbar class="app-sidebar-header shadow-none  ">
-      <q-avatar  size="50px" font-size="90px" class="q-my-sm">
-        <img
-        src="../../public/360_F_251110238_OQHxvZLgcfj6Dbm5JmVdfNSggRCG4hsI.jpg"
-        width="50"
-        height="50"
-        class="q-ml-xs "
-      />
-      </q-avatar>
-      <q-toolbar-title class="text-white text-subtitle1 text-weight-medium">
-        FreeCoder TC
-      </q-toolbar-title>
-    </q-toolbar>
-    <q-scroll-area style="height: calc(100% - 20px); margin-top:0px;" class="app-sidebar-scroll-area" >
-        <q-list padding class="app-menu">
-            <q-item  :to="{ name: 'home' }"  exact-active-class="q-item--active ">
-                <q-item-section avatar>
-                    <q-icon name=" home" size="16px"/>
-                </q-item-section>
+                    <q-item-section>Logout</q-item-section>
+                  </q-item>
+                  <q-separator />
+                </q-list>
+              </q-menu>
+            </q-avatar>
+          </q-btn>
+        </q-toolbar>
+      </q-header>
+      <q-drawer
+        show-if-above
+        v-model="leftDrawerOpen"
+        side="left"
+        bordered
+        class="white"
+        :width="250"
+        style="background-color: grey; color: white"
+      >
+        <q-toolbar class="app-sidebar-header shadow-none">
+          <q-avatar
+            size="50px"
+            font-size="90px"
+            class="q-my-sm"
+          >
+            <img
+              src="../../public/360_F_251110238_OQHxvZLgcfj6Dbm5JmVdfNSggRCG4hsI.jpg"
+              width="50"
+              height="50"
+              class="q-ml-xs"
+            />
+          </q-avatar>
+          <q-toolbar-title class="text-white text-subtitle1 text-weight-medium">
+            FreeCoder TC
+          </q-toolbar-title>
+        </q-toolbar>
+        <q-scroll-area
+          style="height: calc(100% - 20px); margin-top: 0px"
+          class="app-sidebar-scroll-area"
+        >
+          <q-list
+            padding
+            class="app-menu"
+          >
+            <q-item
+              :to="{ name: 'home' }"
+              exact-active-class="q-item--active "
+            >
+              <q-item-section avatar>
+                <q-icon
+                  name=" home"
+                  size="16px"
+                />
+              </q-item-section>
 
-                <q-item-section>
-                   {{ $t('dashboard.title') }}
-                </q-item-section>
+              <q-item-section>
+                {{ $t('dashboard.title') }}
+              </q-item-section>
             </q-item>
 
-            <q-item clickable    exact-active-class="q-item--active " v-ripple :to="{ name: 'goodsTransfer.index' }">
-                <q-item-section avatar>
-                    <q-icon name="category" />
-                </q-item-section>
+            <q-item
+              clickable
+              exact-active-class="q-item--active "
+              v-ripple
+              :to="{ name: 'goodsTransfer.index' }"
+            >
+              <q-item-section avatar>
+                <q-icon name="category" />
+              </q-item-section>
 
-                <q-item-section>
-                     {{ $t('goodtransfer') }}
-                </q-item-section>
+              <q-item-section>
+                {{ $t('goodtransfer') }}
+              </q-item-section>
             </q-item>
 
-            <q-item   exact-active-class="q-item--active " clickable v-ripple :to="{ name: 'subject.index' }">
-                <q-item-section avatar>
-                    <q-icon name="directions_walk" />
-                </q-item-section>
+            <q-item
+              exact-active-class="q-item--active "
+              clickable
+              v-ripple
+              :to="{ name: 'subject.index' }"
+            >
+              <q-item-section avatar>
+                <q-icon name="directions_walk" />
+              </q-item-section>
 
-                <q-item-section >
-                    Customer Receive Goods
-                </q-item-section>
+              <q-item-section> Customer Receive Goods </q-item-section>
             </q-item>
-            <q-item   exact-active-class="q-item--active"    v-ripple :to="{ name: 'subject.index' }">
-                <q-item-section avatar>
-                    <q-icon name="content_paste_search" />
-                </q-item-section>
+            <q-item
+              exact-active-class="q-item--active"
+              v-ripple
+              :to="{ name: 'subject.index' }"
+            >
+              <q-item-section avatar>
+                <q-icon name="content_paste_search" />
+              </q-item-section>
 
-                <q-item-section >
-                    Search Goods transfer
-                </q-item-section>
+              <q-item-section> Search Goods transfer </q-item-section>
             </q-item>
-            <q-item exact-active-class="q-item--active"  v-ripple :to="{ name: 'subject.index' }">
-                <q-item-section avatar>
-                    <q-icon name="settings_phone" />
-                </q-item-section>
+            <q-item
+              exact-active-class="q-item--active"
+              v-ripple
+              :to="{ name: 'subject.index' }"
+            >
+              <q-item-section avatar>
+                <q-icon name="settings_phone" />
+              </q-item-section>
 
-                <q-item-section >
-                    Call Customer
-                </q-item-section>
+              <q-item-section> Call Customer </q-item-section>
             </q-item>
-            <q-expansion-item group="link-dialog" style="border-radius: 20px" expand-separator icon="local_shipping"
-                label="Shipping Info">
-                <q-card-section>
-                    <q-item exact-active-class="q-item--active"  v-ripple menu_book :to="{ name: 'car.index' }" >
-                        <q-item-section avatar>
-                            <q-icon name="local_shipping" />
-                        </q-item-section>
+            <q-expansion-item
+              group="link-dialog"
+              style="border-radius: 20px"
+              expand-separator
+              icon="local_shipping"
+              label="Shipping Info"
+            >
+              <q-card-section>
+                <q-item
+                  exact-active-class="q-item--active"
+                  v-ripple
+                  menu_book
+                  :to="{ name: 'car.index' }"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="local_shipping" />
+                  </q-item-section>
 
-                        <q-item-section class="">
-                            Car
-                        </q-item-section>
-                    </q-item>
-                    <q-item clickable v-ripple exact-active-class="q-item--active" :to="{ name: 'driver.index' }" > 
-                        <q-item-section avatar>
-                            <q-icon name="accessible" />
-                        </q-item-section>
+                  <q-item-section class=""> Car </q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  v-ripple
+                  exact-active-class="q-item--active"
+                  :to="{ name: 'driver.index' }"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="accessible" />
+                  </q-item-section>
 
-                        <q-item-section class="">
-                            Driver
-                        </q-item-section>
-                    </q-item>
-                    <!-- <q-item clickable v-ripple>
+                  <q-item-section class=""> Driver </q-item-section>
+                </q-item>
+                <!-- <q-item clickable v-ripple>
                         <q-item-section avatar>
                             <q-icon name="tune" />
                         </q-item-section>
@@ -184,89 +284,122 @@
                             Car Config
                         </q-item-section>
                     </q-item> -->
-                </q-card-section>
+              </q-card-section>
             </q-expansion-item>
-            <q-expansion-item group="link-dialog" expand-separator icon="settings" label="Setting">
-                <q-card-section>
-                    <q-item clickable v-ripple exact-active-class="q-item--active" :to="{name:'role.index'}" >
-                        <q-item-section avatar>
-                            <q-icon name="gpp_good" />
-                        </q-item-section>
+            <q-expansion-item
+              group="link-dialog"
+              expand-separator
+              icon="settings"
+              label="Setting"
+            >
+              <q-card-section>
+                <q-item
+                  clickable
+                  v-ripple
+                  exact-active-class="q-item--active"
+                  :to="{ name: 'role.index' }"
+                  v-if="userIsInRole(['role'])"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="gpp_good" />
+                  </q-item-section>
 
-                        <q-item-section>
-                            Role
-                        </q-item-section>
-                    </q-item>
-                    <q-item  v-ripple :to="{ name: 'user.index' }" exact-active-class="q-item--active" >
-                        <q-item-section avatar>
-                            <q-icon name="person" />
-                        </q-item-section>
+                  <q-item-section> Role </q-item-section>
+                </q-item>
+                <q-item
+                  v-ripple
+                  :to="{ name: 'user.index' }"
+                  exact-active-class="q-item--active"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="person" />
+                  </q-item-section>
 
-                        <q-item-section>
-                            User
-                        </q-item-section>
-                    </q-item>
-                    <q-item clickable v-ripple :to="{name: 'roleGroup.index'}" exact-active-class="q-item--active" >
-                        <q-item-section avatar>
-                            <q-icon name="payments" />                                
-                        </q-item-section>
+                  <q-item-section> User </q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  v-ripple
+                  :to="{ name: 'roleGroup.index' }"
+                  exact-active-class="q-item--active"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="payments" />
+                  </q-item-section>
 
-                        <q-item-section>
-                            Group
-                        </q-item-section>
-                    </q-item>
-                    <q-item clickable v-ripple :to="{name: 'branch.index'}" exact-active-class="q-item--active" >
-                        <q-item-section avatar>
-                            <q-icon name="apartment" />                                
-                        </q-item-section>
+                  <q-item-section> Group </q-item-section>
+                </q-item>
+                <q-item
+                  v-if="userIsInRole(['branch'])"
+                  clickable
+                  v-ripple
+                  :to="{ name: 'branch.index' }"
+                  exact-active-class="q-item--active"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="apartment" />
+                  </q-item-section>
 
-                        <q-item-section>
-                            BranchId
-                        </q-item-section>
-                    </q-item>
-                    <q-item clickable v-ripple @click="logout" exact-active-class="q-item--active"  >
-                        <q-item-section avatar>
-                            <q-icon name="badge" />                                
-                        </q-item-section>
+                  <q-item-section> BranchId </q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  v-ripple
+                  @click="logout"
+                  exact-active-class="q-item--active"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="badge" />
+                  </q-item-section>
 
-                        <q-item-section>
-                            Staff
-                        </q-item-section>
-                    </q-item>
-                    <q-item clickable v-ripple @click="logout" exact-active-class="q-item--active" >
-                        <q-item-section avatar>
-                            <q-icon name="move_to_inbox" />                                
-                        </q-item-section>
+                  <q-item-section> Staff </q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  v-ripple
+                  @click="logout"
+                  exact-active-class="q-item--active"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="move_to_inbox" />
+                  </q-item-section>
 
-                        <q-item-section>
-                            Location_Desk
-                        </q-item-section>
-                    </q-item>
-                  
-                </q-card-section>
+                  <q-item-section> Location_Desk </q-item-section>
+                </q-item>
+              </q-card-section>
             </q-expansion-item>
-            <q-expansion-item group="link-dialog" expand-separator icon="assignment_late" label="Reports">
-                <q-card-section>
-                    <q-item clickable v-ripple exact-active-class="q-item--active" >
-                        <q-item-section avatar>
-                            <q-icon name="gpp_good" />
-                        </q-item-section>
+            <q-expansion-item
+              group="link-dialog"
+              expand-separator
+              icon="assignment_late"
+              label="Reports"
+            >
+              <q-card-section>
+                <q-item
+                  clickable
+                  v-ripple
+                  exact-active-class="q-item--active"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="gpp_good" />
+                  </q-item-section>
 
-                        <q-item-section>
-                            Role
-                        </q-item-section>
-                    </q-item>
-                    <q-item clickable v-ripple :to="{ name: 'user.index' }" exact-active-class="q-item--active" >
-                        <q-item-section avatar>
-                            <q-icon name="person" />
-                        </q-item-section>
+                  <q-item-section> Role </q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  v-ripple
+                  :to="{ name: 'user.index' }"
+                  exact-active-class="q-item--active"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="person" />
+                  </q-item-section>
 
-                        <q-item-section>
-                            User
-                        </q-item-section>
-                    </q-item>
-                   
-                    <!-- <q-item clickable v-ripple @click="logout">
+                  <q-item-section> User </q-item-section>
+                </q-item>
+
+                <!-- <q-item clickable v-ripple @click="logout">
                         <q-item-section avatar>
                             <q-icon name="logout" />                                
                         </q-item-section>
@@ -275,21 +408,23 @@
                             Log-out
                         </q-item-section>
                     </q-item> -->
-                </q-card-section>
+              </q-card-section>
             </q-expansion-item>
-            <q-item clickable v-ripple exact-active-class="q-item--active" > 
-                <q-item-section avatar>
-                    <q-icon name="info" />
-                </q-item-section>
+            <q-item
+              clickable
+              v-ripple
+              exact-active-class="q-item--active"
+            >
+              <q-item-section avatar>
+                <q-icon name="info" />
+              </q-item-section>
 
-                <q-item-section>
-                    info
-                </q-item-section>
+              <q-item-section> info </q-item-section>
             </q-item>
-        </q-list>
-    </q-scroll-area>
+          </q-list>
+        </q-scroll-area>
 
-    <!-- <q-img class="absolute-top bg-grey-10" src=""  style="height: 130px;">
+        <!-- <q-img class="absolute-top bg-grey-10" src=""  style="height: 130px;">
         <div class="absolute-bottom bg-transparent">
             <q-avatar size="60px" class="q-mb-sm">
                 <img src="../../../public/logo.png">
@@ -298,9 +433,8 @@
             <div>@rstoenescu</div>
         </div>
     </q-img> -->
-
-</q-drawer>     
-    <!-- <q-page-container class="bg-grey-2">
+      </q-drawer>
+      <!-- <q-page-container class="bg-grey-2">
        Page content -->
       <!-- <q-page class="overflow-hidden q-pa-md">
         <router-view v-slot="{ Component, route }">
@@ -315,38 +449,44 @@
           </transition>
         </router-view>
       </q-page>
-    </q-page-container> --> 
-    
-<q-page-container class="" style=""> 
-     <q-page class="q-pa-md"  style="margin-top: 50px" >
-      <router-view v-slot="{ Component }">
-          <transition name="slide">
-            <component :is="Component" />
-          </transition>
-        </router-view>      
-     </q-page> 
-</q-page-container>  
+    </q-page-container> -->
 
-</q-layout>
-</div>
+      <q-page-container
+        class=""
+        style=""
+      >
+        <q-page
+          class="q-pa-md"
+          style="margin-top: 50px"
+        >
+          <router-view v-slot="{ Component }">
+            <transition name="slide">
+              <component :is="Component" />
+            </transition>
+          </router-view>
+        </q-page>
+      </q-page-container>
+    </q-layout>
+  </div>
 </template>
 <script setup>
-import { ref , nextTick, onBeforeMount, onMounted } from 'vue';
-import { mapGetters, useStore } from 'vuex';
+import { ref, nextTick, onBeforeMount, onMounted } from 'vue'
+import { mapGetters, useStore } from 'vuex'
 // import store from '../store'
 import { useI18n } from 'vue-i18n'
-import toast from '../Helper/toast';
-import router from '../router';
-import _BreadCrumb from './_BreadCrumb.vue';
+import toast from '../Helper/toast'
+import router from '../router'
+import _BreadCrumb from './_BreadCrumb.vue'
+import state from '../store/state'
 
-const isTranslate  = ref(false)
-const leftDrawerOpen =ref(true)
-const user = ref({});
-const store = useStore();
-const t = useI18n();
-// const transitionName = ref('fade-out') 
+const isTranslate = ref(false)
+const leftDrawerOpen = ref(true)
+const user = ref({})
+const store = useStore()
+const t = useI18n()
+// const transitionName = ref('fade-out')
 //     onMounted(() => {
-      
+
 //       router.beforeEach((to, from, next) => {
 //         if (to.name === from.name) {
 //           transitionName.value = ''
@@ -354,29 +494,32 @@ const t = useI18n();
 //         next()
 //       })
 //     })
-const logout =()=>{
-  store.dispatch("auth/logout");
+
+// Methods
+const userIsInRole = (roles) => {
+  return store.getters['auth/userIsInRoles'](roles)
 }
-const toggleLeftDrawer =()=>{
+const logout = () => {
+  store.dispatch('auth/logout')
+}
+const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
-const changeLanguage =(lang)=>{
-  isTranslate.value =! isTranslate.value;
+const changeLanguage = (lang) => {
+  isTranslate.value = !isTranslate.value
   nextTick(() => {
     t.locale.value = lang
-    toast.success({message:"Language switch to" + ' ' + lang})
+    toast.success({ message: 'Language switch to' + ' ' + lang })
   })
 }
 // console.log();
-onBeforeMount(()=>{
-      // store.dispatch("auth/getCurrentUser").then((res)=>{
-      //     console.log(res.data);
-      //     user.value = res.data
-      //     // console.log(user.value.email);
-      // })
-
+onBeforeMount(() => {
+  // store.dispatch("auth/getCurrentUser").then((res)=>{
+  //     console.log(res.data);
+  //     user.value = res.data
+  //     // console.log(user.value.email);
+  // })
 })
-
 </script>
 <style scoped lang="scss">
 // .active {
@@ -420,7 +563,6 @@ onBeforeMount(()=>{
   left: 0;
 }
 
-
 .app-sidebar-header {
   background-color: #212121;
   border-bottom: 1px solid rgba(229, 229, 229, 0.25);
@@ -432,8 +574,8 @@ onBeforeMount(()=>{
   margin-top: 50px;
   background-color: #2e323a !important;
 }
-.app-icon{
-    font-size: 40px;
+.app-icon {
+  font-size: 40px;
 }
 
 .app-sidebar-sub-level-item {
@@ -467,18 +609,17 @@ onBeforeMount(()=>{
 }
 
 .app-menu {
-
   .q-item {
     color: #ffffff !important;
     letter-spacing: 0.5px;
     font-size: 12px;
-   
+
     font-weight: 700;
     box-sizing: border-box;
     letter-spacing: 0.5px;
     .q-icon {
       font-size: 0px;
-  }
+    }
     .q-focus-helper {
       width: 100%;
       color: rgba(255, 255, 255, 0.23);
@@ -496,7 +637,7 @@ onBeforeMount(()=>{
   }
 
   .q-item--active {
-    color: #fdf911 ;
+    color: #fdf911;
     font-weight: bold;
     background: rgba(255, 255, 255, 0.23);
     &:before {
@@ -521,7 +662,7 @@ onBeforeMount(()=>{
 
         .q-focus-helper {
           width: 100%;
-         
+
           color: rgba(255, 255, 255, 0.23);
         }
 
@@ -561,7 +702,6 @@ onBeforeMount(()=>{
               font-weight: normal;
             }
             &:before {
-              
               background: rgba(255, 255, 255, 0.23);
             }
 

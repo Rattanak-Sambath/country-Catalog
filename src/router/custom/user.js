@@ -2,7 +2,12 @@ export default [
     {
       path: "/setting",
       name: "setting",
+      meta:{
+        roles:[]
+      }
+      
     //   component: () => import("../../views/setting/AccountSettings.vue"),
+
     },
     {
       path: "/goodsTransfer",
@@ -58,6 +63,9 @@ export default [
       path: "/branch/:branch/edit",
       name: "branch.edit",
       component: () => import("../../view/branch/edit.vue"),
+      meta:{
+        roles:['branch']
+      }
     },
 
     // user

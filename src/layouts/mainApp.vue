@@ -227,6 +227,28 @@
               :to="{ name: 'subject.index' }"
             >
               <q-item-section avatar>
+                <q-icon name="two_wheeler" />
+              </q-item-section>
+
+              <q-item-section> {{ $t('good_delivery') }}</q-item-section>
+            </q-item>
+            <q-item
+              exact-active-class="q-item--active"
+              v-ripple
+              :to="{ name: 'subject.index' }"
+            >
+              <q-item-section avatar>
+                <q-icon name="local_shipping" />
+              </q-item-section>
+
+              <q-item-section> {{ $t('move_item_to_ven') }}</q-item-section>
+            </q-item>
+            <q-item
+              exact-active-class="q-item--active"
+              v-ripple
+              :to="{ name: 'subject.index' }"
+            >
+              <q-item-section avatar>
                 <q-icon name="content_paste_search" />
               </q-item-section>
 
@@ -246,6 +268,7 @@
             <q-expansion-item
               group="link-dialog"
               style="border-radius: 20px"
+              icon="local_shipping"
               expand-separator
               :label="$t('shipping_infor')"
             >
@@ -340,7 +363,7 @@
                     <q-icon name="apartment" />
                   </q-item-section>
 
-                  <q-item-section> Branch </q-item-section>
+                  <q-item-section> {{ $t('branch') }} </q-item-section>
                 </q-item>
                 <q-item
                   clickable
@@ -352,7 +375,7 @@
                     <q-icon name="badge" />
                   </q-item-section>
 
-                  <q-item-section> Staff </q-item-section>
+                  <q-item-section> {{ $t('staff') }} </q-item-section>
                 </q-item>
                 <q-item
                   clickable
@@ -364,7 +387,44 @@
                     <q-icon name="move_to_inbox" />
                   </q-item-section>
 
-                  <q-item-section> Location_Desk </q-item-section>
+                  <q-item-section> {{ $t('location_Desk') }} </q-item-section>
+                </q-item>
+              </q-card-section>
+            </q-expansion-item>
+            <q-expansion-item
+              group="link-dialog"
+              expand-separator
+              icon="change_circle"
+              :label="$t('change')"
+            >
+              <q-card-section>
+                <q-item
+                  clickable
+                  v-ripple
+                  exact-active-class="q-item--active"
+                  :to="{ name: 'role.index' }"
+                >
+                  <!-- v-if="userIsInRole(['role'])" -->
+                  <q-item-section avatar>
+                    <q-icon name="apartment" />
+                  </q-item-section>
+
+                  <q-item-section>{{ $t('change_branch') }} </q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  v-ripple
+                  exact-active-class="q-item--active"
+                  :to="{ name: 'role.index' }"
+                >
+                  <!-- v-if="userIsInRole(['role'])" -->
+                  <q-item-section avatar>
+                    <q-icon name="navigation" />
+                  </q-item-section>
+
+                  <q-item-section
+                    >{{ $t('change_destination') }}
+                  </q-item-section>
                 </q-item>
               </q-card-section>
             </q-expansion-item>
@@ -372,7 +432,7 @@
               group="link-dialog"
               expand-separator
               icon="assignment_late"
-              label="Reports"
+              :label="$t('report')"
             >
               <q-card-section>
                 <q-item
@@ -384,7 +444,9 @@
                     <q-icon name="gpp_good" />
                   </q-item-section>
 
-                  <q-item-section> Role </q-item-section>
+                  <q-item-section
+                    >{{ $t('good_transfer_report') }}
+                  </q-item-section>
                 </q-item>
                 <q-item
                   clickable
@@ -396,9 +458,38 @@
                     <q-icon name="person" />
                   </q-item-section>
 
-                  <q-item-section> User </q-item-section>
+                  <q-item-section>
+                    {{ $t('moveItem_toVen_report') }}
+                  </q-item-section>
                 </q-item>
+                <q-item
+                  clickable
+                  v-ripple
+                  :to="{ name: 'user.index' }"
+                  exact-active-class="q-item--active"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="person" />
+                  </q-item-section>
 
+                  <q-item-section>
+                    {{ $t('receive_item_report') }}
+                  </q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  v-ripple
+                  :to="{ name: 'user.index' }"
+                  exact-active-class="q-item--active"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="person" />
+                  </q-item-section>
+
+                  <q-item-section>
+                    {{ $t('collect_by_user_report') }}
+                  </q-item-section>
+                </q-item>
                 <!-- <q-item clickable v-ripple @click="logout">
                         <q-item-section avatar>
                             <q-icon name="logout" />                                

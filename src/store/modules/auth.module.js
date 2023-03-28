@@ -32,7 +32,7 @@ const getters = {
   userIsInRoles: (state) => (roles) => {
     const user = state.user
     if (!user || !roles?.length) return false
-    if (user.username == 'admin') return true
+    if (user.name === 'admin') return true
 
     if (intersection(user.role, roles).length) return true
     return false

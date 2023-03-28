@@ -253,10 +253,9 @@ const showId = ref('')
 const concel = () => {
   showId.value = null
   form.value.name = ''
-  form.value.address = ''
-  form.value.position = ''
-  form.value.gender = ''
-  form.value.salary = ''
+  form.value.status = ''
+  form.value.role = ''
+  form.value.checkAll = false
   loading.value = false
 }
 const startCase = (val) => _.startCase(val)

@@ -68,7 +68,7 @@
         @request="onChangePagination"
         v-model:pagination="pagination"
       >
-        <template #body-cell-action="props">
+        <!-- <template #body-cell-action="props">
           <q-td :props="props">
             <q-btn
               icon="delete"
@@ -81,13 +81,21 @@
               class="q-mx-md"
               @click="onEdit(props.row._id)"
             ></q-btn>
-            <!-- <span
+             <span
                             class="ra-text-link "
                             @click="editCompo(props.row.id)"
                             style="color: dodgerblue;"
                             >
                             {{ props.row.name }}
                             </span> -->
+        <!-- </q-td> -->
+        <!-- </template>  -->
+        <template #body-cell-name="props">
+          <q-td
+            :props="props"
+            @click="onEdit(props.row._id)"
+          >
+            <span class="text-primary">{{ props.row.name }}</span>
           </q-td>
         </template>
         <template #body-cell-role="props">
@@ -252,7 +260,8 @@ const onConfirmDelete = async () => {
   }
 }
 const onEdit = async (param) => {
-  router.push({ name: 'driver.edit', params: { driver: param } })
+  // console.log(param)
+  router.push({ name: 'roleGroup.edit', params: { roleGroup: param } })
 }
 const exportTable = () => {
   // const content = [columns.map(col => wrapCsvValue(col.label))].concat(

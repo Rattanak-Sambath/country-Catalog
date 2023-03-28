@@ -4,7 +4,7 @@
       <!-- {{ this.$route.params.car }} -->
       <q-toolbar>
         <q-toolbar-title class="text-h6 text-bold"
-          ><q-icon name="add"></q-icon> Edit Driver</q-toolbar-title
+          ><q-icon name="add"></q-icon> Edit RoleGroup</q-toolbar-title
         >
         <q-space />
         <q-btn
@@ -18,7 +18,7 @@
     </q-card>
     <q-card class="q-my-md">
       <q-card-section class="text-grey-15">
-        Fill the form below to update new Driver
+        Fill the form below to update new RoleGroup
       </q-card-section>
       <ValidateForm
         ref="formRef"
@@ -30,172 +30,109 @@
         >
           <q-card-section>
             <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
-              <div class="col-xs-12 col-md-6 col-lg-6">
+              <div class="col-xs-12 col-md-12 col-lg-12">
                 <div class="row q-col-gutter-y-md">
                   <!-- start left side -->
                   <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.date"
-                      name="date"
-                    >
-                      <q-input
-                        color="orange-14"
-                        type="date"
-                        outlined
-                        :model-value="value"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      >
-                        <template v-slot:prepend>
-                          <q-icon
-                            name="calendar_month"
-                            color="indigo-10"
+                    <div class="row q-col-gutter-y-sm">
+                      <div class="col-6">
+                        <validate-field
+                          v-slot="{ value, field, errorMessage }"
+                          v-model="form.name"
+                          name="name"
+                        >
+                          <q-input
+                            :model-value="value"
+                            label="Name *"
+                            outlined
+                            dense
+                            v-bind="field"
+                            :error="!!errorMessage"
+                            :error-message="errorMessage"
                           />
-                        </template>
-                      </q-input>
-                    </validate-field>
-                  </div>
-                  <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.name"
-                      name="name"
-                    >
-                      <q-input
-                        color="orange-14"
-                        type="text"
-                        outlined
-                        :model-value="value"
-                        label="Name"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      >
-                        <template v-slot:prepend>
-                          <q-icon
-                            name="engineering"
-                            color="indigo-10"
+                        </validate-field>
+                      </div>
+                      <div class="col-6">
+                        <validate-field
+                          v-slot="{ value, field, errorMessage }"
+                          v-model="form.status"
+                          name="status"
+                        >
+                          <span
+                            class="text-grey-9"
+                            style="padding-right: 8px"
+                          >
+                            Status *
+                          </span>
+
+                          <q-radio
+                            v-model="form.status"
+                            checked-icon="task_alt"
+                            unchecked-icon="panorama_fish_eye"
+                            val="Inactive"
+                            label="Inactive"
                           />
-                        </template>
-                      </q-input>
-                    </validate-field>
-                  </div>
-                  <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.address"
-                      name="address"
-                    >
-                      <q-input
-                        color="orange-14"
-                        type="text"
-                        outlined
-                        :model-value="value"
-                        label="Address"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      >
-                        <template v-slot:prepend>
-                          <q-icon
-                            name="location_on"
-                            color="indigo-10"
+                          <q-radio
+                            v-model="form.status"
+                            checked-icon="task_alt"
+                            unchecked-icon="panorama_fish_eye"
+                            val="Active"
+                            label="Active"
                           />
-                        </template>
-                      </q-input>
-                    </validate-field>
+
+                          <!-- <div
+                                        v-if="!!errorMessage"
+                                        class="text-negative"
+                                        style="font-size: 11px"
+                                      >
+                                        {{ errorMessage }}
+                                      </div> -->
+                        </validate-field>
+                      </div>
+                      <div class="col-12 text-left">
+                        <q-checkbox
+                          v-model="form.checkAll"
+                          label="Check all *"
+                          @click="checkAllRole()"
+                        ></q-checkbox>
+                      </div>
+
+                      <div class="col-12">
+                        <validate-field
+                          v-slot="{ value, field, errorMessage }"
+                          v-model="form.role"
+                          name="role"
+                        >
+                          <fieldset class="text-left">
+                            <legend>Roles</legend>
+                            <div class="row">
+                              <div
+                                v-for="role in roleOpts"
+                                :key="role._id"
+                                class="col-xs-6 col-sm-6 col-md-4"
+                              >
+                                <q-checkbox
+                                  :model-value="value"
+                                  :val="role.name"
+                                  :label="startCase(role.name)"
+                                  v-bind="field"
+                                />
+                              </div>
+                            </div>
+                          </fieldset>
+                          <!-- v-if="!!errorMessage && value.length === 0" -->
+                          <div
+                            class="text-negative"
+                            style="font-size: 11px"
+                          >
+                            {{ errorMessage }}
+                          </div>
+                        </validate-field>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <!-- end-left-side  -->
-              </div>
-
-              <div class="col-xs-12 col-md-6 col-lg-6">
-                <div class="row q-col-gutter-y-md">
-                  <!-- right-side  -->
-                  <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.gender"
-                      name="gender"
-                    >
-                      <q-select
-                        color="orange-14"
-                        :model-value="value"
-                        :options="genderOpt"
-                        map-options
-                        emit-value
-                        option-label="name"
-                        option-value="name"
-                        type="text"
-                        outlined
-                        label="Gender"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      >
-                        <template v-slot:prepend>
-                          <q-icon
-                            name="female"
-                            color="indigo-10"
-                          />
-                        </template>
-                      </q-select>
-                    </validate-field>
-                  </div>
-                  <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.position"
-                      name="position"
-                    >
-                      <q-input
-                        color="orange-14"
-                        type="text"
-                        outlined
-                        :model-value="value"
-                        label="Position"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      >
-                        <template v-slot:prepend>
-                          <q-icon
-                            name="line_weight"
-                            color="indigo-10"
-                          />
-                        </template>
-                      </q-input>
-                    </validate-field>
-                  </div>
-                  <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.salary"
-                      name="salary"
-                    >
-                      <q-input
-                        color="orange-14"
-                        type="text"
-                        outlined
-                        :model-value="value"
-                        label="Salary"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      >
-                        <template v-slot:prepend>
-                          <q-icon
-                            name="paid"
-                            color="indigo-10"
-                          />
-                        </template>
-                      </q-input>
-                    </validate-field>
-                  </div>
-                  <!-- end-right-side  -->
-                </div>
               </div>
             </div>
           </q-card-section>
@@ -209,6 +146,15 @@
                 no-caps
                 :loading="loading"
                 @click="onUpdate()"
+              />
+              <q-btn
+                push
+                icon="remove"
+                label="remove"
+                color="negative"
+                no-caps
+                :loading="loading"
+                @click="onRemove()"
               />
 
               <q-btn
@@ -240,35 +186,80 @@ import dayjs from 'dayjs'
 import api from '../../utils/utility'
 import axios from 'axios'
 import { useRoute } from 'vue-router'
+import _ from 'lodash'
 const formRef = ref('')
 const loading = ref(false)
 const form = ref({
   name: '',
-  address: '',
-  position: '',
-  gender: '',
-  date: dayjs(new Date()).format('YYYY-MM-DD'),
-  salary: '',
+  status: '',
+  role: [],
+  checkAll: false,
 })
-const genderOpt = ref([
+const roleOpts = ref([])
+const statusOpts = ref([
   {
-    name: 'Female',
-    value: 'Female',
+    name: 'Inactive',
+    value: 'Inactive',
   },
   {
-    name: 'Male',
-    value: 'Male',
+    name: 'Active',
+    value: 'Active',
   },
 ])
 const $route = useRoute()
 const rules = object({
   name: string().required().label('Name'),
-  address: string().required().label('Address'),
-  position: string().required().label('Postion'),
-  gender: string().required().label('Gender'),
-  salary: string().required().label('Salary'),
-  date: string().required().label('Date'),
+  // role: string().required().label('Role'),
+  status: string().required().label('Status'),
 })
+const startCase = (val) => _.startCase(val)
+
+const checkAllRole = () => {
+  // console.log('hi');
+  if (form.value.checkAll === true) {
+    form.value.role = []
+    for (let i = 0; i < roleOpts.value.length; i++) {
+      const roleName = roleOpts.value[i].name
+      form.value.role.push(roleName)
+    }
+  } else {
+    console.log('else')
+    form.value.role = []
+  }
+}
+const onRemove = async () => {
+  await api
+    .delete('/roleGroup/removeById/' + $route.params.roleGroup)
+    .then((res) => {
+      if (res) {
+        toast.success('RoleGroup deleted successfully')
+        cancel()
+        // console.log('hi')
+      }
+    })
+    .catch((err) => {
+      toast.error({ message: 'Not Found !!!' })
+      console.log(err)
+    })
+  // if (dataRemove) {
+  //   console.log('hi')
+  //   toast.error({ message: 'Not found' })
+  // } else {
+  //   toast.success({ message: 'Not found' })
+  //   // cancel()
+  // }
+}
+// watch(
+//   () => form.value.role,
+//   (val) => {
+//     if (val.length === roleOpts.value.length) {
+//       form.value.checkAll = true
+//     } else {
+//       form.value.checkAll = false
+//     }
+//   },
+//   { deep: true, immediate: true }
+// )
 const showId = ref('')
 const cancel = () => {
   showId.value = null
@@ -287,7 +278,7 @@ const onUpdate = async () => {
     // let  methods = 'car/updateCar'
     loading.value = true
     const res = await api.put(
-      `driver/updateDriver/` + $route.params.driver,
+      `roleGroup/updateRoleGroup/` + $route.params.roleGroup,
       form.value
     )
     if (res) {
@@ -299,22 +290,27 @@ const onUpdate = async () => {
     }
   }
 }
+const getRoleOpt = async () => {
+  let data = await api.get('/role/getAllRole', [])
+  if (data) {
+    roleOpts.value = data.data
+  }
+}
 const findDatabyId = async () => {
   let id = showId.value
   // console.log('find', id);
-  let res = await api.get(`/driver/getDriverbyId/` + $route.params.driver)
+  let res = await api.get(
+    `/roleGroup/getRoleGroupbyId/` + $route.params.roleGroup
+  )
   if (res) {
-    console.log(res)
-    form.value.name = res.data.name
-    form.value.address = res.data.address
-    form.value.position = res.data.position
-    form.value.gender = res.data.gender
-    form.value.salary = res.data.salary
-    form.value.date = res.data.date
-    console.log(res.data)
+    // console.log('data', res)
+    form.value.name = res.data.roleGroup.name
+    form.value.role = res.data.roleGroup.role
+    form.value.status = res.data.roleGroup.status
   }
 }
 onMounted(() => {
+  getRoleOpt()
   findDatabyId()
   if ($route.params.driver) {
     showId.value = $route.params.driver

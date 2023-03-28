@@ -219,7 +219,7 @@
                 <q-icon name="directions_walk" />
               </q-item-section>
 
-              <q-item-section> Customer Receive Goods </q-item-section>
+              <q-item-section> {{ $t('customerReceive') }} </q-item-section>
             </q-item>
             <q-item
               exact-active-class="q-item--active"
@@ -230,7 +230,7 @@
                 <q-icon name="content_paste_search" />
               </q-item-section>
 
-              <q-item-section> Search Goods transfer </q-item-section>
+              <q-item-section> {{ $t('searchGoodstransfer') }}</q-item-section>
             </q-item>
             <q-item
               exact-active-class="q-item--active"
@@ -241,14 +241,13 @@
                 <q-icon name="settings_phone" />
               </q-item-section>
 
-              <q-item-section> Call Customer </q-item-section>
+              <q-item-section>{{ $t('callCustomer') }}</q-item-section>
             </q-item>
             <q-expansion-item
               group="link-dialog"
               style="border-radius: 20px"
               expand-separator
-              icon="local_shipping"
-              label="Shipping Info"
+              :label="$t('shipping_infor')"
             >
               <q-card-section>
                 <q-item
@@ -261,7 +260,7 @@
                     <q-icon name="local_shipping" />
                   </q-item-section>
 
-                  <q-item-section class=""> Car </q-item-section>
+                  <q-item-section class="">{{ $t('car') }}</q-item-section>
                 </q-item>
                 <q-item
                   clickable
@@ -273,7 +272,7 @@
                     <q-icon name="accessible" />
                   </q-item-section>
 
-                  <q-item-section class=""> Driver </q-item-section>
+                  <q-item-section class=""> {{ $t('driver') }}</q-item-section>
                 </q-item>
                 <!-- <q-item clickable v-ripple>
                         <q-item-section avatar>
@@ -290,7 +289,7 @@
               group="link-dialog"
               expand-separator
               icon="settings"
-              label="Setting"
+              :label="$t('settings')"
             >
               <q-card-section>
                 <q-item
@@ -304,18 +303,19 @@
                     <q-icon name="gpp_good" />
                   </q-item-section>
 
-                  <q-item-section> Role </q-item-section>
+                  <q-item-section>{{ $t('role') }} </q-item-section>
                 </q-item>
                 <q-item
                   v-ripple
                   :to="{ name: 'user.index' }"
                   exact-active-class="q-item--active"
+                  v-if="userIsInRole(['branch'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="person" />
                   </q-item-section>
 
-                  <q-item-section> User </q-item-section>
+                  <q-item-section> {{ $t('user') }} </q-item-section>
                 </q-item>
                 <q-item
                   clickable
@@ -327,7 +327,7 @@
                     <q-icon name="payments" />
                   </q-item-section>
 
-                  <q-item-section> Group </q-item-section>
+                  <q-item-section> {{ $t('group') }} </q-item-section>
                 </q-item>
                 <q-item
                   v-if="userIsInRole(['branch'])"
@@ -340,7 +340,7 @@
                     <q-icon name="apartment" />
                   </q-item-section>
 
-                  <q-item-section> BranchId </q-item-section>
+                  <q-item-section> Branch </q-item-section>
                 </q-item>
                 <q-item
                   clickable

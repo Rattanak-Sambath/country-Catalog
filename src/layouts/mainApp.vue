@@ -94,7 +94,7 @@
                     </q-item-section>
                     <q-item-section>
                       <q-item-label>{{
-                        $store.state.auth.user.name
+                        $store.state.auth.user.fullname
                       }}</q-item-label>
                       <q-item-label
                         >{{ $store.state.auth.user.email }}
@@ -199,6 +199,7 @@
               exact-active-class="q-item--active "
               v-ripple
               :to="{ name: 'goodsTransfer.index' }"
+              v-if="userIsInRole(['goods_transfer'])"
             >
               <q-item-section avatar>
                 <q-icon name="category" />
@@ -214,6 +215,7 @@
               clickable
               v-ripple
               :to="{ name: 'subject.index' }"
+              v-if="userIsInRole(['customer_receive'])"
             >
               <q-item-section avatar>
                 <q-icon name="directions_walk" />
@@ -225,6 +227,7 @@
               exact-active-class="q-item--active"
               v-ripple
               :to="{ name: 'subject.index' }"
+              v-if="userIsInRole(['good_delivery'])"
             >
               <q-item-section avatar>
                 <q-icon name="two_wheeler" />
@@ -236,6 +239,7 @@
               exact-active-class="q-item--active"
               v-ripple
               :to="{ name: 'subject.index' }"
+              v-if="userIsInRole(['move_item_to_ven'])"
             >
               <q-item-section avatar>
                 <q-icon name="local_shipping" />
@@ -247,6 +251,7 @@
               exact-active-class="q-item--active"
               v-ripple
               :to="{ name: 'subject.index' }"
+              v-if="userIsInRole(['search_goods_transfer'])"
             >
               <q-item-section avatar>
                 <q-icon name="content_paste_search" />
@@ -258,6 +263,7 @@
               exact-active-class="q-item--active"
               v-ripple
               :to="{ name: 'subject.index' }"
+              v-if="userIsInRole(['call_customer'])"
             >
               <q-item-section avatar>
                 <q-icon name="settings_phone" />
@@ -271,6 +277,7 @@
               icon="local_shipping"
               expand-separator
               :label="$t('shipping_infor')"
+              v-if="userIsInRole(['shipping'])"
             >
               <q-card-section>
                 <q-item
@@ -278,6 +285,7 @@
                   v-ripple
                   menu_book
                   :to="{ name: 'car.index' }"
+                  v-if="userIsInRole(['car'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="local_shipping" />
@@ -290,6 +298,7 @@
                   v-ripple
                   exact-active-class="q-item--active"
                   :to="{ name: 'driver.index' }"
+                  v-if="userIsInRole(['driver'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="accessible" />
@@ -313,6 +322,7 @@
               expand-separator
               icon="settings"
               :label="$t('settings')"
+              v-if="userIsInRole(['setting'])"
             >
               <q-card-section>
                 <q-item
@@ -332,7 +342,7 @@
                   v-ripple
                   :to="{ name: 'user.index' }"
                   exact-active-class="q-item--active"
-                  v-if="userIsInRole(['branch'])"
+                  v-if="userIsInRole(['user'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="person" />
@@ -345,6 +355,7 @@
                   v-ripple
                   :to="{ name: 'roleGroup.index' }"
                   exact-active-class="q-item--active"
+                  v-if="userIsInRole(['role-group'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="payments" />
@@ -368,8 +379,8 @@
                 <q-item
                   clickable
                   v-ripple
-                  @click="logout"
                   exact-active-class="q-item--active"
+                  v-if="userIsInRole(['staff'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="badge" />
@@ -382,6 +393,7 @@
                   v-ripple
                   @click="logout"
                   exact-active-class="q-item--active"
+                  v-if="userIsInRole(['location_desk'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="move_to_inbox" />
@@ -396,6 +408,7 @@
               expand-separator
               icon="change_circle"
               :label="$t('change')"
+              v-if="userIsInRole(['change'])"
             >
               <q-card-section>
                 <q-item
@@ -403,6 +416,7 @@
                   v-ripple
                   exact-active-class="q-item--active"
                   :to="{ name: 'role.index' }"
+                  v-if="userIsInRole(['change-branch'])"
                 >
                   <!-- v-if="userIsInRole(['role'])" -->
                   <q-item-section avatar>
@@ -416,6 +430,7 @@
                   v-ripple
                   exact-active-class="q-item--active"
                   :to="{ name: 'role.index' }"
+                  v-if="userIsInRole(['change_destination'])"
                 >
                   <!-- v-if="userIsInRole(['role'])" -->
                   <q-item-section avatar>
@@ -433,12 +448,14 @@
               expand-separator
               icon="assignment_late"
               :label="$t('report')"
+              v-if="userIsInRole(['report'])"
             >
               <q-card-section>
                 <q-item
                   clickable
                   v-ripple
                   exact-active-class="q-item--active"
+                  v-if="userIsInRole(['goods_transfer_report'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="gpp_good" />
@@ -453,6 +470,7 @@
                   v-ripple
                   :to="{ name: 'user.index' }"
                   exact-active-class="q-item--active"
+                  v-if="userIsInRole(['move_item_to_ven_report'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="person" />
@@ -467,6 +485,7 @@
                   v-ripple
                   :to="{ name: 'user.index' }"
                   exact-active-class="q-item--active"
+                  v-if="userIsInRole(['receive_item_report'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="person" />
@@ -481,6 +500,7 @@
                   v-ripple
                   :to="{ name: 'user.index' }"
                   exact-active-class="q-item--active"
+                  v-if="userIsInRole(['collect_by_user_report'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="person" />

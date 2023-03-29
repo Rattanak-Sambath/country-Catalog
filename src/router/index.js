@@ -43,7 +43,7 @@ router.beforeEach((to, from, next) => {
     if (guestRoute.includes(to.name)) {
       router.push({ name: 'home' })
     } else {
-      let roles = store.state.auth.user.role
+      let roles = store.state.auth.user.roles
       if (!roles.includes(to.name)) {
         // router.go(-1)
         next()

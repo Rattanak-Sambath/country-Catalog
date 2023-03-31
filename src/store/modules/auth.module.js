@@ -15,6 +15,7 @@ const state = {
     email: null,
     admin: null,
     location: null,
+    roles: null,
   },
   accessToken: null,
 }
@@ -24,6 +25,7 @@ const getters = {
     return state.authenticated
   },
   user(state) {
+    // console.log(state)
     return state.user
   },
   accessToken(state) {
@@ -31,7 +33,7 @@ const getters = {
   },
   userIsInRoles: (state) => (roles) => {
     const user = state.user
-    console.log('user', user)
+    // console.log('user', user.roles)
     if (!user || !roles?.length) return false
     if (user.username === 'admin') return true
 
@@ -39,11 +41,10 @@ const getters = {
     return false
   },
 }
-
 const mutations = {
   SET_AUTH_USER(state, value) {
     state.user = value
-    // console.log(state.user);
+    console.log('status', state)
   },
   SET_AUTH_TOKEN(state, payload) {
     state.accessToken = payload.token

@@ -51,8 +51,8 @@
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
-                      v-model="form.fullName"
-                      name="fullName"
+                      v-model="form.fullname"
+                      name="fullname"
                     >
                       <q-input
                         :model-value="value"
@@ -185,43 +185,53 @@
                       v-model="form.allowedBranch"
                       name="allowedBranch"
                     >
-                      <!-- multiple
-                    options-dense -->
                       <q-select
-                        options-dense
                         :model-value="value"
                         :options="allowedBranchOpts"
-                        label="Allowed branches"
-                        v-bind="field"
-                        clearable
-                        outlined
-                        option-value="_id"
+                        map-options
+                        emit-value
                         option-label="label"
+                        option-value="_id"
+                        color="orange-14"
+                        type="text"
+                        outlined
+                        label="allowed Branch"
+                        v-bind="field"
                         :error="!!errorMessage"
                         :error-message="errorMessage"
-                      />
-                      <!-- @clear="form.allowedBranches = []" -->
+                      >
+                      </q-select>
                     </validate-field>
                   </div>
 
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
-                      v-model="form.roleGroup"
-                      name="roleGroup"
+                      v-model="form.roleGroupId"
+                      name="roleGroupId"
                     >
                       <q-select
                         :model-value="value"
                         :options="roleGroupOpts"
-                        label="Role group"
-                        option-value="_id"
+                        map-options
+                        emit-value
                         option-label="name"
+                        option-value="_id"
+                        color="orange-14"
+                        type="text"
                         outlined
+                        label="Role group"
                         v-bind="field"
                         :error="!!errorMessage"
                         :error-message="errorMessage"
-                        @update:model-value="roleGroupChange"
-                      />
+                      >
+                        <template v-slot:prepend>
+                          <q-icon
+                            name="engineering"
+                            color="indigo-10"
+                          />
+                        </template>
+                      </q-select>
                     </validate-field>
                   </div>
 
@@ -239,9 +249,9 @@
                         v-bind="field"
                         :error="!!errorMessage"
                         :error-message="errorMessage"
-                        :suffix="form.expiryDate"
-                        @update:model-value="expiryDayChange"
                       />
+                      <!-- :suffix="form.expiryDate"
+                        @update:model-value="expiryDayChange" -->
                     </validate-field>
                   </div>
 
@@ -278,6 +288,38 @@
                       />
                       <div
                         v-if="!!errorMessage"
+                        class="text-negative"
+                        style="font-size: 11px"
+                      >
+                        {{ errorMessage }}
+                      </div>
+                    </validate-field>
+                  </div>
+                  <div class="col-12">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
+                      v-model="form.roles"
+                      name="roles"
+                    >
+                      <fieldset class="text-left">
+                        <legend>Roles</legend>
+                        <div class="row">
+                          <div
+                            v-for="role in roleFetch"
+                            :key="role.name"
+                            class="col-xs-6 col-sm-6 col-md-4"
+                          >
+                            <q-checkbox
+                              :model-value="value"
+                              :val="role.name"
+                              :label="startCase(role)"
+                              v-bind="field"
+                            />
+                          </div>
+                        </div>
+                      </fieldset>
+                      <!-- v-if="!!errorMessage && value.length === 0" -->
+                      <div
                         class="text-negative"
                         style="font-size: 11px"
                       >
@@ -339,6 +381,8 @@ import router from '../../router'
 import dayjs from 'dayjs'
 import api from '../../utils/utility'
 import axios from 'axios'
+import _ from 'lodash'
+
 // import { number } from 'yup/lib/locale';
 
 const formRef = ref('')
@@ -346,14 +390,17 @@ const loading = ref(false)
 const form = ref({
   username: 'user',
   name: '',
-  fullName: '',
+  fullname: '',
   email: '',
   password: '',
   confirmPassword: '',
   allowedBranch: '',
-  roleGroup: '',
+  roleGroupId: '',
   expiryDay: '',
+  status: '',
+  roles: [],
 })
+const roleFetch = ref([])
 const allowedBranchOpts = ref([])
 const roleGroupOpts = ref([])
 const statusOpts = ref([
@@ -381,12 +428,13 @@ const statusOpts = ref([
 
 const rules = object({
   name: string().required().label('Name'),
-  fullName: string().required().label('Role'),
+  fullname: string().required().label('Role'),
   email: string().required().label('Status'),
   password: string().required().label('Password'),
-  allowedBranch: object().required().label('Allowed branches'),
-  roleGroup: object().required().label('Role group'),
+  allowedBranch: string().required().label('Allowed branches'),
+  roleGroupId: string().required().label('Role group'),
   expiryDay: string().required().label('Expiry day'),
+  status: string().required().label('Status'),
 })
 
 const showId = ref('')
@@ -399,10 +447,13 @@ const concel = () => {
   form.value.salary = ''
   loading.value = false
 }
+const startCase = (val) => _.startCase(val)
+
 const onSubmit = async () => {
   const { valid } = await formRef.value.validate()
+  console.log('form', form.value)
   if (valid) {
-    let methods = '/driver/createDriver'
+    let methods = '/auth/register'
     // if(showId.value){
     //   methods = 'driver/updateDriver'
     // }
@@ -417,6 +468,25 @@ const onSubmit = async () => {
     }
   }
 }
+// const val = form.value.roleGroupId
+watch(
+  () => form.value.roleGroupId,
+  (newValue) => {
+    if (newValue) {
+      api
+        .get('roleGroup/getRoleGroupbyId/' + newValue)
+        .then((res) => {
+          roleFetch.value = []
+          roleFetch.value = res.data.roleGroup.role
+          form.value.roles = roleFetch.value
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  },
+  { deep: true, immediate: true }
+)
 const fetchAllowBranch = async () => {
   await api
     .get('/branch/fetchAllBranch', [])
@@ -432,7 +502,7 @@ const fetchAllRoleGroups = async () => {
   await api
     .get('roleGroup/getAllRoleGroup', [])
     .then((res) => {
-      console.log(res.data)
+      console.log('roleGroup', res.data)
       roleGroupOpts.value = res.data
     })
     .catch((err) => {

@@ -51,6 +51,7 @@ router.beforeEach((to, from, next) => {
         router.go(-1)
         next()
       }
+      next()
     }
   } else {
     if (guestRoute.includes(to.name) || to.name == 'farm.monitoring') next()

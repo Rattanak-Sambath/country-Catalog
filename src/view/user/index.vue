@@ -85,8 +85,8 @@
               icon="edit"
               color="primary"
               class="q-mx-md"
-              @click="onEdit(props.row._id)"
             ></q-btn>
+            <!-- @click="onEdit(props.row._id)" -->
             <!-- <span
                                     class="ra-text-link "
                                     @click="editCompo(props.row.id)"
@@ -94,6 +94,39 @@
                                     >
                                     {{ props.row.name }}
                                     </span> -->
+          </q-td>
+        </template>
+        <template #body-cell-username="props">
+          <q-td
+            class="text-primary cursor-pointer"
+            :props="props"
+            @click="onEdit(props.row._id)"
+          >
+            <span> {{ props.row.username }}</span>
+          </q-td>
+        </template>
+        <template #body-cell-roles="props">
+          <q-td :props="props">
+            <VueJsonPretty
+              :data="props.row.roles"
+              :deep="0"
+            />
+          </q-td>
+        </template>
+        <template #body-cell-allowedBranch="props">
+          <q-td :props="props">
+            <span>
+              {{
+                props.row.allowedBranch ? props.row.allowedBranch : 'No Branch'
+              }}</span
+            >
+          </q-td>
+        </template>
+        <template #body-cell-status="props">
+          <q-td :props="props">
+            <span>
+              {{ props.row.status ? props.row.status : 'No Status' }}</span
+            >
           </q-td>
         </template>
         <template #body-cell-map="props">
@@ -145,6 +178,8 @@ import router from '../../router'
 import api from '../../utils/utility'
 import _ from 'lodash'
 import { Loading } from 'quasar'
+import VueJsonPretty from 'vue-json-pretty'
+
 const pagination = ref({
   sortBy: 'name',
   descending: false,
@@ -203,17 +238,17 @@ const columns = [
     sortable: true,
   },
   {
-    name: 'allowBranch',
+    name: 'allowedBranch',
     align: 'center',
     label: 'Allows Branch',
-    field: 'allowBranch',
+    field: 'allowedBranch',
     sortable: true,
   },
   {
-    name: 'roleGroup',
+    name: 'roles',
     align: 'center',
     label: 'RoleGroup',
-    field: 'roleGroup',
+    field: 'roles',
     sortable: true,
   },
   {
@@ -223,7 +258,7 @@ const columns = [
     field: 'status',
     sortable: true,
   },
-  { name: 'expired', label: 'Expired', field: 'expired' },
+  { name: 'expiryDay', label: 'Expired', field: 'expiryDay' },
 ]
 watch(
   filter,
@@ -277,7 +312,7 @@ const onConfirmDelete = async () => {
   }
 }
 const onEdit = async (param) => {
-  router.push({ name: 'branch.edit', params: { branch: param } })
+  router.push({ name: 'user.edit', params: { user: param } })
 }
 const exportTable = () => {
   // const content = [columns.map(col => wrapCsvValue(col.label))].concat(

@@ -98,6 +98,7 @@
             <span class="text-primary">{{ props.row.name }}</span>
           </q-td>
         </template>
+
         <template #body-cell-role="props">
           <q-td :props="props">
             <VueJsonPretty
@@ -154,7 +155,6 @@ import VueJsonPretty from 'vue-json-pretty'
 const pagination = ref({
   sortBy: 'name',
   descending: false,
-
   page: 1,
   rowsPerPage: 5,
   rowsNumber: 0,
@@ -228,7 +228,7 @@ const getDataTable = async () => {
   })
   loading.value = false
   if (data) {
-    // console.log(data.data)
+    console.log(data.data)
     dataTable.value = data.data.items
     pagination.value.rowsNumber = data.data.totalItems
   }

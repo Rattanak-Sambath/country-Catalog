@@ -95,8 +95,8 @@ import { useStore } from 'vuex'
 import router from '../../router'
 const refForm = ref('')
 const loading = ref(false)
-const email = ref('headoffice@email.com')
-const password = ref('hr123')
+const email = ref('admin@email.com')
+const password = ref('admin123')
 const store = useStore()
 const onLogin = async () => {
   const { valid } = await refForm.value?.validate()

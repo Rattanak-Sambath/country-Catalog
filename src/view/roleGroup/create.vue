@@ -278,6 +278,7 @@ const onSubmit = async () => {
 const getRoleOpt = async () => {
   let data = await api.get('/role/getAllRole', [])
   if (data) {
+    console.log(data.data)
     roleOpts.value = data.data
   }
 }

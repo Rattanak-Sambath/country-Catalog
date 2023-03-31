@@ -312,6 +312,7 @@ const onConfirmDelete = async () => {
   }
 }
 const onEdit = async (param) => {
+  // console.log(param);
   router.push({ name: 'user.edit', params: { user: param } })
 }
 const exportTable = () => {

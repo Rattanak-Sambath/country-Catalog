@@ -448,13 +448,18 @@ const concel = () => {
   loading.value = false
 }
 const findDatabyId = async () => {
-  let id = showId.value
-  // console.log('find', id);
-  let res = await api.get(`/user/getUserById/` + $route.params.user)
+
+  let res = await api.get("/auth/getUserById/" + $route.params.user)
   if (res) {
     console.log('data', res)
-    // form.value.name = res.data.roleGroup.name
-    // form.value.role = res.data.roleGroup.role
+    form.value.name = res.data.name
+    form.value.fullname = res.data.fullname
+    form.value.email = res.data.email
+    form.value.allowedBranch = res.data.allowedBranch
+    form.value.roleGroupId = res.data.roleGroupId
+    form.value.expiryDay = res.data.expiryDay
+    form.value.status = res.data.status
+    form.value.roles = res.data.roles
     // form.value.status = res.data.roleGroup.status
   }
 }
@@ -513,7 +518,7 @@ const fetchAllRoleGroups = async () => {
   await api
     .get('roleGroup/getAllRoleGroup', [])
     .then((res) => {
-      console.log('roleGroup', res.data)
+      // console.log('roleGroup', res.data)
       roleGroupOpts.value = res.data
     })
     .catch((err) => {

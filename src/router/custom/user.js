@@ -118,4 +118,21 @@ export default [
     name: 'role.edit',
     component: () => import('../../view/role/edit.vue'),
   },
+
+  // staff
+  {
+    path: '/staff',
+    name: 'staff.index',
+    component: () => import('../../view/staff/index.vue'),
+  },
+  {
+    path: '/staff/create',
+    name: 'staff.create',
+    component: () => import('../../view/staff/create.vue'),
+  },
+  {
+    path: '/staff/:staff/edit',
+    name: 'staff.edit',
+    component: () => import('../../view/staff/edit.vue'),
+  },
 ]

@@ -21,14 +21,9 @@
             @click="toggleLeftDrawer"
           />
           <q-space />
-          <!-- <q-toolbar-title align="left">
-            <q-avatar>
-                <img style="width: 40px;" src="logo.png">
-            </q-avatar> 
-            <span class="title">
-                VET LOGISTIC
-            </span>
-        </q-toolbar-title> -->
+          <div align="left">
+            <span class="title"> {{ getBranch }} </span>
+          </div>
           <q-btn
             class="q-mr-xs"
             flat
@@ -322,7 +317,7 @@
               expand-separator
               icon="settings"
               :label="$t('settings')"
-              v-if="userIsInRole(['setting'])"
+              v-if="userIsInRole(['admin_settings'])"
             >
               <q-card-section>
                 <q-item
@@ -381,6 +376,7 @@
                   v-ripple
                   exact-active-class="q-item--active"
                   v-if="userIsInRole(['staff'])"
+                  :to="{ name: 'staff.index' }"
                 >
                   <q-item-section avatar>
                     <q-icon name="badge" />
@@ -581,7 +577,7 @@
   </div>
 </template>
 <script setup>
-import { ref, nextTick, onBeforeMount, onMounted } from 'vue'
+import { ref, nextTick, onBeforeMount, onMounted, computed } from 'vue'
 import { mapGetters, useStore } from 'vuex'
 // import store from '../store'
 import { useI18n } from 'vue-i18n'
@@ -607,6 +603,9 @@ const t = useI18n()
 //     })
 
 // Methods
+const getBranch = computed(() => {
+  return store.state.auth.branchId
+})
 const userIsInRole = (roles) => {
   return store.getters['auth/userIsInRoles'](roles)
 }

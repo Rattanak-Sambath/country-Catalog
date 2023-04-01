@@ -28,6 +28,9 @@ const getters = {
     // console.log(state)
     return state.user
   },
+  branchId(state) {
+    return state.branchId
+  },
   accessToken(state) {
     return state.accessToken
   },
@@ -50,6 +53,10 @@ const mutations = {
     state.accessToken = payload.token
     // state.refreshToken = token.refresh_token
   },
+  SET_BRANCH_ID(state, value) {
+    console.log('state', value)
+    state.branchId = value
+  },
   SET_AUTHENTICATED(state, value) {
     state.authenticated = value
   },
@@ -61,6 +68,10 @@ const mutations = {
     state.user = {}
     console.log('remove user')
   },
+  REMOVE_BRANCH_ID(state) {
+    state.branchId = {}
+    console.log('remove branch')
+  },
 }
 
 const actions = {
@@ -70,9 +81,11 @@ const actions = {
       api
         .post('http://localhost:5001/api/auth/login', credential)
         .then((response) => {
+          console.log('respone', response)
           commit('SET_AUTHENTICATED', true)
           commit('SET_AUTH_TOKEN', response.data)
           commit('SET_AUTH_USER', response.data.user)
+          commit('SET_BRANCH_ID', response.data.user.allowedBranch)
           resolve(response)
 
           router.push({ name: 'home' })
@@ -121,6 +134,7 @@ const actions = {
     commit('SET_AUTHENTICATED', false)
     commit('REMOVE_AUTH_TOKEN')
     commit('REMOVE_AUTH_USER')
+    commit('REMOVE_BRANCH_ID')
     router.push({ name: 'login' })
     // router.replace({ name: 'login' })
   },
@@ -128,6 +142,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       commit('SET_AUTHENTICATED', false)
       commit('REMOVE_AUTH_TOKEN')
+      commit('REMOVE_BRANCH_ID')
       router.push({ name: 'login' })
       resolve()
     })

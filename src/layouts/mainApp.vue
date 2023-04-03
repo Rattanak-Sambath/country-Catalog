@@ -22,7 +22,9 @@
           />
           <q-space />
           <div align="left">
-            <span class="title"> {{ getBranch }} </span>
+            <span class="title text-bold">
+              {{ branchName ? branchName : 'No Branch' }}
+            </span>
           </div>
           <q-btn
             class="q-mr-xs"
@@ -585,12 +587,13 @@ import toast from '../Helper/toast'
 import router from '../router'
 import _BreadCrumb from './_BreadCrumb.vue'
 import state from '../store/state'
-
+import api from '../utils/utility'
 const isTranslate = ref(false)
 const leftDrawerOpen = ref(true)
 const user = ref({})
 const store = useStore()
 const t = useI18n()
+const branchName = ref('')
 // const transitionName = ref('fade-out')
 //     onMounted(() => {
 
@@ -603,9 +606,19 @@ const t = useI18n()
 //     })
 
 // Methods
-const getBranch = computed(() => {
-  return store.state.auth.branchId
-})
+const getBranch = async () => {
+  await api
+    .get('branch/getCurrentBranch/' + store.state.auth.branchId)
+    .then((res) => {
+      // console.log(res.data)
+      if (res) {
+        branchName.value = res.data.name + '[ ' + res.data.code + ' ]'
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
 const userIsInRole = (roles) => {
   return store.getters['auth/userIsInRoles'](roles)
 }
@@ -624,6 +637,7 @@ const changeLanguage = (lang) => {
 }
 // console.log();
 onBeforeMount(() => {
+  getBranch()
   // store.dispatch("auth/getCurrentUser").then((res)=>{
   //     console.log(res.data);
   //     user.value = res.data

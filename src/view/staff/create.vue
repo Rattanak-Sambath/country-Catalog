@@ -168,7 +168,7 @@
               <div class="col-xs-12 col-md-6 col-lg-6">
                 <div class="row q-col-gutter-y-md">
                   <!-- right-side  -->
-                  <div class="col-12">
+                  <!-- <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
                       v-model="form.positionId"
@@ -197,12 +197,12 @@
                         </template>
                       </q-select>
                     </validate-field>
-                  </div>
+                  </div> -->
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
-                      v-model="form.genderId"
-                      name="genderId"
+                      v-model="form.gender"
+                      name="gender"
                     >
                       <q-select
                         :model-value="value"
@@ -326,7 +326,7 @@
 import { Form as ValidateForm, Field as ValidateField } from 'vee-validate'
 import actions from '../../store/actions'
 import toast from '../../Helper/toast.js'
-import { object, string } from 'yup'
+import { object, string, date } from 'yup'
 import { ref, onMounted, watch } from 'vue'
 // import store from '../../store/'
 // import api from '../../utils/utility'
@@ -340,23 +340,44 @@ const loading = ref(false)
 const store = useStore()
 // const name = ref('')
 const form = ref({
-  branchId: store.state.auth.branchId,
   name: '',
-  model: '',
-  weight: '',
-  color: '',
-  driverId: '',
+  phone: '',
+  positionId: '',
+  gender: '',
+  address: '',
+  salary: '',
   date: dayjs(new Date()).format('YYYY-MM-DD'),
 })
+const positionOpt = ref([
+  {
+    name: 'Delivery',
+    value: 'Delivery',
+  },
+  {
+    name: 'Staff Office',
+    value: 'Staff Office',
+  },
+])
+const genderOpt = ref([
+  {
+    name: 'Male',
+    value: 'Male',
+  },
+  {
+    name: 'Female',
+    value: 'Female',
+  },
+])
 const driverOpt = ref([])
 const invisibleBtn = ref(false)
 const rules = object({
   name: string().required().label('Name'),
-  model: string().required().label('Model'),
-  weight: string().required().label('Weight'),
-  color: string().required().label('Color'),
-  driverId: string().required().label('Driver'),
-  date: string().required().label('Date'),
+  positionId: string().required().label('Position'),
+  phone: string().required().label('Phone'),
+  gender: string().required().label('Gender'),
+  address: string().required().label('Address'),
+  salary: string().required().label('Salary'),
+  date: date().required().label('Date'),
 })
 const showId = ref('')
 const concel = () => {
@@ -380,18 +401,21 @@ const onSubmit = async () => {
   const { valid } = await formRef.value.validate()
   if (valid) {
     let methods = '/car/createCar'
-    if (showId.value) {
-      methods = 'car/updateCar'
-    }
-    loading.value = true
-    let res = await api.post('car/createCar', form.value)
+    let doc = form.value
+    doc.branchId = store.state.auth.branchId
+
+    // if (showId.value) {
+    //   methods =  'car/updateCar'
+    // }
+    // loading.value = true
+    let res = await api.post('staff/createStaff', doc)
     if (res) {
       toast.success({ message: 'Insert successfully ' })
       loading.value = false
       router.go(-1)
     } else {
       toast.error({ message: 'There was somehting wrong to add car' })
-      // throw('There was something wrong !!')
+      router.go(-1)
     }
   }
 }

@@ -138,6 +138,8 @@ import router from '../../router'
 import api from '../../utils/utility'
 import _ from 'lodash'
 import { Loading } from 'quasar'
+import { useStore } from 'vuex'
+const store = useStore()
 const pagination = ref({
   sortBy: 'name',
   descending: false,
@@ -172,21 +174,22 @@ const columns = [
     sortable: true,
   },
   {
-    name: 'model',
+    name: 'phone',
     align: 'center',
-    label: 'Model',
-    field: 'model',
+    label: 'Phone',
+    field: 'phone',
     sortable: true,
   },
   {
-    name: '',
+    name: 'positionId',
     align: 'center',
-    label: 'Driver',
-    field: 'driverName',
+    label: 'Position',
+    field: 'positionId',
     sortable: true,
   },
-  { name: 'weight', label: 'weight', field: 'weight', sortable: true },
-  { name: 'color', label: 'Color', field: 'color' },
+  { name: 'gender', label: 'Gender', field: 'gender', sortable: true },
+  { name: 'address', label: 'Address', field: 'address' },
+  { name: 'salary', label: 'Salary', field: 'salary' },
   { name: 'date', label: 'Date', field: 'date' },
   { name: 'action', label: 'Action', field: '' },
 ]
@@ -203,11 +206,12 @@ const getDataTable = async () => {
   dataTable.value = []
   const { page, rowsPerPage } = pagination.value
 
-  let data = await api.get('/car/getCar', {
+  let data = await api.get('/staff/getStaff', {
     params: {
       page,
       rowsPerPage,
       search: filter.value,
+      branchId: store.state.auth.branchId,
     },
   })
   loading.value = false

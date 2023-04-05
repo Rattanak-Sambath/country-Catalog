@@ -94,6 +94,10 @@
                             </span> -->
           </q-td>
         </template>
+        <template #body-cell-salary="props">
+          <q-td :props="props"> $ {{ props.row.salary }} </q-td>
+        </template>
+
         <template v-slot:top>
           <q-btn
             color="blue-10"
@@ -238,9 +242,11 @@ const onRemove = async (param) => {
   diaglogDelete.value = true
 }
 const onConfirmDelete = async () => {
-  let data = await api.delete('/car/removeCar/' + showId.value)
+  let data = await api.delete('/staff/removeStaff/' + showId.value)
+
   if (data) {
-    toast.success({ message: '' })
+    console.log('data', data)
+    toast.success(data.data.status)
     getDataTable()
     diaglogDelete.value = false
   } else {
@@ -249,7 +255,7 @@ const onConfirmDelete = async () => {
 }
 const onEdit = async (param) => {
   // console.log(param);
-  router.push({ name: 'car.edit', params: { car: param } })
+  router.push({ name: 'staff.edit', params: { staff: param } })
 }
 const exportTable = () => {
   // const content = [columns.map(col => wrapCsvValue(col.label))].concat(

@@ -377,8 +377,8 @@
                   clickable
                   v-ripple
                   exact-active-class="q-item--active"
-                  v-if="userIsInRole(['staff'])"
                   :to="{ name: 'staff.index' }"
+                  v-if="userIsInRole(['staff'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="badge" />
@@ -389,7 +389,7 @@
                 <q-item
                   clickable
                   v-ripple
-                  @click="logout"
+                  :to="{ name: 'storeLocation.index' }"
                   exact-active-class="q-item--active"
                   v-if="userIsInRole(['location_desk'])"
                 >

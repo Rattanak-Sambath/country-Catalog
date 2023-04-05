@@ -15,7 +15,7 @@ export default {
   group: 'RoleGroup',
   branch: 'Branch',
   staff: 'Staff',
-  location_Desk: 'Location_Desk',
+  location_Desk: 'Store-ocation',
   role: 'Role',
   user: 'User',
   report: 'Report',

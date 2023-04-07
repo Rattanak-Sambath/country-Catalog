@@ -13,6 +13,12 @@ export default [
     name: 'goodsTransfer.index',
     component: () => import('../../view/goodsTransfer/index.vue'),
   },
+  {
+    path: '/goodsTransfer/create',
+    name: 'goodsTransfer.create',
+    component: () => import('../../view/goodsTransfer/create.vue'),
+  },
+
   // car
   {
     path: '/car',

@@ -28,4 +28,5 @@ export default {
   moveItem_toVen_report: 'របាយការណ៏ផ្ទេរអីវ៉ាន់ទៅឡាន',
   receive_item_report: 'របាយការណ៏អតិថិជនទទួលអីវ៉ាន',
   collect_by_user_report: 'របាយការណ៏ចំណូលតាមអ្នកប្រើប្រាស់',
+  receive_item: 'ទទួលអីវ៉ាន់ចូលសាខា',
 }

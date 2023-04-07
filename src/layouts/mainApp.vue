@@ -229,8 +229,20 @@
               <q-item-section avatar>
                 <q-icon name="two_wheeler" />
               </q-item-section>
-
               <q-item-section> {{ $t('good_delivery') }}</q-item-section>
+            </q-item>
+
+            <q-item
+              exact-active-class="q-item--active"
+              v-ripple
+              :to="{ name: 'subject.index' }"
+              v-if="userIsInRole(['receive_item'])"
+            >
+              <q-item-section avatar>
+                <q-icon name="save_alt" />
+              </q-item-section>
+
+              <q-item-section> {{ $t('receive_item') }}</q-item-section>
             </q-item>
             <q-item
               exact-active-class="q-item--active"
@@ -251,7 +263,7 @@
               v-if="userIsInRole(['search_goods_transfer'])"
             >
               <q-item-section avatar>
-                <q-icon name="content_paste_search" />
+                <q-icon name="search" />
               </q-item-section>
 
               <q-item-section> {{ $t('searchGoodstransfer') }}</q-item-section>

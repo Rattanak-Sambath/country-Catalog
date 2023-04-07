@@ -28,4 +28,5 @@ export default {
   moveItem_toVen_report: 'Move Items Report',
   receive_item_report: 'Receive Item Report',
   collect_by_user_report: 'Collect By User-Report',
+  receive_item: 'Receive Items',
 }

@@ -29,4 +29,5 @@ export default {
   receive_item_report: 'Receive Item Report',
   collect_by_user_report: 'Collect By User-Report',
   receive_item: 'Receive Items',
+  destination: 'Destination',
 }

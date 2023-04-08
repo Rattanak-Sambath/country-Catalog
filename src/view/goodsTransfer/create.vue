@@ -40,7 +40,10 @@
                     >
                     sender / receive information
                   </legend>
-                  <div class="row q-col-gutter-y-md">
+                  <div
+                    class="row q-col-gutter-y-md"
+                    style="width: auto; height: 600px"
+                  >
                     <div class="col-12 flex justify-between q-my-md">
                       <div>
                         Date:
@@ -67,7 +70,7 @@
                         </span>
                       </div>
                     </div>
-                    <span> Sender Telephone * </span>
+                    <div>Sender Telephone *</div>
                     <div class="col-12">
                       <validate-field
                         v-slot="{ value, field, errorMessage }"
@@ -75,18 +78,19 @@
                         name="sender"
                       >
                         <q-input
+                          dense
                           color="orange-14"
                           type="text"
                           outlined
                           :model-value="value"
-                          label="Sender"
+                          label="Please provide sender "
                           v-bind="field"
                           :error="!!errorMessage"
                           :error-message="errorMessage"
                         >
                           <template v-slot:prepend>
                             <q-icon
-                              name="person"
+                              name="phone"
                               color="indigo-10"
                             />
                           </template>
@@ -97,22 +101,23 @@
                     <div class="col-12">
                       <validate-field
                         v-slot="{ value, field, errorMessage }"
-                        v-model="form.phone"
-                        name="phone"
+                        v-model="form.receiver"
+                        name="receiver"
                       >
                         <q-input
+                          dense
                           color="orange-14"
                           type="text"
                           outlined
                           :model-value="value"
-                          label="Phone"
+                          label="Please provide receive "
                           v-bind="field"
                           :error="!!errorMessage"
                           :error-message="errorMessage"
                         >
                           <template v-slot:prepend>
                             <q-icon
-                              name="phone"
+                              name="phone_callback"
                               color="indigo-10"
                             />
                           </template>
@@ -127,8 +132,9 @@
                       >
                         <span>Area * </span>
                         <q-select
-                          :model-value="value"
-                          :options="positionOpt"
+                          dense
+                          v-model="form.area"
+                          :options="areaOpt"
                           map-options
                           emit-value
                           option-label="name"
@@ -136,7 +142,7 @@
                           color="orange-14"
                           type="text"
                           outlined
-                          label="Position"
+                          label="Area"
                           v-bind="field"
                           :error="!!errorMessage"
                           :error-message="errorMessage"
@@ -144,29 +150,38 @@
                       </div>
                       <div style="width: 280px">
                         <span>Destination to * </span>
-
-                        <q-select
-                          :model-value="value"
-                          :options="positionOpt"
-                          map-options
-                          emit-value
-                          option-label="name"
-                          option-value="value"
-                          color="orange-14"
-                          type="text"
-                          outlined
-                          label="Position"
-                          v-bind="field"
-                          :error="!!errorMessage"
-                          :error-message="errorMessage"
-                        />
+                        <validate-field
+                          v-slot="{ value, field, errorMessage }"
+                          v-model="form.destination"
+                          name="destination"
+                        >
+                          <q-select
+                            dense
+                            :model-value="value"
+                            :options="destinationOpt"
+                            map-options
+                            emit-value
+                            option-label="name"
+                            option-value="value"
+                            color="orange-14"
+                            type="text"
+                            outlined
+                            label="destination"
+                            v-bind="field"
+                            :error="!!errorMessage"
+                            :error-message="errorMessage"
+                          />
+                        </validate-field>
                       </div>
                     </div>
                   </div>
                 </fieldset>
               </div>
 
-              <div class="col-xs-12 col-md-4 col-lg-4">
+              <div
+                class="col-xs-12 col-md-4 col-lg-4"
+                style="height: 500px"
+              >
                 <fieldset class="text-left">
                   <legend>
                     <span
@@ -176,16 +191,29 @@
                     >
                     Item Information
                   </legend>
-                  <div class="row q-col-gutter-y-md">
+                  <div
+                    class="row q-col-gutter-y-md"
+                    style="width: auto; height: 620px"
+                  >
+                    <div class="col-12 q-my-lg text-center">
+                      <span
+                        class="text-bold"
+                        style="font-size: 40px"
+                      >
+                        បញ្ញើធម្មតា (Standart)
+                      </span>
+                    </div>
+                    <span>Items Type * </span>
                     <div class="col-12">
                       <validate-field
                         v-slot="{ value, field, errorMessage }"
-                        v-model="form.gender"
-                        name="gender"
+                        v-model="form.itemType"
+                        name="itemType"
                       >
                         <q-select
+                          dense=""
                           :model-value="value"
-                          :options="genderOpt"
+                          :options="itemTypeOpt"
                           map-options
                           emit-value
                           option-label="name"
@@ -193,190 +221,259 @@
                           color="orange-14"
                           type="text"
                           outlined
-                          label="Gender"
+                          label=""
                           v-bind="field"
                           :error="!!errorMessage"
                           :error-message="errorMessage"
                         >
                           <template v-slot:prepend>
                             <q-icon
-                              name="transgender"
+                              name="dashboard"
                               color="indigo-10"
                             />
                           </template>
                         </q-select>
                       </validate-field>
                     </div>
+                    <div>Items Name</div>
                     <div class="col-12">
                       <validate-field
                         v-slot="{ value, field, errorMessage }"
-                        v-model="form.address"
-                        name="address"
+                        v-model="form.itemName"
+                        name="itemName"
                       >
                         <q-input
+                          dense=""
                           color="orange-14"
                           type="text"
                           outlined
                           :model-value="value"
-                          label="Address"
+                          label=""
                           v-bind="field"
                           :error="!!errorMessage"
                           :error-message="errorMessage"
                         >
                           <template v-slot:prepend>
                             <q-icon
-                              name="place"
+                              name="sticky_note_2"
                               color="indigo-10"
                             />
                           </template>
                         </q-input>
                       </validate-field>
                     </div>
+                    <div>Items Value *</div>
                     <div class="col-12">
                       <validate-field
                         v-slot="{ value, field, errorMessage }"
-                        v-model="form.salary"
-                        name="salary"
+                        v-model="form.itemValue"
+                        name="itemValue"
                       >
                         <q-input
+                          dense=""
                           color="orange-14"
                           type="text"
                           outlined
                           :model-value="value"
-                          label="Salary"
+                          label=""
                           v-bind="field"
                           :error="!!errorMessage"
                           :error-message="errorMessage"
                         >
                           <template v-slot:prepend>
                             <q-icon
-                              name="money"
+                              name="attach_money"
                               color="indigo-10"
                             />
                           </template>
                         </q-input>
                       </validate-field>
+                    </div>
+
+                    <div class="col-12 row">
+                      <div
+                        style="width: 200px"
+                        class="q-mx-xs"
+                      >
+                        <span>Qty * </span>
+                        <validate-field
+                          v-slot="{ value, field, errorMessage }"
+                          v-model="form.qty"
+                          name="qty"
+                        >
+                          <q-input
+                            dense=""
+                            :model-value="value"
+                            type="number"
+                            color="orange-14"
+                            outlined
+                            v-bind="field"
+                            :error="!!errorMessage"
+                            :error-message="errorMessage"
+                          />
+                        </validate-field>
+                      </div>
+                      <div style="width: 280px">
+                        <div>please select oUM *</div>
+
+                        <q-select
+                          dense
+                          :model-value="value"
+                          :options="positionOpt"
+                          map-options
+                          emit-value
+                          option-label="name"
+                          option-value="value"
+                          color="orange-14"
+                          type="text"
+                          outlined
+                          label="Position"
+                          v-bind="field"
+                          :error="!!errorMessage"
+                          :error-message="errorMessage"
+                        />
+                      </div>
                     </div>
                     <!-- end-right-side  -->
                   </div>
                 </fieldset>
               </div>
-              <div class="col-xs-12 col-md-4 col-lg-4">
-                <fieldset class="q-pa-md text-left">
+              <div
+                class="col-xs-12 col-md-4 col-lg-4"
+                style=""
+              >
+                <fieldset class="text-left">
                   <legend>
                     <span
                       style="font-size: 30px"
                       class="text-bold q-mx-md"
-                      >3</span
                     >
+                      3
+                    </span>
                     Fee
                   </legend>
-                  <div class="row q-col-gutter-y-md">
-                    <!-- right-side  -->
-                    <!-- <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.positionId"
-                      name="positionId"
-                    >
-                      <q-select
-                        :model-value="value"
-                        :options="positionOpt"
-                        map-options
-                        emit-value
-                        option-label="name"
-                        option-value="value"
-                        color="orange-14"
-                        type="text"
-                        outlined
-                        label="Position"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      >
-                        <template v-slot:prepend>
-                          <q-icon
-                            name="picture_in_picture"
-                            color="indigo-10"
-                          />
-                        </template>
-                      </q-select>
-                    </validate-field>
-                  </div> -->
+                  <div class="row">
                     <div class="col-12">
                       <validate-field
                         v-slot="{ value, field, errorMessage }"
-                        v-model="form.gender"
-                        name="gender"
-                      >
-                        <q-select
-                          :model-value="value"
-                          :options="genderOpt"
-                          map-options
-                          emit-value
-                          option-label="name"
-                          option-value="value"
-                          color="orange-14"
-                          type="text"
-                          outlined
-                          label="Gender"
-                          v-bind="field"
-                          :error="!!errorMessage"
-                          :error-message="errorMessage"
-                        >
-                          <template v-slot:prepend>
-                            <q-icon
-                              name="transgender"
-                              color="indigo-10"
-                            />
-                          </template>
-                        </q-select>
-                      </validate-field>
-                    </div>
-                    <div class="col-12">
-                      <validate-field
-                        v-slot="{ value, field, errorMessage }"
-                        v-model="form.address"
-                        name="address"
+                        v-model="form.fee"
+                        name="fee"
                       >
                         <q-input
+                          dense=""
+                          style="font-size: bold"
+                          :model-value="value"
                           color="orange-14"
                           type="text"
                           outlined
-                          :model-value="value"
-                          label="Address"
                           v-bind="field"
                           :error="!!errorMessage"
                           :error-message="errorMessage"
                         >
                           <template v-slot:prepend>
                             <q-icon
-                              name="place"
+                              name="attach_money"
                               color="indigo-10"
                             />
                           </template>
                         </q-input>
                       </validate-field>
                     </div>
-                    <div class="col-12">
-                      <validate-field
-                        v-slot="{ value, field, errorMessage }"
-                        v-model="form.salary"
-                        name="salary"
+                    <div class="col-12 row q-my-md">
+                      <div
+                        v-for="(fee, index) in feesOpt"
+                        @click="clickFee(fee)"
                       >
+                        <q-chip
+                          square
+                          class="text-indigo text-bold q-pa-md cursor-pointer"
+                          >{{ fee.name }}</q-chip
+                        >
+                      </div>
+                    </div>
+                    <div>Delivery</div>
+                    <div class="col-12 row">
+                      <div>
+                        <validate-field
+                          v-slot="{ value, field, errorMessage }"
+                          v-model="form.delivery"
+                          name="delivery"
+                        >
+                          <q-input
+                            dense=""
+                            color="orange-14"
+                            type="text"
+                            outlined
+                            :model-value="value"
+                            label=""
+                            v-bind="field"
+                            :error="!!errorMessage"
+                            :error-message="errorMessage"
+                          >
+                            <template v-slot:prepend>
+                              <q-icon
+                                name="place"
+                                color="indigo-10"
+                              />
+                            </template>
+                          </q-input>
+                        </validate-field>
+                      </div>
+                      <div class="q-mx-xs">
                         <q-input
+                          dense=""
                           color="orange-14"
                           type="text"
                           outlined
                           :model-value="value"
-                          label="Salary"
+                          v-bind="field"
+                          :error="!!errorMessage"
+                          :error-message="errorMessage"
+                        />
+                      </div>
+                    </div>
+                    <div>Total *</div>
+                    <div class="col-12">
+                      <validate-field
+                        v-slot="{ value, field, errorMessage }"
+                        v-model="form.total"
+                        name="total"
+                      >
+                        <q-input
+                          dense=""
+                          color="orange-14"
+                          type="text"
+                          outlined
+                          :model-value="value"
+                          label=""
+                          v-bind="field"
+                          :error="!!errorMessage"
+                          :error-message="errorMessage"
+                        >
+                        </q-input>
+                      </validate-field>
+                    </div>
+                    <div>Total Paid</div>
+                    <div class="col-12">
+                      <validate-field
+                        v-slot="{ value, field, errorMessage }"
+                        v-model="form.totalPaid"
+                        name="totalPaid"
+                      >
+                        <q-input
+                          dense=""
+                          color="orange-14"
+                          type="text"
+                          outlined
+                          :model-value="value"
+                          label="Total Paid"
                           v-bind="field"
                           :error="!!errorMessage"
                           :error-message="errorMessage"
                         >
                           <template v-slot:prepend>
                             <q-icon
-                              name="money"
+                              name="attach_money"
                               color="indigo-10"
                             />
                           </template>
@@ -432,7 +529,7 @@
 import { Form as ValidateForm, Field as ValidateField } from 'vee-validate'
 import actions from '../../store/actions'
 import toast from '../../Helper/toast.js'
-import { object, string, date } from 'yup'
+import { object, string, date, number } from 'yup'
 import { ref, onMounted, watch } from 'vue'
 // import store from '../../store/'
 // import api from '../../utils/utility'
@@ -441,12 +538,13 @@ import router from '../../router'
 import dayjs from 'dayjs'
 import api from '../../utils/utility'
 import axios from 'axios'
+
 const formRef = ref('')
 const loading = ref(false)
 const store = useStore()
 // const name = ref('')
 const form = ref({
-  name: '',
+  area: 'All',
   phone: '',
   positionId: '',
   gender: '',
@@ -454,6 +552,143 @@ const form = ref({
   salary: '',
   date: dayjs(new Date()).format('YYYY-MM-DD'),
 })
+const areaOpt = ref([
+  {
+    name: 'All',
+    value: 'All',
+  },
+  {
+    name: 'ភ្នំពេញ',
+    value: 'ភ្នំពេញ',
+  },
+  {
+    name: 'ក្រុង',
+    value: 'ក្រុង',
+  },
+  {
+    name: 'ខេត្ត',
+    value: 'ខេត្ត',
+  },
+  {
+    name: 'ផ្សារ',
+    value: 'ផ្សារ',
+  },
+  {
+    name: 'ឃុំ',
+    value: 'ឃុំ',
+  },
+  {
+    name: 'ស្រុក',
+    value: 'ស្រុក',
+  },
+  {
+    name: 'ភូមិ',
+    value: 'ភូមិ',
+  },
+  {
+    name: 'ព្រំដែន',
+    value: 'ព្រំដែន',
+  },
+])
+const feesOpt = ref([
+  {
+    name: 5000,
+  },
+  {
+    name: 5500,
+  },
+  {
+    name: 6000,
+  },
+  {
+    name: 6500,
+  },
+  {
+    name: 7000,
+  },
+  {
+    name: 7500,
+  },
+  {
+    name: 8000,
+  },
+  {
+    name: 8500,
+  },
+  {
+    name: 8000,
+  },
+  {
+    name: 8500,
+  },
+  {
+    name: 9000,
+  },
+  {
+    name: 9500,
+  },
+  {
+    name: 10000,
+  },
+  {
+    name: 11000,
+  },
+  {
+    name: 12000,
+  },
+  {
+    name: 13000,
+  },
+  {
+    name: 12000,
+  },
+  {
+    name: 13000,
+  },
+  {
+    name: 14000,
+  },
+  {
+    name: 15000,
+  },
+  {
+    name: 16000,
+  },
+  {
+    name: 17000,
+  },
+  {
+    name: 18000,
+  },
+  {
+    name: 19000,
+  },
+  {
+    name: 21000,
+  },
+  {
+    name: 22000,
+  },
+  {
+    name: 24000,
+  },
+  {
+    name: 25000,
+  },
+])
+
+// const rules = object({
+//   name: string().required().label('Name'),
+//   // role: string().required().label('Role'),
+//   status: string().required().label('Status'),
+// })
+const clickFee = async (params) => {
+  console.log(params)
+  form.value.fee = ''
+  if (params) {
+    form.value.fee = params.name
+  }
+}
 const branchName = ref('')
 const customerType = ref('General')
 const getBranch = async () => {
@@ -492,13 +727,13 @@ const genderOpt = ref([
 const driverOpt = ref([])
 const invisibleBtn = ref(false)
 const rules = object({
-  name: string().required().label('Name'),
-  positionId: string().required().label('Position'),
-  phone: string().required().label('Phone'),
-  gender: string().required().label('Gender'),
-  address: string().required().label('Address'),
-  salary: string().required().label('Salary'),
-  date: date().required().label('Date'),
+  sender: string().required().label('Sender'),
+  receiver: string().required().label('Receive'),
+  destination: string().required().label('Destination'),
+  itemType: string().required().label('Item Type'),
+  itemValue: string().required().label('Item Value'),
+  qty: string().required().label('Qty'),
+  fee: number().required().label('Fee'),
 })
 const showId = ref('')
 const concel = () => {
@@ -521,23 +756,22 @@ watch(
 const onSubmit = async () => {
   const { valid } = await formRef.value.validate()
   if (valid) {
-    let methods = '/car/createCar'
-    let doc = form.value
-    doc.branchId = store.state.auth.branchId
-
+    // let methods = '/goodstranfer/createGoodstranfer'
+    // let doc = form.value
+    // doc.branchId = store.state.auth.branchId
     // if (showId.value) {
     //   methods =  'car/updateCar'
     // }
     // loading.value = true
-    let res = await api.post('staff/createStaff', doc)
-    if (res) {
-      toast.success({ message: 'Insert successfully ' })
-      loading.value = false
-      router.go(-1)
-    } else {
-      toast.error({ message: 'There was somehting wrong to add car' })
-      router.go(-1)
-    }
+    // let res = await api.post('staff/createStaff', doc)
+    // if (res) {
+    //   toast.success({ message: 'Insert successfully ' })
+    //   loading.value = false
+    //   router.go(-1)
+    // } else {
+    //   toast.error({ message: 'There was somehting wrong to add car' })
+    //   router.go(-1)
+    // }
   }
 }
 const cancel = () => {

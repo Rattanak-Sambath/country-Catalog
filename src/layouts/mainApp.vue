@@ -411,6 +411,19 @@
 
                   <q-item-section> {{ $t('location_Desk') }} </q-item-section>
                 </q-item>
+                <!-- <q-item
+                  clickable
+                  v-ripple
+                  :to="{ name: 'destination.index' }"
+                  exact-active-class="q-item--active"
+                  v-if="userIsInRole(['destination'])"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="near_me" />
+                  </q-item-section>
+
+                  <q-item-section> {{ $t('destination') }} </q-item-section>
+                </q-item> -->
               </q-card-section>
             </q-expansion-item>
             <q-expansion-item

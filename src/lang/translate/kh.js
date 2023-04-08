@@ -29,4 +29,5 @@ export default {
   receive_item_report: 'របាយការណ៏អតិថិជនទទួលអីវ៉ាន',
   collect_by_user_report: 'របាយការណ៏ចំណូលតាមអ្នកប្រើប្រាស់',
   receive_item: 'ទទួលអីវ៉ាន់ចូលសាខា',
+  destination: 'ទិសដៅ',
 }

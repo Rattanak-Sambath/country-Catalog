@@ -141,4 +141,22 @@ export default [
     name: 'staff.edit',
     component: () => import('../../view/staff/edit.vue'),
   },
+
+  // destination
+
+  {
+    path: '/destination',
+    name: 'destination.index',
+    component: () => import('../../view/destination/index.vue'),
+  },
+  {
+    path: '/destination/create',
+    name: 'destination.create',
+    component: () => import('../../view/destination/create.vue'),
+  },
+  {
+    path: '/destination/:destination/edit',
+    name: 'destination.edit',
+    component: () => import('../../view/destination/edit.vue'),
+  },
 ]

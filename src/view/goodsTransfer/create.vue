@@ -162,7 +162,7 @@
                             map-options
                             emit-value
                             option-label="name"
-                            option-value="value"
+                            option-value="name"
                             color="orange-14"
                             type="text"
                             outlined
@@ -315,23 +315,28 @@
                       </div>
                       <div style="width: 280px">
                         <div>please select oUM *</div>
-
-                        <q-select
-                          dense
-                          :model-value="value"
-                          :options="positionOpt"
-                          map-options
-                          emit-value
-                          option-label="name"
-                          option-value="value"
-                          color="orange-14"
-                          type="text"
-                          outlined
-                          label="Position"
-                          v-bind="field"
-                          :error="!!errorMessage"
-                          :error-message="errorMessage"
-                        />
+                        <validate-field
+                          v-slot="{ value, field, errorMessage }"
+                          v-model="form.oum"
+                          name="oum"
+                        >
+                          <q-select
+                            dense
+                            :model-value="value"
+                            :options="OumOpt"
+                            map-options
+                            emit-value
+                            option-label="name"
+                            option-value="value"
+                            color="orange-14"
+                            type="text"
+                            outlined
+                            label="Position"
+                            v-bind="field"
+                            :error="!!errorMessage"
+                            :error-message="errorMessage"
+                          />
+                        </validate-field>
                       </div>
                     </div>
                     <!-- end-right-side  -->
@@ -544,6 +549,7 @@ const loading = ref(false)
 const store = useStore()
 // const name = ref('')
 const form = ref({
+  oum: '',
   area: 'All',
   phone: '',
   positionId: '',
@@ -552,6 +558,7 @@ const form = ref({
   salary: '',
   date: dayjs(new Date()).format('YYYY-MM-DD'),
 })
+const destinationOpt = ref([])
 const areaOpt = ref([
   {
     name: 'All',
@@ -588,6 +595,56 @@ const areaOpt = ref([
   {
     name: 'ព្រំដែន',
     value: 'ព្រំដែន',
+  },
+])
+const OumOpt = ref([
+  {
+    name: 'កេស',
+    value: 'កេស',
+  },
+  {
+    name: 'គីឡូក្រាម',
+    value: 'គីឡូក្រាម',
+  },
+  {
+    name: 'កញ្ចាប់',
+    value: 'កញ្ចាប់',
+  },
+  {
+    name: 'លីត្រ',
+    value: 'លីត្រ',
+  },
+  {
+    name: 'ចំនូន',
+    value: 'ចំនូន',
+  },
+  {
+    name: 'ដុំ',
+    value: 'ដុំ',
+  },
+  {
+    name: 'ប្រអប់',
+    value: 'ប្រអប់',
+  },
+  {
+    name: 'ថង់',
+    value: 'ថង់',
+  },
+  {
+    name: 'ការ៉ុង',
+    value: 'ការ៉ុង',
+  },
+  {
+    name: 'សាមី',
+    value: 'សាមី',
+  },
+  {
+    name: 'យួរ',
+    value: 'យួរ',
+  },
+  {
+    name: '​កង',
+    value: 'កង',
   },
 ])
 const feesOpt = ref([
@@ -689,6 +746,23 @@ const clickFee = async (params) => {
     form.value.fee = params.name
   }
 }
+
+watch(
+  () => form.value.area,
+  (val) => {
+    destinationOpt.value = []
+    form.value.destination = ''
+    // formRef.value.resetForm()
+    let res = api
+      .get('destination/getDestination/' + val)
+      .then((res) => {
+        destinationOpt.value = res.data
+      })
+      .catch((error) => console.log(error))
+  },
+  { immediate: true }
+)
+
 const branchName = ref('')
 const customerType = ref('General')
 const getBranch = async () => {
@@ -788,6 +862,7 @@ const findDriver = async () => {
 onMounted(() => {
   findDriver()
   getBranch()
+
   // if (store.state.auth.branchId) {
   //   getBranch()
   // }

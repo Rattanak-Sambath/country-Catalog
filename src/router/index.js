@@ -13,7 +13,6 @@ const routes = [
         name: 'home',
         component: () => import('../view/Dashboard.vue'),
       },
-
       ...user,
     ],
     meta: {

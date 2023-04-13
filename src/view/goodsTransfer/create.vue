@@ -127,7 +127,7 @@
                     <span> <q-radio>ទិសដៅ (Destination)</q-radio> </span>
                     <div class="col-12 row">
                       <div
-                        style="width: 200px"
+                        style="width: 120px"
                         class="q-mx-xs"
                       >
                         <span>Area * </span>
@@ -148,7 +148,7 @@
                           :error-message="errorMessage"
                         />
                       </div>
-                      <div style="width: 280px">
+                      <div style="width: 250px">
                         <span>Destination to * </span>
                         <validate-field
                           v-slot="{ value, field, errorMessage }"
@@ -180,7 +180,7 @@
 
               <div
                 class="col-xs-12 col-md-4 col-lg-4"
-                style="height: 500px"
+                style="height: 670px"
               >
                 <fieldset class="text-left">
                   <legend>
@@ -292,7 +292,7 @@
 
                     <div class="col-12 row">
                       <div
-                        style="width: 200px"
+                        style="width: 120px"
                         class="q-mx-xs"
                       >
                         <span>Qty * </span>
@@ -313,7 +313,7 @@
                           />
                         </validate-field>
                       </div>
-                      <div style="width: 280px">
+                      <div style="width: 250px">
                         <div>please select oUM *</div>
                         <validate-field
                           v-slot="{ value, field, errorMessage }"
@@ -345,9 +345,12 @@
               </div>
               <div
                 class="col-xs-12 col-md-4 col-lg-4"
-                style=""
+                style="height: 665px"
               >
-                <fieldset class="text-left">
+                <fieldset
+                  class="text-left"
+                  style="height: 665px"
+                >
                   <legend>
                     <span
                       style="font-size: 30px"
@@ -404,11 +407,14 @@
                           v-model="form.delivery"
                           name="delivery"
                         >
-                          <q-input
+                          <q-select
                             dense=""
                             color="orange-14"
                             type="text"
                             outlined
+                            :options="deliveryOpt"
+                            option-label="name"
+                            option-value="value"
                             :model-value="value"
                             label=""
                             v-bind="field"
@@ -421,19 +427,18 @@
                                 color="indigo-10"
                               />
                             </template>
-                          </q-input>
+                          </q-select>
                         </validate-field>
                       </div>
                       <div class="q-mx-xs">
                         <q-input
+                          readonly=""
                           dense=""
                           color="orange-14"
                           type="text"
                           outlined
-                          :model-value="value"
-                          v-bind="field"
-                          :error="!!errorMessage"
-                          :error-message="errorMessage"
+                          v-model="form.deliveryPrice"
+                          label=""
                         />
                       </div>
                     </div>
@@ -445,6 +450,7 @@
                         name="total"
                       >
                         <q-input
+                          readonly
                           dense=""
                           color="orange-14"
                           type="text"
@@ -466,6 +472,7 @@
                         name="totalPaid"
                       >
                         <q-input
+                          readonly=""
                           dense=""
                           color="orange-14"
                           type="text"
@@ -485,6 +492,7 @@
                         </q-input>
                       </validate-field>
                     </div>
+
                     <!-- end-right-side  -->
                   </div>
                 </fieldset>
@@ -549,15 +557,150 @@ const loading = ref(false)
 const store = useStore()
 // const name = ref('')
 const form = ref({
+  code: Date.now() + Math.random().toString(36).substring(2, 3).toUpperCase(),
+  branchId: store.state.auth.branchId,
+  fee: '',
+  delivery: '',
+  sender: '',
+  receiver: '',
+  destination: '',
   oum: '',
   area: 'All',
   phone: '',
   positionId: '',
+  itemType: '',
+  itemName: '',
+  itemValue: '',
+  qty: '1',
   gender: '',
   address: '',
-  salary: '',
+  deliveryPrice: 0,
+  total: 0,
+  totalPaid: 0,
   date: dayjs(new Date()).format('YYYY-MM-DD'),
 })
+const itemTypeOpt = ref([
+  {
+    name: 'គ្រឿងសង្ហារឹម',
+    value: 'គ្រឿងសង្ហារឹម',
+  },
+  {
+    name: 'សម្លៀកបំពាក់',
+    value: 'សម្លៀកបំពាក់',
+  },
+  {
+    name: 'សាច់ក្រណាត់',
+    value: 'សាច់ក្រណាត់',
+  },
+  {
+    name: 'គ្រឿងកំប៉ុង',
+    value: 'គ្រឿងកំប៉ុង',
+  },
+  {
+    name: 'កាបូបស្បែកជើង',
+    value: 'កាបូបស្បែកជើង',
+  },
+  {
+    name: 'ឧបករណ៍អេឡិចត្រូនិច',
+    value: 'ឧបករណ៍អេឡិចត្រូនិច',
+  },
+  {
+    name: 'សម្ភារការិយាល័យ',
+    value: 'សម្ភារការិយាល័យ',
+  },
+  {
+    name: 'គ្រឿងសំណង់',
+    value: 'គ្រឿងសំណង់',
+  },
+  {
+    name: 'គ្រឿងបន្លាស់យានយន្ត',
+    value: 'គ្រឿងបន្លាស់យានយន្ត',
+  },
+  {
+    name: 'ឯកសារ-សម្ភារបន្ទាន់',
+    value: 'ឯកសារ-សម្ភារបន្ទាន់',
+  },
+  {
+    name: 'ផ្សេងៗ Others',
+    value: 'ផ្សេងៗ Others',
+  },
+  {
+    name: 'បន្លែ ផ្លែឈើ',
+    value: 'បន្លែ ផ្លែឈើ',
+  },
+  {
+    name: 'បន្លែ ផ្លែឈើ',
+    value: 'បន្លែ ផ្លែឈើ',
+  },
+  {
+    name: 'វត្ថុស្រួយងាយបែកបាក់',
+    value: 'វត្ថុស្រួយងាយបែកបាក់',
+  },
+  {
+    name: 'គ្រឿងក្រអូប',
+    value: 'គ្រឿងក្រអូប',
+  },
+  {
+    name: 'កាបូប',
+    value: 'កាបូប',
+  },
+  {
+    name: 'ឡេ',
+    value: 'ឡេ',
+  },
+  {
+    name: 'ថ្នាំពេទ្រ',
+    value: 'ថ្នាំពេទ្រ',
+  },
+  {
+    name: 'គ្រឿងកាឡៃ',
+    value: 'គ្រឿងកាឡៃ',
+  },
+  {
+    name: 'វ៉ែនតា',
+    value: 'វ៉ែនតា',
+  },
+  {
+    name: 'ពុម្ពធ្មេញ',
+    value: 'ពុម្ពធ្មេញ',
+  },
+  {
+    name: 'គ្រឿងសមុទ្រ',
+    value: 'គ្រឿងសមុទ្រ',
+  },
+  {
+    name: 'អាល់កុល',
+    value: 'អាល់កុល',
+  },
+  {
+    name: 'ម៉ាស់-Mask',
+    value: 'ម៉ាស់-Mask',
+  },
+  {
+    name: 'នាឡិការ',
+    value: 'នាឡិការ',
+  },
+  {
+    name: 'របស់ញ៉ាំ(មិនធានាខូច)',
+    value: 'របស់ញ៉ាំ(មិនធានាខូច)',
+  },
+  {
+    name: 'Case ទូរស័ព្ទ',
+    value: 'Case ទូរស័ព្ទ',
+  },
+  {
+    name: 'ម៉ូតូ/កង់ Vehicles',
+    value: 'ម៉ូតូ/កង់ Vehicles',
+  },
+  {
+    name: 'អាហារបំប៉ន',
+    value: 'អាហារបំប៉ន',
+  },
+  {
+    name: 'គំរូអីវាន់',
+    value: 'គំរូអីវាន់',
+  },
+])
 const destinationOpt = ref([])
 const areaOpt = ref([
   {
@@ -733,7 +876,103 @@ const feesOpt = ref([
     name: 25000,
   },
 ])
-
+const deliveryOpt = ref([
+  {
+    name: 'ផ្សារ ទួលទំពួង',
+    value: 'ផ្សារ ទួលទំពួង',
+    price: 2000,
+  },
+  {
+    name: 'សាខា កំបូល',
+    value: 'សាខា កំបូល',
+    price: 2500,
+  },
+  {
+    name: 'សាខា កម្ពុជាក្រោម',
+    value: 'សាខា កម្ពុជាក្រោម',
+    price: 2000,
+  },
+  {
+    name: 'សាខា',
+    value: 'សាខា',
+    price: 2000,
+  },
+  {
+    name: 'អូឡាំពិក',
+    value: 'អូឡាំពិក',
+    price: 2000,
+  },
+  {
+    name: 'ផ្សារថ្មី',
+    value: 'ផ្សារថ្មី',
+    price: 2000,
+  },
+  {
+    name: 'អូរឬស្សី',
+    value: 'អូរឬស្សី',
+    price: 3000,
+  },
+  {
+    name: 'ទួលទំពូង',
+    value: 'ទួលទំពូង',
+    price: 3000,
+  },
+  {
+    name: 'ផ្សារដើមគរ',
+    value: 'ផ្សារដើមគរ',
+    price: 3000,
+  },
+  {
+    name: 'ផ្សារបឹងសាឡាងថ្មី (ទួលសង្កែ)',
+    value: 'ផ្សារបឹងសាឡាងថ្មី (ទួលសង្កែ)',
+    price: 3000,
+  },
+  {
+    name: 'បឹងកេងកង',
+    value: 'បឹងកេងកង',
+    price: 2500,
+  },
+  {
+    name: 'ទួលស្លែង',
+    value: 'ទួលស្លែង',
+    price: 2500,
+  },
+  {
+    name: 'ស្ទឹងមានជ័យ',
+    value: 'ស្ទឹងមានជ័យ',
+    price: 2500,
+  },
+  {
+    name: 'សំណង់១២',
+    value: 'សំណង់១២',
+    price: 2500,
+  },
+  {
+    name: 'ផ្សារឃ្លាំងរំសែវ',
+    value: 'ផ្សារឃ្លាំងរំសែវ',
+    price: 2500,
+  },
+  {
+    name: 'ផ្សារដើមថ្តូវ',
+    value: 'ផ្សារដើមថ្តូវ',
+    price: 2500,
+  },
+  {
+    name: 'បឹងត្របែក',
+    value: 'បឹងត្របែក',
+    price: 3500,
+  },
+  {
+    name: 'ទឹកល្អក់ ២',
+    value: 'ទឹកល្អក់ ២',
+    price: 3500,
+  },
+  {
+    name: 'សំណង់១២',
+    value: 'សំណង់១២',
+    price: 3500,
+  },
+])
 // const rules = object({
 //   name: string().required().label('Name'),
 //   // role: string().required().label('Role'),
@@ -763,13 +1002,49 @@ watch(
   { immediate: true }
 )
 
+watch(
+  () => form.value.delivery,
+  (val, oldValue) => {
+    if (oldValue) {
+      form.value.deliveryPrice = oldValue.price
+      form.value.total -= form.value.deliveryPrice
+      if (form.value.deliveryPrice === 0) {
+        form.value.deliveryPrice = 0
+      }
+    }
+    if (val) {
+      form.value.deliveryPrice = 0
+      form.value.deliveryPrice = val.price
+      form.value.total += form.value.deliveryPrice
+      form.value.totalPaid = form.value.total
+    }
+  }
+)
+watch(
+  () => form.value.fee,
+  (val, oldValue) => {
+    if (val) {
+      console.log('val', val)
+      let sum = form.value.deliveryPrice + val
+      form.value.total = sum
+      form.value.totalPaid = sum
+    }
+  }
+)
+
+// watch(
+//   () => form.value.deliveryPrice,
+//   (val) => {
+//     console.log(val)
+//   }
+// )
 const branchName = ref('')
 const customerType = ref('General')
 const getBranch = async () => {
   await api
     .get('branch/getCurrentBranch/' + store.state.auth.branchId)
     .then((res) => {
-      // console.log(res.data)
+      // console.log(res.data)SVGFEFuncAElementSVGFEFuSVGFEFuncAElement
       if (res) {
         branchName.value = res.data.name
       }
@@ -830,6 +1105,8 @@ watch(
 const onSubmit = async () => {
   const { valid } = await formRef.value.validate()
   if (valid) {
+    window.open()
+    // console.log('form', form.value)
     // let methods = '/goodstranfer/createGoodstranfer'
     // let doc = form.value
     // doc.branchId = store.state.auth.branchId

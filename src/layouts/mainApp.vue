@@ -4,7 +4,10 @@
       <q-header>
         <q-toolbar
           class="shadow-none absolute-top text-black"
-          style="border-bottom: 1px solid rgba(0, 0, 0, 0.08)"
+          style="
+            border-bottom: 3px double rgba(0, 0, 0, 0.08);
+            background-color: white;
+          "
         >
           <q-btn
             dense

@@ -95,7 +95,7 @@ import { useStore } from 'vuex'
 import router from '../../router'
 const refForm = ref('')
 const loading = ref(false)
-const email = ref('admin@email.com')
+const email = ref('admin@gmail.com')
 const password = ref('admin123')
 const store = useStore()
 const onLogin = async () => {

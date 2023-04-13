@@ -36,6 +36,7 @@
                     <span
                       style="font-size: 30px"
                       class="text-bold q-mx-md"
+                      +
                       >1</span
                     >
                     sender / receive information

@@ -36,7 +36,6 @@
                     <span
                       style="font-size: 30px"
                       class="text-bold q-mx-md"
-                      +
                       >1</span
                     >
                     sender / receive information
@@ -381,7 +380,7 @@
                         >
                           <template v-slot:prepend>
                             <q-icon
-                              name="attach_money"
+                              name="payments"
                               color="indigo-10"
                             />
                           </template>
@@ -486,7 +485,7 @@
                         >
                           <template v-slot:prepend>
                             <q-icon
-                              name="attach_money"
+                              name="payments"
                               color="indigo-10"
                             />
                           </template>
@@ -556,9 +555,14 @@ import axios from 'axios'
 const formRef = ref('')
 const loading = ref(false)
 const store = useStore()
+const branchName = ref('')
+const customerType = ref('General')
 // const name = ref('')
 const form = ref({
-  code: Date.now() + Math.random().toString(36).substring(2, 3).toUpperCase(),
+  code:
+    store.state.auth.branchId +
+    Date.now() +
+    Math.random().toString(36).substring(2, 3).toUpperCase(),
   branchId: store.state.auth.branchId,
   fee: '',
   delivery: '',
@@ -578,6 +582,7 @@ const form = ref({
   deliveryPrice: 0,
   total: 0,
   totalPaid: 0,
+  type: 'Transfer',
   date: dayjs(new Date()).format('YYYY-MM-DD'),
 })
 const itemTypeOpt = ref([
@@ -1006,10 +1011,13 @@ watch(
 watch(
   () => form.value.delivery,
   (val, oldValue) => {
+    // if (val == null) {
+    //   form.value.deliveryPrice = 0
+    // }
     if (oldValue) {
       form.value.deliveryPrice = oldValue.price
       form.value.total -= form.value.deliveryPrice
-      if (form.value.deliveryPrice === 0) {
+      if (form.value.deliveryPrice < 0) {
         form.value.deliveryPrice = 0
       }
     }
@@ -1020,6 +1028,9 @@ watch(
       form.value.totalPaid = form.value.total
     }
   }
+  // {
+  //   immediate: true,
+  // }
 )
 watch(
   () => form.value.fee,
@@ -1030,17 +1041,26 @@ watch(
       form.value.total = sum
       form.value.totalPaid = sum
     }
+  },
+  {
+    immediate: true,
   }
 )
 
-// watch(
-//   () => form.value.deliveryPrice,
-//   (val) => {
-//     console.log(val)
-//   }
-// )
-const branchName = ref('')
-const customerType = ref('General')
+watch(
+  () => form.value.destination,
+  (val) => {
+    // formRef.resetForm()
+    form.value.fee = 0
+    form.value.total = 0
+    form.value.totalPaid = 0
+    form.value.delivery = ''
+  },
+  {
+    immediate: true,
+  }
+)
+
 const getBranch = async () => {
   await api
     .get('branch/getCurrentBranch/' + store.state.auth.branchId)
@@ -1106,7 +1126,7 @@ watch(
 const onSubmit = async () => {
   const { valid } = await formRef.value.validate()
   if (valid) {
-    window.open()
+    window.open('/printChemKun/' + form.value.code)
     // console.log('form', form.value)
     // let methods = '/goodstranfer/createGoodstranfer'
     // let doc = form.value

@@ -28,6 +28,20 @@ const routes = [
       requiresAuth: false,
     },
   },
+  {
+    path: '/',
+    component: () => import('../layouts/printLayout.vue'),
+    children: [
+      {
+        path: '/printChemKun/:id',
+        name: 'print',
+        component: () => import('../view/print.vue'),
+      },
+    ],
+    meta: {
+      requiresAuth: true,
+    },
+  },
 ]
 
 const router = createRouter({
@@ -53,7 +67,7 @@ router.beforeEach((to, from, next) => {
       next()
     }
   } else {
-    if (guestRoute.includes(to.name) || to.name == 'farm.monitoring') next()
+    if (guestRoute.includes(to.name) || to.name == '') next()
     else next({ name: 'login', query: { redirect: to.fullPath } })
   }
 })

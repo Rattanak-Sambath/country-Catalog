@@ -18,12 +18,12 @@
             >
               <q-img
                 style="width: 250px"
-                src="../../../public/301644425_462796235860934_8400094332768800945_n.png"
+                src="../../../public/04100fe4-ab2f-4971-8f95-9b05c778d5a1.jpg-output.png"
               />
             </q-avatar>
             <div class="section q-my-lg">
               <q-input
-                color="positive090999999999990oo90ollo0o00ik "
+                color="orange-14"
                 type="email"
                 filled
                 v-model="email"
@@ -33,13 +33,13 @@
                 <template v-slot:prepend>
                   <q-icon
                     name="person"
-                    color="positive"
+                    color="orange-14"
                   />
                 </template>
               </q-input>
               <q-input
                 class="q-my-md"
-                color="positive"
+                color="orange-14"
                 filled
                 v-model="password"
                 label="Password"
@@ -48,7 +48,7 @@
                 <template v-slot:prepend>
                   <q-icon
                     name="lock"
-                    color="positive"
+                    color="orange-14"
                   />
                 </template>
               </q-input>
@@ -58,7 +58,7 @@
                   color: white;
                   font-weight: bold;
                 "
-                class="full-width"
+                class="full-width bg-orange-14"
                 label="Login"
                 :loading="loading"
                 push

@@ -34,6 +34,31 @@
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
+                      v-model="form.staffId"
+                      name="staffId"
+                    >
+                      <q-select
+                        :model-value="value"
+                        :options="staffOpt"
+                        map-options
+                        emit-value
+                        option-label="label"
+                        option-value="_id"
+                        color="orange-14"
+                        type="text"
+                        outlined
+                        label="Select Staff"
+                        v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                      >
+                      </q-select>
+                    </validate-field>
+                  </div>
+
+                  <div class="col-12">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
                       v-model="form.name"
                       name="name"
                     >
@@ -388,6 +413,7 @@ import _ from 'lodash'
 const formRef = ref('')
 const loading = ref(false)
 const form = ref({
+  staffId: 'asdsad',
   username: 'user',
   name: '',
   fullname: '',
@@ -413,6 +439,7 @@ const statusOpts = ref([
     value: 'Active',
   },
 ])
+const staffOpt = ref([])
 // const positionOpt = ref([
 //   {
 //     name: 'Pre-driver',
@@ -428,6 +455,7 @@ const statusOpts = ref([
 
 const rules = object({
   name: string().required().label('Name'),
+  staffId: string().required().label('Staff'),
   fullname: string().required().label('Role'),
   email: string().required().label('Status'),
   password: string().required().label('Password'),
@@ -498,6 +526,17 @@ const fetchAllowBranch = async () => {
       console.log(err)
     })
 }
+const getStaff = async () => {
+  await api
+    .get('/staff/getAllStaff', [])
+    .then((res) => {
+      console.log(res.data)
+      staffOpt.value = res.data
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
 const fetchAllRoleGroups = async () => {
   await api
     .get('roleGroup/getAllRoleGroup', [])
@@ -514,6 +553,7 @@ const cancel = () => {
 }
 onMounted(() => {
   fetchAllowBranch()
+  getStaff()
   fetchAllRoleGroups()
 })
 </script>

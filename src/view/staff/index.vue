@@ -169,6 +169,15 @@ const breadcrumbs = ref([
 ])
 const columns = [
   {
+    name: 'code',
+    required: true,
+    label: 'Code',
+    align: 'left',
+    field: (row) => row.code,
+    format: (val) => `${val}`,
+    sortable: true,
+  },
+  {
     name: 'name',
     required: true,
     label: 'Name',

@@ -198,6 +198,52 @@
                       </q-select>
                     </validate-field>
                   </div> -->
+                  <div class="col-12 q-mb-lg" v-show="branchOpt.length != 0">
+                    
+                       <q-input
+                       readonly
+                       class="text-bold"
+                        color="orange-14"
+                        type="text"
+                        outlined
+                        v-model="preBranchId"
+                        >
+                        <!-- v-bind="field"                        -->
+                      
+                        <template v-slot:prepend>
+                          <q-icon
+                            name="account_balance"
+                            color="indigo-10"
+                          />
+                        </template>
+                        </q-input>
+                   
+                  </div>
+                  <div class="col-12">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
+                      v-model="form.code"
+                      name="code"
+                    >
+                      <q-input
+                        color="orange-14"
+                        type="text"
+                        outlined
+                        :model-value="value"
+                        label="Code"
+                        v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                      >
+                        <template v-slot:prepend>
+                          <q-icon
+                            name="money"
+                            color="indigo-10"
+                          />
+                        </template>
+                      </q-input>
+                    </validate-field>
+                  </div>
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
@@ -283,6 +329,7 @@
               </div>
             </div>
           </q-card-section>
+          <!-- {{ getBranch() }} -->
           <q-card-section>
             <div class="text-right q-gutter-x-md">
               <q-btn
@@ -338,8 +385,11 @@ import axios from 'axios'
 const formRef = ref('')
 const loading = ref(false)
 const store = useStore()
+const branchOpt = ref([])
+const preBranchId = ref('')
 // const name = ref('')
 const form = ref({
+  code: '',
   name: '',
   phone: '',
   positionId: '',
@@ -350,12 +400,12 @@ const form = ref({
 })
 const positionOpt = ref([
   {
-    name: 'Delivery',
-    value: 'Delivery',
+    name: 'Cashier',
+    value: 'Cashier',
   },
   {
-    name: 'Staff Office',
-    value: 'Staff Office',
+    name: 'Teller',
+    value: 'Teller',
   },
 ])
 const genderOpt = ref([
@@ -370,15 +420,15 @@ const genderOpt = ref([
 ])
 const driverOpt = ref([])
 const invisibleBtn = ref(false)
-const rules = object({
-  name: string().required().label('Name'),
-  positionId: string().required().label('Position'),
-  phone: string().required().label('Phone'),
-  gender: string().required().label('Gender'),
-  address: string().required().label('Address'),
-  salary: string().required().label('Salary'),
-  date: date().required().label('Date'),
-})
+// const rules = object({
+//   name: string().required().label('Name'),
+//   positionId: string().required().label('Position'),
+//   phone: string().required().label('Phone'),
+//   gender: string().required().label('Gender'),
+//   address: string().required().label('Address'),
+//   salary: string().required().label('Salary'),
+//   date: date().required().label('Date'),
+// })
 const showId = ref('')
 const concel = () => {
   showId.value = null
@@ -397,6 +447,21 @@ watch(
   },
   { immediate: true }
 )
+const getBranch = async () => {
+  await api
+    .get('branch/getCurrentBranch/' + store.state.auth.branchId)
+    .then((res) => {
+      console.log(res.data);
+      if (res) {
+          branchOpt.value  = res.data
+          preBranchId.value = res.data.name + ' [ ' + res.data.code + ' ] ' ;
+           // return res.data.name;
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
 const onSubmit = async () => {
   const { valid } = await formRef.value.validate()
   if (valid) {
@@ -433,7 +498,7 @@ const findDriver = async () => {
 onMounted(() => {
   findDriver()
   // if (store.state.auth.branchId) {
-  //   getBranch()
+    getBranch()
   // }
 })
 </script>

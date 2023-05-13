@@ -138,7 +138,7 @@
           <q-btn
             color="blue-10"
             icon="add"
-            label="Add Branch"
+            label="Add User"
             @click="addRow"
             class="q-mx-md"
             :to="{ name: 'user.create' }"

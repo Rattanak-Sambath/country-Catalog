@@ -365,6 +365,37 @@
           </q-card-section>
         </q-form>
       </ValidateForm>
+      <q-dialog
+        v-model="diaglogDelete"
+        max-width="500"
+      >
+        <q-card>
+          <q-card-section>
+            <div class="text-h6">Confirm</div>
+            <div class="text-subtitle2">are you sure you want to remove ?</div>
+          </q-card-section>
+
+          <q-separator dark />
+
+          <div class="text-right q-mx-md q-my-lg">
+            <q-btn
+              name="remove"
+              color="secondary"
+              outlined
+              :disabled="deleting"
+              @click="diaglogDelete = false"
+              >Cancel</q-btn
+            >
+            <q-btn
+              class="q-mx-md"
+              name="confirm"
+              color="negative"
+              @click="onConfirmDelete"
+              >Confirm</q-btn
+            >
+          </div>
+        </q-card>
+      </q-dialog>
     </q-card>
   </div>
 </template>
@@ -387,6 +418,8 @@ import { useRoute } from 'vue-router'
 const $route = useRoute()
 const formRef = ref('')
 const loading = ref(false)
+const diaglogDelete = ref(false)
+
 const form = ref({
   username: 'user',
   name: '',
@@ -464,7 +497,22 @@ const findDatabyId = async () => {
   }
 }
 const startCase = (val) => _.startCase(val)
-
+const onRemove = async (param) => {
+  // showId.value = param
+  diaglogDelete.value = true
+}
+const onConfirmDelete = async () => {
+  let data = await api.delete('/auth/removeUser/' + showId.value)
+  if (data) {
+      console.log('hi');
+    // toast.success({ message: '' })
+    // getDataTable()
+    // diaglogDelete.value = false
+    // router.go(-1)
+  } else {
+    toast.error(err.data.status)
+  }
+}
 const onSubmit = async () => {
   const { valid } = await formRef.value.validate()
   console.log('form', form.value)
@@ -503,6 +551,16 @@ watch(
   },
   { deep: true, immediate: true }
 )
+// watch to get showId
+watch(()=> $route.params, (newValue)=>{
+  if(newValue){
+      showId.value = newValue;
+      console.log('hi', newValue);
+  }
+}, { deep: true, immediate: true })
+
+// get Allow Branch
+
 const fetchAllowBranch = async () => {
   await api
     .get('/branch/fetchAllBranch', [])

@@ -160,14 +160,14 @@
             class="q-my-sm"
           >
             <img
-              src="../../public/360_F_251110238_OQHxvZLgcfj6Dbm5JmVdfNSggRCG4hsI.jpg"
+              src="../../public/04100fe4-ab2f-4971-8f95-9b05c778d5a1.jpg-output.png"
               width="50"
               height="50"
               class="q-ml-xs"
             />
           </q-avatar>
           <q-toolbar-title class="text-white text-subtitle1 text-weight-medium">
-            FreeCoder TC
+              PhonShop MS
           </q-toolbar-title>
         </q-toolbar>
         <q-scroll-area
@@ -198,15 +198,15 @@
               clickable
               exact-active-class="q-item--active "
               v-ripple
-              :to="{ name: 'goodsTransfer.index' }"
-              v-if="userIsInRole(['goods_transfer'])"
+              :to="{ name: 'sale.index' }"
+              v-if="userIsInRole(['sale'])"
             >
               <q-item-section avatar>
                 <q-icon name="category" />
               </q-item-section>
 
               <q-item-section>
-                {{ $t('goodtransfer') }}
+                {{ $t('sale') }}
               </q-item-section>
             </q-item>
 
@@ -214,76 +214,53 @@
               exact-active-class="q-item--active "
               clickable
               v-ripple
-              :to="{ name: 'subject.index' }"
-              v-if="userIsInRole(['customer_receive'])"
+              :to="{ name: 'receipt.index' }"
+              v-if="userIsInRole(['receipt'])"
             >
               <q-item-section avatar>
                 <q-icon name="directions_walk" />
               </q-item-section>
 
-              <q-item-section> {{ $t('customerReceive') }} </q-item-section>
+              <q-item-section> {{ $t('receipt') }} </q-item-section>
             </q-item>
             <q-item
               exact-active-class="q-item--active"
               v-ripple
-              :to="{ name: 'subject.index' }"
-              v-if="userIsInRole(['good_delivery'])"
+              :to="{ name: 'purchase.index' }"
+              v-if="userIsInRole(['purchase'])"
             >
               <q-item-section avatar>
                 <q-icon name="two_wheeler" />
               </q-item-section>
-              <q-item-section> {{ $t('good_delivery') }}</q-item-section>
+              <q-item-section> {{ $t('purchase') }}</q-item-section>
             </q-item>
 
             <q-item
               exact-active-class="q-item--active"
               v-ripple
-              :to="{ name: 'subject.index' }"
-              v-if="userIsInRole(['receive_item'])"
+              :to="{ name: 'payment.index' }"
+              v-if="userIsInRole(['payment'])"
             >
               <q-item-section avatar>
                 <q-icon name="save_alt" />
               </q-item-section>
 
-              <q-item-section> {{ $t('receive_item') }}</q-item-section>
+              <q-item-section> {{ $t('payment') }}</q-item-section>
             </q-item>
             <q-item
               exact-active-class="q-item--active"
               v-ripple
-              :to="{ name: 'subject.index' }"
-              v-if="userIsInRole(['move_item_to_ven'])"
+              :to="{ name: 'product.index' }"
+              v-if="userIsInRole(['product'])"
             >
               <q-item-section avatar>
                 <q-icon name="local_shipping" />
               </q-item-section>
 
-              <q-item-section> {{ $t('move_item_to_ven') }}</q-item-section>
+              <q-item-section> {{ $t('product') }}</q-item-section>
             </q-item>
-            <q-item
-              exact-active-class="q-item--active"
-              v-ripple
-              :to="{ name: 'subject.index' }"
-              v-if="userIsInRole(['search_goods_transfer'])"
-            >
-              <q-item-section avatar>
-                <q-icon name="search" />
-              </q-item-section>
-
-              <q-item-section> {{ $t('searchGoodstransfer') }}</q-item-section>
-            </q-item>
-            <q-item
-              exact-active-class="q-item--active"
-              v-ripple
-              :to="{ name: 'subject.index' }"
-              v-if="userIsInRole(['call_customer'])"
-            >
-              <q-item-section avatar>
-                <q-icon name="settings_phone" />
-              </q-item-section>
-
-              <q-item-section>{{ $t('callCustomer') }}</q-item-section>
-            </q-item>
-            <q-expansion-item
+           
+            <!-- <q-expansion-item
               group="link-dialog"
               style="border-radius: 20px"
               icon="local_shipping"
@@ -318,7 +295,7 @@
 
                   <q-item-section class=""> {{ $t('driver') }}</q-item-section>
                 </q-item>
-                <!-- <q-item clickable v-ripple>
+                 <q-item clickable v-ripple>
                         <q-item-section avatar>
                             <q-icon name="tune" />
                         </q-item-section>
@@ -327,8 +304,8 @@
                             Car Config
                         </q-item-section>
                     </q-item> -->
-              </q-card-section>
-            </q-expansion-item>
+              <!-- </q-card-section> -->
+            <!-- </q-expansion-item> --> 
             <q-expansion-item
               group="link-dialog"
               expand-separator
@@ -337,6 +314,7 @@
               v-if="userIsInRole(['admin_settings'])"
             >
               <q-card-section>
+                
                 <q-item
                   clickable
                   v-ripple
@@ -402,18 +380,53 @@
                   <q-item-section> {{ $t('staff') }} </q-item-section>
                 </q-item>
                 <q-item
-                  clickable
-                  v-ripple
-                  :to="{ name: 'storeLocation.index' }"
-                  exact-active-class="q-item--active"
-                  v-if="userIsInRole(['location_desk'])"
-                >
-                  <q-item-section avatar>
-                    <q-icon name="move_to_inbox" />
-                  </q-item-section>
+              exact-active-class="q-item--active"
+              v-ripple
+              :to="{ name: 'category.index' }"
+              v-if="userIsInRole(['category_inter'])"
+            >
+              <q-item-section avatar>
+                <q-icon name="category" />
+              </q-item-section>
 
-                  <q-item-section> {{ $t('location_Desk') }} </q-item-section>
-                </q-item>
+              <q-item-section> {{ $t('category') }}</q-item-section>
+            </q-item>
+            <q-item
+              exact-active-class="q-item--active"
+              v-ripple
+              :to="{ name: 'brand.index' }"
+              v-if="userIsInRole(['brand'])"
+            >
+              <q-item-section avatar>
+                <q-icon name="workspaces" />
+              </q-item-section>
+
+              <q-item-section>{{ $t('brand') }}</q-item-section>
+            </q-item>
+            <q-item
+              exact-active-class="q-item--active"
+              v-ripple
+              :to="{ name: 'color.index' }"
+              v-if="userIsInRole(['color'])"
+            >
+              <q-item-section avatar>
+                <q-icon name="palette" />
+              </q-item-section>
+
+              <q-item-section>{{ $t('color') }}</q-item-section>
+            </q-item>
+            <q-item
+              exact-active-class="q-item--active"
+              v-ripple
+              :to="{ name: 'model.index' }"
+              v-if="userIsInRole(['model'])"
+            >
+              <q-item-section avatar>
+                <q-icon name="on_device_training" />
+              </q-item-section>
+
+              <q-item-section>{{ $t('model') }}</q-item-section>
+            </q-item>
                 <!-- <q-item
                   clickable
                   v-ripple
@@ -429,7 +442,7 @@
                 </q-item> -->
               </q-card-section>
             </q-expansion-item>
-            <q-expansion-item
+            <!-- <q-expansion-item
               group="link-dialog"
               expand-separator
               icon="change_circle"
@@ -444,7 +457,7 @@
                   :to="{ name: 'role.index' }"
                   v-if="userIsInRole(['change-branch'])"
                 >
-                  <!-- v-if="userIsInRole(['role'])" -->
+                  
                   <q-item-section avatar>
                     <q-icon name="apartment" />
                   </q-item-section>
@@ -458,7 +471,7 @@
                   :to="{ name: 'role.index' }"
                   v-if="userIsInRole(['change_destination'])"
                 >
-                  <!-- v-if="userIsInRole(['role'])" -->
+                
                   <q-item-section avatar>
                     <q-icon name="navigation" />
                   </q-item-section>
@@ -468,7 +481,7 @@
                   </q-item-section>
                 </q-item>
               </q-card-section>
-            </q-expansion-item>
+            </q-expansion-item> -->
             <q-expansion-item
               group="link-dialog"
               expand-separator

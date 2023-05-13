@@ -202,6 +202,31 @@
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
+                      v-model="form.code"
+                      name="code"
+                    >
+                      <q-input
+                        color="orange-14"
+                        type="text"
+                        outlined
+                        :model-value="value"
+                        label="Code"
+                        v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                      >
+                        <template v-slot:prepend>
+                          <q-icon
+                            name="money"
+                            color="indigo-10"
+                          />
+                        </template>
+                      </q-input>
+                    </validate-field>
+                  </div>
+                  <div class="col-12">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
                       v-model="form.gender"
                       name="gender"
                     >
@@ -403,6 +428,7 @@ const findDatabyId = async () => {
   let res = await api.get(`/staff/getStaffbyId/` + $route.params.staff)
   console.log(res)
   if (res) {
+    form.value.code = res.data.code
     form.value.name = res.data.name
     form.value.phone = res.data.phone
     form.value.positionId = res.data.positionId

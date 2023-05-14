@@ -31,30 +31,7 @@
             <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
               <div class="col-xs-12 col-md-6 col-lg-6">
                 <div class="row q-col-gutter-y-sm">
-                  <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.staffId"
-                      name="staffId"
-                    >
-                      <q-select
-                        :model-value="value"
-                        :options="staffOpt"
-                        map-options
-                        emit-value
-                        option-label="label"
-                        option-value="_id"
-                        color="orange-14"
-                        type="text"
-                        outlined
-                        label="Select Staff"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      >
-                      </q-select>
-                    </validate-field>
-                  </div>
+                 
 
                   <div class="col-12">
                     <validate-field
@@ -180,6 +157,55 @@
                         />
                       </validate-field>
                     </div>
+                    <div class="col-12">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
+                      v-model="form.type"
+                      name="type"
+                    >
+                      <q-select
+                        :model-value="value"
+                        :options="statustype"
+                        map-options
+                        emit-value
+                        option-label="name"
+                        option-value="value"
+                        color="orange-14"
+                        type="text"
+                        outlined
+                        label="User Type"
+                        v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                      >
+                      </q-select>
+                    </validate-field>
+                  </div>
+                  <div class="col-12" v-show="form.type === 'staff'">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
+                      v-model="form.staffId"
+                      name="staffId"
+                    >
+                      <q-select
+                      clearable
+                        :model-value="value"
+                        :options="staffOpt"
+                        map-options
+                        emit-value
+                        option-label="label"
+                        option-value="_id"
+                        color="orange-14"
+                        type="text"
+                        outlined
+                        label="Select Staff"
+                        v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                      >
+                      </q-select>
+                    </validate-field>
+                  </div>
 
                     <!-- <div class="col-12">
                       <validate-field
@@ -413,7 +439,8 @@ import _ from 'lodash'
 const formRef = ref('')
 const loading = ref(false)
 const form = ref({
-  staffId: 'asdsad',
+  type: '',
+  staffId: '',
   username: 'user',
   name: '',
   fullname: '',
@@ -429,6 +456,16 @@ const form = ref({
 const roleFetch = ref([])
 const allowedBranchOpts = ref([])
 const roleGroupOpts = ref([])
+const statustype = ref ([
+  {
+    name: 'Owner',
+    value: 'owner'
+  },
+  {
+    name: 'Staff',
+    value: 'staff'
+  }
+])
 const statusOpts = ref([
   {
     name: 'Inactive',
@@ -455,7 +492,7 @@ const staffOpt = ref([])
 
 const rules = object({
   name: string().required().label('Name'),
-  staffId: string().required().label('Staff'),
+  // staffId: string().required().label('Staff'),
   fullname: string().required().label('Role'),
   email: string().required().label('Status'),
   password: string().required().label('Password'),
@@ -515,6 +552,12 @@ watch(
   },
   { deep: true, immediate: true }
 )
+
+watch(()=>form.value.type, (newValue)=>{
+  if(newValue){
+      form.value.staffId = null
+  }
+})
 const fetchAllowBranch = async () => {
   await api
     .get('/branch/fetchAllBranch', [])
@@ -555,6 +598,7 @@ onMounted(() => {
   fetchAllowBranch()
   getStaff()
   fetchAllRoleGroups()
+ 
 })
 </script>
 

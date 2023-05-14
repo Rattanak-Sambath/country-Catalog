@@ -226,6 +226,7 @@
                       name="code"
                     >
                       <q-input
+                        readonly
                         color="orange-14"
                         type="text"
                         outlined
@@ -389,7 +390,7 @@ const branchOpt = ref([])
 const preBranchId = ref('')
 // const name = ref('')
 const form = ref({
-  code: '',
+  code: '001',
   name: '',
   phone: '',
   positionId: '',
@@ -495,8 +496,20 @@ const findDriver = async () => {
     }
   })
 }
+
+// count for increase code 
+const countStaff = async ( )=>{
+  await api.get('staff/countStaff').then((res) => {
+    if(res){
+      form.value.code = res.data.length + 1;
+        // console.log('hi', res);
+    }
+  })
+}
 onMounted(() => {
   findDriver()
+  countStaff()
+  
   // if (store.state.auth.branchId) {
     getBranch()
   // }

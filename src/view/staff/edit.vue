@@ -199,6 +199,27 @@
                       </q-select>
                     </validate-field>
                   </div> -->
+                  <div class="col-12 q-mb-lg" v-show="branchOpt.length != 0">
+                    
+                    <q-input
+                    readonly
+                    class="text-bold"
+                     color="orange-14"
+                     type="text"
+                     outlined
+                     v-model="preBranchId"
+                     >
+                     <!-- v-bind="field"                        -->
+                   
+                     <template v-slot:prepend>
+                       <q-icon
+                         name="account_balance"
+                         color="indigo-10"
+                       />
+                     </template>
+                     </q-input>
+                
+               </div>
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
@@ -350,8 +371,11 @@ import dayjs from 'dayjs'
 import api from '../../utils/utility'
 import axios from 'axios'
 import { useRoute } from 'vue-router'
+const branchOpt = ref([])
+
 const formRef = ref('')
 const loading = ref(false)
+const preBranchId = ref('')
 const form = ref({
   name: '',
   phone: '',
@@ -404,6 +428,21 @@ const cancel = () => {
   loading.value = false
   router.go(-1)
 }
+const getBranch = async () => {
+  await api
+    .get('branch/getCurrentBranch/' + store.state.auth.branchId)
+    .then((res) => {
+      console.log(res.data);
+      if (res) {
+          branchOpt.value  = res.data
+          preBranchId.value = res.data.name + ' [ ' + res.data.code + ' ] ' ;
+           // return res.data.name;
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
 const onUpdate = async () => {
   const { valid } = await formRef.value.validate()
   if (valid) {
@@ -426,7 +465,7 @@ const findDatabyId = async () => {
   let id = showId.value
   // console.log('find', id);
   let res = await api.get(`/staff/getStaffbyId/` + $route.params.staff)
-  console.log(res)
+  // console.log(res)
   if (res) {
     form.value.code = res.data.code
     form.value.name = res.data.name
@@ -435,7 +474,7 @@ const findDatabyId = async () => {
     form.value.gender = res.data.gender
     form.value.address = res.data.address
     form.value.salary = res.data.salary
-    console.log(res.data)
+    // console.log('hi',res.data)
   }
 }
 
@@ -451,6 +490,7 @@ const findDriver = async () => {
 onMounted(() => {
   findDriver()
   findDatabyId()
+  getBranch()
   if ($route.params.car) {
     showId.value = $route.params.car
     // console.log(showId.value);

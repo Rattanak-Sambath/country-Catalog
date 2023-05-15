@@ -323,7 +323,7 @@ const onSubmit = async () => {
 const getDataTable = async () => {
   let data = await api.get('/branch/countDriver')
   if (data) {
-    console.log(data.data.length)
+    // console.log(data.data.length)
     // form.value.code = data.data.length + 1
     // form.code= data.data.length + 1
   }

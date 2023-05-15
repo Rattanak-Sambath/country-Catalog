@@ -350,6 +350,7 @@
                 icon="remove"
                 label="Remove"
                 no-caps
+                :disable="deleting"
                 :loading="loading"
                 @click="onRemove()"
               />
@@ -419,7 +420,7 @@ const $route = useRoute()
 const formRef = ref('')
 const loading = ref(false)
 const diaglogDelete = ref(false)
-
+const deleting = ref(false)
 const form = ref({
   username: 'user',
   name: '',
@@ -505,10 +506,11 @@ const onConfirmDelete = async () => {
   let data = await api.delete('/auth/removeUser/' + $route.params.user)
   if (data) {
       // console.log('hi');
-    toast.success({ message: '' })
-    getDataTable()
-    diaglogDelete.value = false
-    router.go(-1)
+      router.go(-1)
+      diaglogDelete.value = false
+      toast.success({ message: '' })
+     
+  
   } else {
     toast.error(err.data.status)
   }
@@ -572,6 +574,7 @@ const fetchAllowBranch = async () => {
       console.log(err)
     })
 }
+// fetchRole
 const fetchAllRoleGroups = async () => {
   await api
     .get('roleGroup/getAllRoleGroup', [])
@@ -586,10 +589,22 @@ const fetchAllRoleGroups = async () => {
 const cancel = () => {
   router.go(-1)
 }
+// count User
+const countUser = async () =>{
+    await api.get('auth/countUser', [])
+    .then((res)=>{
+       if(res.data <= 1){
+          deleting.value = true
+       }
+    }).catch((err)=>{
+      console.log(err);
+    })
+}
 onMounted(() => {
   findDatabyId()
   fetchAllowBranch()
   fetchAllRoleGroups()
+  countUser()
 })
 </script>
 

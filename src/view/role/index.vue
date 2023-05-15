@@ -161,7 +161,7 @@ import { Loading } from 'quasar';
                      })
                      loading.value = false
                      if(data){
-                        console.log(data.data);
+                        // console.log(data.data);
                         dataTable.value = data.data.items
                         pagination.value.rowsNumber = data.data.totalItems
                      }

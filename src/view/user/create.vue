@@ -188,7 +188,7 @@
                       name="staffId"
                     >
                       <q-select
-                      clearable
+                       clearable
                         :model-value="value"
                         :options="staffOpt"
                         map-options
@@ -432,7 +432,7 @@ import router from '../../router'
 import dayjs from 'dayjs'
 import api from '../../utils/utility'
 import axios from 'axios'
-import _ from 'lodash'
+import _, { has } from 'lodash'
 
 // import { number } from 'yup/lib/locale';
 
@@ -492,6 +492,7 @@ const staffOpt = ref([])
 
 const rules = object({
   name: string().required().label('Name'),
+  type: string().required().label('Type'),
   // staffId: string().required().label('Staff'),
   fullname: string().required().label('Role'),
   email: string().required().label('Status'),
@@ -516,17 +517,18 @@ const startCase = (val) => _.startCase(val)
 
 const onSubmit = async () => {
   const { valid } = await formRef.value.validate()
-  console.log('form', form.value)
+  // console.log('form', form.value)
   if (valid) {
     let methods = '/auth/register'
     // if(showId.value){
     //   methods = 'driver/updateDriver'
     // }
-    loading.value = true
+       loading.value = true
     let res = await api.post(methods, form.value)
     if (res) {
       toast.success({ message: 'Insert successfully' })
       router.go(-1)
+      loading.value = false
     } else {
       toast.error({ message: 'There was somehting wrong to add car' })
       throw 'There was something wrong !!'

@@ -502,13 +502,13 @@ const onRemove = async (param) => {
   diaglogDelete.value = true
 }
 const onConfirmDelete = async () => {
-  let data = await api.delete('/auth/removeUser/' + showId.value)
+  let data = await api.delete('/auth/removeUser/' + $route.params.user)
   if (data) {
-      console.log('hi');
-    // toast.success({ message: '' })
-    // getDataTable()
-    // diaglogDelete.value = false
-    // router.go(-1)
+      // console.log('hi');
+    toast.success({ message: '' })
+    getDataTable()
+    diaglogDelete.value = false
+    router.go(-1)
   } else {
     toast.error(err.data.status)
   }

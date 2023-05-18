@@ -150,7 +150,7 @@
         side="left"
         bordered
         class="white"
-        :width="250"
+        :width="300"
         style="background-color: grey; color: white"
       >
         <q-toolbar class="app-sidebar-header shadow-none">
@@ -323,7 +323,7 @@
                   v-if="userIsInRole(['role'])"
                 >
                   <q-item-section avatar>
-                    <q-icon name="gpp_good" />
+                    <q-icon name="description" />
                   </q-item-section>
 
                   <q-item-section>{{ $t('role') }} </q-item-section>
@@ -485,7 +485,7 @@
             <q-expansion-item
               group="link-dialog"
               expand-separator
-              icon="assignment_late"
+              icon="description"
               :label="$t('report')"
               v-if="userIsInRole(['report'])"
             >
@@ -497,67 +497,184 @@
                   v-if="userIsInRole(['goods_transfer_report'])"
                 >
                   <q-item-section avatar>
-                    <q-icon name="gpp_good" />
+                    <q-icon name="description" />
                   </q-item-section>
 
-                  <q-item-section
-                    >{{ $t('good_transfer_report') }}
+                  <q-item-section>
+                   Sale Report Details
                   </q-item-section>
                 </q-item>
                 <q-item
                   clickable
                   v-ripple
-                  :to="{ name: 'user.index' }"
                   exact-active-class="q-item--active"
-                  v-if="userIsInRole(['move_item_to_ven_report'])"
+                  v-if="userIsInRole(['goods_transfer_report'])"
                 >
                   <q-item-section avatar>
-                    <q-icon name="person" />
+                    <q-icon name="description" />
                   </q-item-section>
 
                   <q-item-section>
-                    {{ $t('moveItem_toVen_report') }}
+                   Sale Report By Summary
                   </q-item-section>
                 </q-item>
                 <q-item
                   clickable
                   v-ripple
-                  :to="{ name: 'user.index' }"
                   exact-active-class="q-item--active"
-                  v-if="userIsInRole(['receive_item_report'])"
+                  v-if="userIsInRole(['goods_transfer_report'])"
                 >
                   <q-item-section avatar>
-                    <q-icon name="person" />
+                    <q-icon name="description" />
                   </q-item-section>
 
                   <q-item-section>
-                    {{ $t('receive_item_report') }}
+                   Sale Report By Product
                   </q-item-section>
                 </q-item>
+
+                <!-- purchase -->
+
                 <q-item
                   clickable
                   v-ripple
-                  :to="{ name: 'user.index' }"
                   exact-active-class="q-item--active"
-                  v-if="userIsInRole(['collect_by_user_report'])"
+                  v-if="userIsInRole(['goods_transfer_report'])"
                 >
                   <q-item-section avatar>
-                    <q-icon name="person" />
+                    <q-icon name="description" />
                   </q-item-section>
 
                   <q-item-section>
-                    {{ $t('collect_by_user_report') }}
+                   Purchase Report By Details
                   </q-item-section>
                 </q-item>
-                <!-- <q-item clickable v-ripple @click="logout">
-                        <q-item-section avatar>
-                            <q-icon name="logout" />                                
-                        </q-item-section>
 
-                        <q-item-section>
-                            Log-out
-                        </q-item-section>
-                    </q-item> -->
+                <q-item
+                  clickable
+                  v-ripple
+                  exact-active-class="q-item--active"
+                  v-if="userIsInRole(['goods_transfer_report'])"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="description" />
+                  </q-item-section>
+
+                  <q-item-section>
+                   Purchase Report By Summary
+                  </q-item-section>
+                </q-item>
+
+                <q-item
+                  clickable
+                  v-ripple
+                  exact-active-class="q-item--active"
+                  v-if="userIsInRole(['goods_transfer_report'])"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="description" />
+                  </q-item-section>
+
+                  <q-item-section>
+                   Purchase Report By Product
+                  </q-item-section>
+                </q-item>
+
+                <!-- Product report -->
+                <q-item
+                  clickable
+                  v-ripple
+                  exact-active-class="q-item--active"
+                  v-if="userIsInRole(['goods_transfer_report'])"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="description" />
+                  </q-item-section>
+
+                  <q-item-section>
+                  Product Report
+                  </q-item-section>
+                </q-item>
+
+                <!-- Payment -->
+                <q-item
+                  clickable
+                  v-ripple
+                  exact-active-class="q-item--active"
+                  v-if="userIsInRole(['goods_transfer_report'])"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="description" />
+                  </q-item-section>
+
+                  <q-item-section>
+                  Payment Report By Details
+                  </q-item-section>
+                </q-item>
+
+                <q-item
+                  clickable
+                  v-ripple
+                  exact-active-class="q-item--active"
+                  v-if="userIsInRole(['goods_transfer_report'])"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="description" />
+                  </q-item-section>
+
+                  <q-item-section>
+                  Payment Report By Summary
+                  </q-item-section>
+                </q-item>
+
+                <!-- receipt  -->
+
+                <q-item
+                  clickable
+                  v-ripple
+                  exact-active-class="q-item--active"
+                  v-if="userIsInRole(['goods_transfer_report'])"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="description" />
+                  </q-item-section>
+
+                  <q-item-section>
+                  Receipt Report By Details
+                  </q-item-section>
+                </q-item>
+
+                <q-item
+                  clickable
+                  v-ripple
+                  exact-active-class="q-item--active"
+                  v-if="userIsInRole(['goods_transfer_report'])"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="description" />
+                  </q-item-section>
+
+                  <q-item-section>
+                  Receipt Report By Summary
+                  </q-item-section>
+                </q-item>
+
+                <q-item
+                  clickable
+                  v-ripple
+                  exact-active-class="q-item--active"
+                  v-if="userIsInRole(['goods_transfer_report'])"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="description" />
+                  </q-item-section>
+
+                  <q-item-section>
+                  Payment Report By Summary
+                  </q-item-section>
+                </q-item>
+
+                
               </q-card-section>
             </q-expansion-item>
             <q-item

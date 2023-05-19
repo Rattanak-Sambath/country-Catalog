@@ -108,10 +108,10 @@
           <q-btn
             color="blue-10"
             icon="add"
-            label="Add Category"
+            label="Add Brand"
             @click="addRow"
             class="q-mx-md"
-            :to="{ name: 'category.create' }"
+            :to="{ name: 'brand.create' }"
           />
 
           <q-btn
@@ -164,9 +164,9 @@ const diaglogDelete = ref(false)
 const  removeName = ref('')
 const breadcrumbs = ref([
   {
-    label: 'Dashboard / Category',
+    label: 'Dashboard / Brand',
     icon: 'dashboard',
-    route: '/category',
+    route: '/brand',
   },
   // {
   //     label: 'Car',
@@ -216,7 +216,7 @@ const getDataTable = async () => {
   dataTable.value = []
   const { page, rowsPerPage } = pagination.value
 
-  let data = await api.get('/category/getCategory', {
+  let data = await api.get('/brand/getBrand', {
     params: {
       page,
       rowsPerPage,
@@ -249,7 +249,7 @@ const onRemove = async (param) => {
   diaglogDelete.value = true
 }
 const onConfirmDelete = async () => {
-  let data = await api.delete('/category/removeCategory/' + showId.value)
+  let data = await api.delete('/brand/removeBrand/' + showId.value)
   if (data) {
     console.log('data', data)
     toast.success(data.data.status)
@@ -263,7 +263,7 @@ const onConfirmDelete = async () => {
 }
 const onEdit = async (param) => {
   // console.log(param);
-  router.push({ name: 'category.edit', params: { id: param } })
+  router.push({ name: 'brand.edit', params: { id: param } })
 }
 const exportTable = () => {
   // const content = [columns.map(col => wrapCsvValue(col.label))].concat(

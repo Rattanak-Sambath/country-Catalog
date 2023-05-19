@@ -383,7 +383,7 @@
               exact-active-class="q-item--active"
               v-ripple
               :to="{ name: 'category.index' }"
-              v-if="userIsInRole(['category_inter'])"
+              v-if="userIsInRole(['category'])"
             >
               <q-item-section avatar>
                 <q-icon name="category" />

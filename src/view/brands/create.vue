@@ -3,7 +3,7 @@
     <q-card class="flex justify-space-between">
       <q-toolbar>
         <q-toolbar-title class="text-h6 text-bold"
-          ><q-icon name="add"></q-icon> Create Category</q-toolbar-title
+          ><q-icon name="add"></q-icon> Create Brand</q-toolbar-title
         >
         <q-space />
         <q-btn
@@ -17,7 +17,7 @@
     </q-card>
     <q-card class="q-my-md">
       <q-card-section class="text-grey-15">
-        Fill the form below to crate new Category
+        Fill the form below to crate new Brand
       </q-card-section>
       <ValidateForm
         ref="formRef"
@@ -250,21 +250,7 @@ watch(
   },
   { immediate: true }
 )
-const getBranch = async () => {
-  await api
-    .get('branch/getCurrentBranch/' + store.state.auth.branchId)
-    .then((res) => {
-      console.log(res.data);
-      if (res) {
-          branchOpt.value  = res.data
-          preBranchId.value = res.data.name + ' [ ' + res.data.code + ' ] ' ;
-           // return res.data.name;
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
+
 const onSubmit = async () => {
   const { valid } = await formRef.value.validate()
   if (valid) {
@@ -275,7 +261,7 @@ const onSubmit = async () => {
     //   methods =  'car/updateCar'
     // }
     // loading.value = true
-    let res = await api.post('category/createCategory', doc)
+    let res = await api.post('brand/createBrand', doc)
     if (res) {
       toast.success({ message: 'Insert successfully ' })
       loading.value = false
@@ -304,7 +290,7 @@ onMounted(() => {
   findDriver()
 
   // if (store.state.auth.branchId) {
-    getBranch()
+    
   // }
 })
 </script>

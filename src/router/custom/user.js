@@ -145,18 +145,52 @@ export default [
   // destination
 
   {
-    path: '/destination',
-    name: 'destination.index',
-    component: () => import('../../view/destination/index.vue'),
+    path: '/category',
+    name: 'category.index',
+    component: () => import('../../view/category/index.vue'),
   },
   {
-    path: '/destination/create',
-    name: 'destination.create',
-    component: () => import('../../view/destination/create.vue'),
+    path: '/category/create',
+    name: 'category.create',
+    component: () => import('../../view/category/create.vue'),
   },
   {
-    path: '/destination/:destination/edit',
-    name: 'destination.edit',
-    component: () => import('../../view/destination/edit.vue'),
+    path: '/category/:id/edit',
+    name: 'category.edit',
+    component: () => import('../../view/category/edit.vue'),
   },
+
+  // brands
+  {
+    path: '/brand',
+    name: 'brand.index',
+    component: () => import('../../view/brands/index.vue'),
+  },
+  {
+    path: '/brand/create',
+    name: 'brand.create',
+    component: () => import('../../view/brands/create.vue'),
+  },
+  {
+    path: '/brand/:id/edit',
+    name: 'brand.edit',
+    component: () => import('../../view/brands/edit.vue'),
+  },
+  // color
+  {
+    path: '/color',
+    name: 'color.index',
+    component: () => import('../../view/color/index.vue'),
+  },
+  {
+    path: '/color/create',
+    name: 'color.create',
+    component: () => import('../../view/color/create.vue'),
+  },
+  {
+    path: '/color/:id/edit',
+    name: 'color.edit',
+    component: () => import('../../view/color/edit.vue'),
+  },
+
 ]

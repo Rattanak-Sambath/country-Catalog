@@ -108,10 +108,10 @@
           <q-btn
             color="blue-10"
             icon="add"
-            label="Add Category"
+            label="Add Color"
             @click="addRow"
             class="q-mx-md"
-            :to="{ name: 'category.create' }"
+            :to="{ name: 'color.create' }"
           />
 
           <q-btn
@@ -164,9 +164,9 @@ const diaglogDelete = ref(false)
 const  removeName = ref('')
 const breadcrumbs = ref([
   {
-    label: 'Dashboard / Category',
+    label: 'Dashboard / Color',
     icon: 'dashboard',
-    route: '/category',
+    route: '/color',
   },
   // {
   //     label: 'Car',
@@ -192,14 +192,6 @@ const columns = [
     field: 'status',
     sortable: true,
   },
-  {
-    name: 'describtion',
-    align: 'center',
-    label: 'Describtion',
-    field: 'describtion',
-    sortable: true,
-  },
-  { name: 'date', label: 'Date', field: 'date' },
   { name: 'action', label: 'Action', field: '' },
 ]
 watch(
@@ -216,7 +208,7 @@ const getDataTable = async () => {
   dataTable.value = []
   const { page, rowsPerPage } = pagination.value
 
-  let data = await api.get('/category/getCategory', {
+  let data = await api.get('/color/getColor', {
     params: {
       page,
       rowsPerPage,
@@ -240,7 +232,7 @@ const onChangePagination = (val) => {
 }
 const editCompo = (param) => {
   showId.value = param
-  router.push({ name: 'car.edit' })
+  router.push({ name: 'color.edit' })
   // console.log(param);
 }
 const onRemove = async (param) => {
@@ -249,7 +241,7 @@ const onRemove = async (param) => {
   diaglogDelete.value = true
 }
 const onConfirmDelete = async () => {
-  let data = await api.delete('/category/removeCategory/' + showId.value)
+  let data = await api.delete('/color/removeColor/' + showId.value)
   if (data) {
     console.log('data', data)
     toast.success(data.data.status)
@@ -263,7 +255,7 @@ const onConfirmDelete = async () => {
 }
 const onEdit = async (param) => {
   // console.log(param);
-  router.push({ name: 'category.edit', params: { id: param } })
+  router.push({ name: 'color.edit', params: { id: param } })
 }
 const exportTable = () => {
   // const content = [columns.map(col => wrapCsvValue(col.label))].concat(

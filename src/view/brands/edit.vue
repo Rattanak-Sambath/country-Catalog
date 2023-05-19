@@ -1,9 +1,10 @@
 <template>
   <div>
     <q-card class="flex justify-space-between">
+      <!-- {{ this.$route.params.car }} -->
       <q-toolbar>
         <q-toolbar-title class="text-h6 text-bold"
-          ><q-icon name="add"></q-icon> Create Category</q-toolbar-title
+          ><q-icon name="add"></q-icon> Edit Brand</q-toolbar-title
         >
         <q-space />
         <q-btn
@@ -17,7 +18,7 @@
     </q-card>
     <q-card class="q-my-md">
       <q-card-section class="text-grey-15">
-        Fill the form below to crate new Category
+        Fill the form below to crate new Brand
       </q-card-section>
       <ValidateForm
         ref="formRef"
@@ -27,7 +28,7 @@
           @submit.prevent.stop="onSubmit()"
           class="mt-4 text-center"
         >
-          <q-card-section>
+        <q-card-section>
             <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
               <div class="col-xs-12 col-md-6 col-lg-6">
                 <div class="row q-col-gutter-y-md">
@@ -163,35 +164,23 @@
             </div>
           </div>
           </q-card-section>
-          <!-- {{ getBranch() }} -->
           <q-card-section>
             <div class="text-right q-gutter-x-md">
               <q-btn
                 push
-                icon="add"
-                :label="showId ? 'Update' : 'Save'"
+                icon="update"
+                label="Update"
                 color="primary"
                 no-caps
-                :disable="invisibleBtn"
                 :loading="loading"
-                @click="onSubmit()"
+                @click="onUpdate()"
               />
-              <q-btn
-                v-if="showId"
-                color="negative"
-                push
-                icon="remove"
-                label="Remove"
-                no-caps
-                :loading="loading"
-                @click="onRemove()"
-              />
+
               <q-btn
                 push
                 icon="cancel"
                 label="Cancel"
                 no-caps
-                :loading="loading"
                 @click="cancel()"
               />
             </div>
@@ -199,7 +188,6 @@
         </q-form>
       </ValidateForm>
     </q-card>
-    <!-- {{ store.state.auth.branchId }} -->
   </div>
 </template>
 
@@ -207,49 +195,65 @@
 import { Form as ValidateForm, Field as ValidateField } from 'vee-validate'
 import actions from '../../store/actions'
 import toast from '../../Helper/toast.js'
-import { object, string, date } from 'yup'
-import { ref, onMounted, watch } from 'vue'
-// import store from '../../store/'
+import { object, string } from 'yup'
+import { ref, onMounted } from 'vue'
+// import store from '../../store/';
 // import api from '../../utils/utility'
 import { useStore } from 'vuex'
 import router from '../../router'
 import dayjs from 'dayjs'
 import api from '../../utils/utility'
 import axios from 'axios'
+import { useRoute } from 'vue-router'
+const branchOpt = ref([])
+const store = useStore()
 const formRef = ref('')
 const loading = ref(false)
-const store = useStore()
-// const name = ref('')
+const preBranchId = ref('')
 const form = ref({
   name: '',
   status: '',
   describtion: '',
-  date: dayjs(new Date()).format('YYYY-MM-DD'),
+  date: '',
 })
-
+const $route = useRoute()
+const positionOpt = ref([
+  {
+    name: 'Delivery',
+    value: 'Delivery',
+  },
+  {
+    name: 'Staff Office',
+    value: 'Staff Office',
+  },
+])
+const genderOpt = ref([
+  {
+    name: 'Male',
+    value: 'Male',
+  },
+  {
+    name: 'Female',
+    value: 'Female',
+  },
+])
 const driverOpt = ref([])
 const invisibleBtn = ref(false)
 const rules = object({
   name: string().required().label('Name'),
   status: string().required().label('Status'),
-  date: date().required().label('Date'),
+  date: string().required().label('Date'),
 })
 const showId = ref('')
-const concel = () => {
+const cancel = () => {
   showId.value = null
   form.value.name = ''
   form.value.status = ''
-  form.value.describtion = ''
+  form.value.date = ''
+  
   loading.value = false
+  router.go(-1)
 }
-watch(
-  form.value,
-  (newValue, oldValue) => {
-    if (newValue) {
-    }
-  },
-  { immediate: true }
-)
 const getBranch = async () => {
   await api
     .get('branch/getCurrentBranch/' + store.state.auth.branchId)
@@ -265,30 +269,39 @@ const getBranch = async () => {
       console.log(err)
     })
 }
-const onSubmit = async () => {
+const onUpdate = async () => {
   const { valid } = await formRef.value.validate()
   if (valid) {
-    let doc = form.value
-    doc.branchId = store.state.auth.branchId
-    
-    // if (showId.value) {
-    //   methods =  'car/updateCar'
-    // }
-    // loading.value = true
-    let res = await api.post('category/createCategory', doc)
+    // let  methods = 'car/updateCar'
+    form.value.branchId = store.state.auth.branchId
+    loading.value = true
+    const res = await api.put(
+      `brand/updateBrand/` + $route.params.id,
+      form.value
+    )
     if (res) {
-      toast.success({ message: 'Insert successfully ' })
-      loading.value = false
-      router.go(-1)
+      toast.success({ message: 'Update car successfully' })
+      cancel()
     } else {
       toast.error({ message: 'There was somehting wrong to add car' })
-      router.go(-1)
+      throw 'There was something wrong !!'
     }
   }
 }
-const cancel = () => {
-  router.go(-1)
+const findDatabyId = async () => {
+  let id = showId.value
+  // console.log('find', id);
+  let res = await api.get(`/brand/getBrandbyId/` + $route.params.id)
+  // console.log(res)
+  if (res) {
+    form.value.status = res.data.status
+    form.value.name = res.data.name
+    form.value.describtion = res.data.describtion
+    form.value.date = res.data.date  
+    // console.log('hi',res.data)
+  }
 }
+
 const findDriver = async () => {
   await api.get('/driver/getDriver').then((res) => {
     if (res) {
@@ -298,14 +311,15 @@ const findDriver = async () => {
   })
 }
 
-// count for increase code 
-
 onMounted(() => {
   findDriver()
-
-  // if (store.state.auth.branchId) {
-    getBranch()
-  // }
+  findDatabyId()
+  getBranch()
+  if ($route.params.id) {
+    showId.value = $route.params.id
+    // console.log(showId.value);
+    // console.log($route.params.car);
+  }
 })
 </script>
 

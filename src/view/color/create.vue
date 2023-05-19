@@ -3,7 +3,7 @@
     <q-card class="flex justify-space-between">
       <q-toolbar>
         <q-toolbar-title class="text-h6 text-bold"
-          ><q-icon name="add"></q-icon> Create Category</q-toolbar-title
+          ><q-icon name="add"></q-icon> Create Color</q-toolbar-title
         >
         <q-space />
         <q-btn
@@ -16,8 +16,8 @@
       </q-toolbar>
     </q-card>
     <q-card class="q-my-md">
-      <q-card-section class="text-grey-15">
-        Fill the form below to crate new Category
+      <q-card-section class="text-grey-15 text-bold">
+        Fill the form below to crate new Color
       </q-card-section>
       <ValidateForm
         ref="formRef"
@@ -27,36 +27,11 @@
           @submit.prevent.stop="onSubmit()"
           class="mt-4 text-center"
         >
-          <q-card-section>
-            <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
-              <div class="col-xs-12 col-md-6 col-lg-6">
-                <div class="row q-col-gutter-y-md">
-                  <!-- start left side -->
-                  <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.date"
-                      name="date"
-                    >
-                      <q-input
-                        color="orange-14"
-                        type="date"
-                        outlined
-                        :model-value="value"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      >
-                        <template v-slot:prepend>
-                          <q-icon
-                            name="calendar_month"
-                            color="indigo-10"
-                          />
-                        </template>
-                      </q-input>
-                    </validate-field>
-                  </div>
-              
+          <q-card-section class="q-my-lg">
+            <div class=" row q-col-gutter-x-xl q-col-gutter-y-md">
+              <div class="q-mx-auto col-xs-12 col-md-12 col-lg-8">
+                <div class="row q-col-gutter-y-md q-mx-auto ">
+                  <!-- start left side -->      
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
@@ -123,44 +98,11 @@
                       </div>
                     </validate-field>
                   </div>
-                 
                 </div>
                 <!-- end-left-side  -->
               </div>
 
-              <div class="col-xs-12 col-md-6 col-lg-6">
-                <div class="row q-col-gutter-y-md">
-                 
-                 
-                 <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.describtion"
-                      name="describtion"
-                    >
-                     <q-input
-                        color="orange-14"
-                        type="textarea"
-                        outlined
-                        :model-value="value"
-                        label="Description"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      >
-                        <template v-slot:prepend>
-                          <q-icon
-                            name="person"
-                            color="indigo-10"
-                          />
-                        </template>
-                        </q-input>
-                    </validate-field>
-                  </div>
-                  
-                  
-              </div>
-            </div>
+             
           </div>
           </q-card-section>
           <!-- {{ getBranch() }} -->
@@ -223,8 +165,6 @@ const store = useStore()
 const form = ref({
   name: '',
   status: '',
-  describtion: '',
-  date: dayjs(new Date()).format('YYYY-MM-DD'),
 })
 
 const driverOpt = ref([])
@@ -232,14 +172,12 @@ const invisibleBtn = ref(false)
 const rules = object({
   name: string().required().label('Name'),
   status: string().required().label('Status'),
-  date: date().required().label('Date'),
 })
 const showId = ref('')
 const concel = () => {
   showId.value = null
   form.value.name = ''
   form.value.status = ''
-  form.value.describtion = ''
   loading.value = false
 }
 watch(
@@ -250,21 +188,7 @@ watch(
   },
   { immediate: true }
 )
-const getBranch = async () => {
-  await api
-    .get('branch/getCurrentBranch/' + store.state.auth.branchId)
-    .then((res) => {
-      console.log(res.data);
-      if (res) {
-          branchOpt.value  = res.data
-          preBranchId.value = res.data.name + ' [ ' + res.data.code + ' ] ' ;
-           // return res.data.name;
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
+
 const onSubmit = async () => {
   const { valid } = await formRef.value.validate()
   if (valid) {
@@ -275,7 +199,7 @@ const onSubmit = async () => {
     //   methods =  'car/updateCar'
     // }
     // loading.value = true
-    let res = await api.post('category/createCategory', doc)
+    let res = await api.post('color/createColor', doc)
     if (res) {
       toast.success({ message: 'Insert successfully ' })
       loading.value = false
@@ -304,7 +228,7 @@ onMounted(() => {
   findDriver()
 
   // if (store.state.auth.branchId) {
-    getBranch()
+    
   // }
 })
 </script>

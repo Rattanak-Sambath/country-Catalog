@@ -8,16 +8,16 @@ export default [
 
     //   component: () => import("../../views/setting/AccountSettings.vue"),
   },
-  {
-    path: '/goodsTransfer',
-    name: 'goodsTransfer.index',
-    component: () => import('../../view/goodsTransfer/index.vue'),
-  },
-  {
-    path: '/goodsTransfer/create',
-    name: 'goodsTransfer.create',
-    component: () => import('../../view/goodsTransfer/create.vue'),
-  },
+  // {
+  //   path: '/goodsTransfer',
+  //   name: 'goodsTransfer.index',
+  //   component: () => import('../../view/goodsTransfer/index.vue'),
+  // },
+  // {
+  //   path: '/goodsTransfer/create',
+  //   name: 'goodsTransfer.create',
+  //   component: () => import('../../view/goodsTransfer/create.vue'),
+  // },
 
   // car
   {
@@ -192,5 +192,37 @@ export default [
     name: 'color.edit',
     component: () => import('../../view/color/edit.vue'),
   },
+  // model
+  {
+    path: '/model',
+    name: 'model.index',
+    component: () => import('../../view/modelsModel/index.vue'),
+  },
+  {
+    path: '/model/create',
+    name: 'model.create',
+    component: () => import('../../view/modelsModel/create.vue'),
+  },
+  {
+    path: '/model/:id/edit',
+    name: 'model.edit',
+    component: () => import('../../view/modelsModel/edit.vue'),
+  },
 
+  // product
+  {
+    path: '/product',
+    name: 'product.index',
+    component: () => import('../../view/product/index.vue'),
+  },
+  {
+    path: '/product/create',
+    name: 'product.create',
+    component: () => import('../../view/product/create.vue'),
+  },
+  {
+    path: '/product/:id/edit',
+    name: 'product.edit',
+    component: () => import('../../view/product/edit.vue'),
+  },
 ]

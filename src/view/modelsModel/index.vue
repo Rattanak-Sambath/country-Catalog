@@ -34,12 +34,12 @@
         <q-card>
           <q-card-section>
             <div class="text-h6">Confirm</div>
-            <div class="text-subtitle2">are you sure you want to remove ?</div>
+            <div class="text-subtitle2">are you sure you want to remove ? [ {{ removeName }} ] </div>
           </q-card-section>
 
           <q-separator dark />
 
-          <div class="text-right q-mx-md q-my-lg">
+          <div class="text-right q-mx-md q-my-lg flex justify-center">
             <q-btn
               name="remove"
               color="secondary"
@@ -68,16 +68,22 @@
         @request="onChangePagination"
         v-model:pagination="pagination"
       >
-        <!-- <template #body-cell-name="props">
-                        <q-td :props="props" @click=""showMap(props.row.name)>
-                        {{ props.row.name }}</q-td>
-                    </template> -->
+        <template #body-cell-status="props">
+                      <q-td :props="props"  >
+                        {{ props.row.status ? props.row.status : 'No Status' }}
+                      </q-td>
+        </template>
+        <template #body-cell-describtion="props">
+                      <q-td :props="props"  >
+                        {{ props.row.describtion ? props.row.describtion : 'No Describtion' }}
+                      </q-td>
+        </template>
         <template #body-cell-action="props">
           <q-td :props="props">
             <q-btn
               icon="delete"
               color="negative"
-              @click="onRemove(props.row._id)"
+              @click="onRemove(props.row)"
             ></q-btn>
             <q-btn
               icon="edit"
@@ -102,10 +108,10 @@
           <q-btn
             color="blue-10"
             icon="add"
-            label="Add row"
+            label="Add Model"
             @click="addRow"
             class="q-mx-md"
-            :to="{ name: 'destination.create' }"
+            :to="{ name: 'model.create' }"
           />
 
           <q-btn
@@ -155,11 +161,12 @@ const filter = ref('')
 const loading = ref(false)
 const showId = ref('')
 const diaglogDelete = ref(false)
+const  removeName = ref('')
 const breadcrumbs = ref([
   {
-    label: 'Dashboard / Destination',
+    label: 'Dashboard / Model',
     icon: 'dashboard',
-    route: '/destination',
+    route: '/model',
   },
   // {
   //     label: 'Car',
@@ -168,6 +175,7 @@ const breadcrumbs = ref([
   // }
 ])
 const columns = [
+ 
   {
     name: 'name',
     required: true,
@@ -178,23 +186,12 @@ const columns = [
     sortable: true,
   },
   {
-    name: 'phone',
+    name: 'status',
     align: 'center',
-    label: 'Phone',
-    field: 'phone',
+    label: 'Status',
+    field: 'status',
     sortable: true,
   },
-  {
-    name: 'positionId',
-    align: 'center',
-    label: 'Position',
-    field: 'positionId',
-    sortable: true,
-  },
-  { name: 'gender', label: 'Gender', field: 'gender', sortable: true },
-  { name: 'address', label: 'Address', field: 'address' },
-  { name: 'salary', label: 'Salary', field: 'salary' },
-  { name: 'date', label: 'Date', field: 'date' },
   { name: 'action', label: 'Action', field: '' },
 ]
 watch(
@@ -207,10 +204,11 @@ watch(
 const dataTable = ref([])
 const getDataTable = async () => {
   // loading.value = true
+  removeName.value = "";
   dataTable.value = []
   const { page, rowsPerPage } = pagination.value
 
-  let data = await api.get('/staff/getStaff', {
+  let data = await api.get('/model/getModel', {
     params: {
       page,
       rowsPerPage,
@@ -234,28 +232,30 @@ const onChangePagination = (val) => {
 }
 const editCompo = (param) => {
   showId.value = param
-  router.push({ name: 'car.edit' })
+  router.push({ name: 'color.edit' })
   // console.log(param);
 }
 const onRemove = async (param) => {
-  showId.value = param
+  showId.value = param._id
+  removeName.value = param.name;
   diaglogDelete.value = true
 }
 const onConfirmDelete = async () => {
-  let data = await api.delete('/staff/removeStaff/' + showId.value)
-
+  let data = await api.delete('/model/removeModel/' + showId.value)
   if (data) {
-    console.log('data', data)
+    // console.log('data', data)
     toast.success(data.data.status)
     getDataTable()
     diaglogDelete.value = false
+    
   } else {
+    removeName.value = "";
     toast.error(err.data.status)
   }
 }
 const onEdit = async (param) => {
   // console.log(param);
-  router.push({ name: 'staff.edit', params: { staff: param } })
+  router.push({ name: 'model.edit', params: { id: param } })
 }
 const exportTable = () => {
   // const content = [columns.map(col => wrapCsvValue(col.label))].concat(

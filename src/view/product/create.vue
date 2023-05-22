@@ -159,19 +159,52 @@
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
-                      v-model="form.spec"
-                      name="spe"
+                      v-model="form.brand_id"
+                      name="brand_id"
                     >
-                    <q-input
+                    <q-select
                         :model-value="value"
-                        label="Privide spec of product *"
+                        :options="brandOpt"
+                        map-options
+                        emit-value
+                        option-label="name"
+                        option-value="_id"
+                        color="orange-14"
+                        type="text"
                         outlined
+                        label="Brand *"
                         v-bind="field"
                         :error="!!errorMessage"
                         :error-message="errorMessage"
-                      />
+                      >
+                      </q-select>
                     </validate-field>
-                  </div>
+                  </div>   
+                  <div class="col-12">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
+                      v-model="form.category_id"
+                      name="category_id"
+                    >
+                    <q-select
+                        :model-value="value"
+                        :options="categoryOpt"
+                        map-options
+                        emit-value
+                        option-label="name"
+                        option-value="_id"
+                        color="orange-14"
+                        type="text"
+                        outlined
+                        label="Category *"
+                        v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                      >
+                      </q-select>
+                    </validate-field>
+                  </div>   
+                 
                  
                   <div class="col-12">
                     <validate-field
@@ -205,10 +238,13 @@
                         :error-message="errorMessage"
                       />
                     </validate-field>
-                  </div>
-
-
-                  <div class="col-12">
+                  </div>   
+                </div>
+              </div>
+  
+              <div class="  col-xs-12 col-md-6 col-lg-4">
+                   <div class="column q-col-gutter-y-sm">
+                    <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
                       v-model.number="form.describtion"
@@ -227,15 +263,22 @@
                         @update:model-value="expiryDayChange" -->
                     </validate-field>
                   </div>
-
-                
-                 
-                </div>
-              </div>
-   
-              <div class="  col-xs-12 col-md-6 col-lg-4">
-                   <div class="column q-col-gutter-y-sm">
-                   
+                    <div class="col-12">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
+                      v-model="form.spec"
+                      name="spe"
+                    >
+                    <q-input
+                        :model-value="value"
+                        label="Privide spec of product *"
+                        outlined
+                        v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                      />
+                    </validate-field>
+                  </div>
                     <div class="col-12 q-my-sm">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
@@ -347,6 +390,8 @@ import _, { has } from 'lodash'
 const store = useStore()
 const formRef = ref('')
 const loading = ref(false)
+const brandOpt = ref([])
+const categoryOpt = ref([])
 const form = ref({
   name: '',
   model_id: '',
@@ -356,6 +401,8 @@ const form = ref({
   price: '',
   status: '',
   qty: '',
+  brand_id:'',
+  category_id:'',
   date:  dayjs(new Date()).format('YYYY-MM-DD'),
   
 })
@@ -484,6 +531,30 @@ const getColor = async () => {
       console.log(err)
     })
 }
+// get brand
+const getBrand = async () => {
+  await api
+    .get('/brand/getAllBrand/' + store.state.auth.branchId)
+    .then((res) => {    
+      console.log('Get brand', res.data);
+      brandOpt.value = res.data
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+// get Category
+const getCategory = async () => {
+  await api
+    .get('/category/getAllCategory/' + store.state.auth.branchId)
+    .then((res) => {    
+      console.log('Get category', res.data);
+      categoryOpt.value = res.data
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
 const fetchAllRoleGroups = async () => {
   await api
     .get('roleGroup/getAllRoleGroup', [])
@@ -504,6 +575,8 @@ onMounted(() => {
   fetchAllRoleGroups()
   getModel()
   getColor()
+  getBrand()
+  getCategory()
  
 })
 </script>

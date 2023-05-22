@@ -25,11 +25,13 @@ const getters = {
     return state.authenticated
   },
   user(state) {
-    // console.log(state)
     return state.user
   },
   branchId(state) {
     return state.branchId
+  },
+  userEmail(state) {
+    return state.userEmail
   },
   accessToken(state) {
     return state.accessToken
@@ -47,6 +49,10 @@ const getters = {
 const mutations = {
   SET_AUTH_USER(state, value) {
     state.user = value
+    console.log('status', state)
+  },
+  SET_AUTH_EMAIL(state, value) {
+    state.userEmail = value
     console.log('status', state)
   },
   SET_AUTH_TOKEN(state, payload) {
@@ -71,6 +77,10 @@ const mutations = {
   REMOVE_BRANCH_ID(state) {
     state.branchId = {}
     console.log('remove branch')
+  }, 
+  REMOVE_AUTH_EMAIL(state) {
+    state.userEmail = {}
+    console.log('remove branch')
   },
 }
 
@@ -83,6 +93,7 @@ const actions = {
         .then((response) => {
           console.log('respone', response)
           commit('SET_AUTHENTICATED', true)
+          commit('SET_AUTH_EMAIL', response.data.user.email)
           commit('SET_AUTH_TOKEN', response.data)
           commit('SET_AUTH_USER', response.data.user)
           commit('SET_BRANCH_ID', response.data.user.allowedBranch)
@@ -106,7 +117,7 @@ const actions = {
         .get('/auth/getCurrentUser')
         .then((response) => {
           console.log(response)
-          commit('SET_AUTH_USER', response.data.user)
+          commit('SET_AUTH_USER', response.data.user)      
           // console.log('response', response);
           resolve(response)
         })
@@ -135,6 +146,7 @@ const actions = {
     commit('REMOVE_AUTH_TOKEN')
     commit('REMOVE_AUTH_USER')
     commit('REMOVE_BRANCH_ID')
+    commit('REMOVE_AUTH_EMAIL')
     router.push({ name: 'login' })
     // router.replace({ name: 'login' })
   },
@@ -143,6 +155,7 @@ const actions = {
       commit('SET_AUTHENTICATED', false)
       commit('REMOVE_AUTH_TOKEN')
       commit('REMOVE_BRANCH_ID')
+      commit('REMOVE_AUTH_EMAIL')
       router.push({ name: 'login' })
       resolve()
     })

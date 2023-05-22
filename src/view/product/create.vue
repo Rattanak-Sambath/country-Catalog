@@ -29,7 +29,8 @@
         >
           <q-card-section>
             <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
-              <div class="col-xs-12 col-md-6 col-lg-6">
+            
+              <div class="col-xs-12 col-md-6 col-lg-4">
                 <div class="row q-col-gutter-y-sm">
                  
                   <!-- <q-uploader
@@ -41,7 +42,30 @@
                     url="http://localhost:4444/upload"
                    
                   /> -->
-
+                  <div class="col-12">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
+                      v-model="form.date"
+                      name="date"
+                    >
+                      <q-input
+                        color="orange-14"
+                        type="date"
+                        outlined
+                        :model-value="value"
+                        v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                      >
+                        <template v-slot:prepend>
+                          <q-icon
+                            name="calendar_month"
+                            color="indigo-10"
+                          />
+                        </template>
+                      </q-input>
+                    </validate-field>
+                  </div>
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
@@ -50,7 +74,7 @@
                     >
                     <q-input
                         :model-value="value"
-                        label="Name"
+                        label="Name *"
                         outlined
                         v-bind="field"
                         :error="!!errorMessage"
@@ -67,7 +91,7 @@
                     >
                     <q-select
                         :model-value="value"
-                        :options="allowedBranchOpts"
+                        :options="modelOpt"
                         map-options
                         emit-value
                         option-label="name"
@@ -75,7 +99,7 @@
                         color="orange-14"
                         type="text"
                         outlined
-                        label="Model"
+                        label="Model *"
                         v-bind="field"
                         :error="!!errorMessage"
                         :error-message="errorMessage"
@@ -92,7 +116,7 @@
                     >
                     <q-select
                         :model-value="value"
-                        :options="allowedBranchOpts"
+                        :options="colorOpt"
                         map-options
                         emit-value
                         option-label="name"
@@ -100,7 +124,7 @@
                         color="orange-14"
                         type="text"
                         outlined
-                        label="Color"
+                        label="Color *"
                         v-bind="field"
                         :error="!!errorMessage"
                         :error-message="errorMessage"
@@ -109,7 +133,7 @@
                     </validate-field>
                   </div>     
 
-                  <div class="col-12">
+                  <!-- <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
                       v-model="form.qty"
@@ -125,79 +149,75 @@
                         :error-message="errorMessage"
                       />
                     </validate-field>
-                  </div>
+                  </div> -->
                   
                 </div>
               </div>
 
-              <div class="col-xs-12 col-md-6 col-lg-6">
+              <div class="col-xs-12 col-md-6 col-lg-4">
                 <div class="row q-col-gutter-y-sm">
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
-                      v-model="form.allowedBranch"
-                      name="allowedBranch"
+                      v-model="form.spec"
+                      name="spe"
                     >
-                      <q-select
+                    <q-input
                         :model-value="value"
-                        :options="allowedBranchOpts"
-                        map-options
-                        emit-value
-                        option-label="label"
-                        option-value="_id"
-                        color="orange-14"
-                        type="text"
+                        label="Privide spec of product *"
                         outlined
-                        label="allowed Branch"
                         v-bind="field"
                         :error="!!errorMessage"
                         :error-message="errorMessage"
-                      >
-                      </q-select>
+                      />
+                    </validate-field>
+                  </div>
+                 
+                  <div class="col-12">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
+                      v-model="form.cost"
+                      name="cost"
+                    >
+                    <q-input
+                        :model-value="value"
+                        label="Cost *"
+                        outlined
+                        v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                      />
                     </validate-field>
                   </div>
 
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
-                      v-model="form.roleGroupId"
-                      name="roleGroupId"
+                      v-model="form.price"
+                      name="price"
                     >
-                      <q-select
+                    <q-input
                         :model-value="value"
-                        :options="roleGroupOpts"
-                        map-options
-                        emit-value
-                        option-label="name"
-                        option-value="_id"
-                        color="orange-14"
-                        type="text"
+                        label="Price *"
                         outlined
-                        label="Role group"
                         v-bind="field"
                         :error="!!errorMessage"
                         :error-message="errorMessage"
-                      >
-                        <template v-slot:prepend>
-                          <q-icon
-                            name="engineering"
-                            color="indigo-10"
-                          />
-                        </template>
-                      </q-select>
+                      />
                     </validate-field>
                   </div>
+
 
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
-                      v-model.number="form.expiryDay"
-                      name="expiryDay"
+                      v-model.number="form.describtion"
+                      name="describtion"
                     >
                       <q-input
                         :model-value="value"
-                        label="Expiry day *"
-                        type="number"
+                        label="Describtion"
+                        type="text"
                         outlined
                         v-bind="field"
                         :error="!!errorMessage"
@@ -208,20 +228,21 @@
                     </validate-field>
                   </div>
 
-                  <div class="col-12">
+                
+                 
+                </div>
+              </div>
+   
+              <div class="  col-xs-12 col-md-6 col-lg-4">
+                   <div class="column q-col-gutter-y-sm">
+                   
+                    <div class="col-12 q-my-sm">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
                       v-model="form.status"
                       name="status"
                     >
-                      <!-- <q-option-group
-                        :model-value="value"
-                        :options="statusOpts"
-                        v-bind="field"
-                        color="primary"
-                        inline
-                        style="display: inline-block"
-                      /> -->
+                   
                       <span>Status : </span>
                       <q-radio
                         :model-value="value"
@@ -248,40 +269,29 @@
                       </div>
                     </validate-field>
                   </div>
-                  <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.roles"
-                      name="roles"
-                    >
-                      <fieldset class="text-left">
-                        <legend>Roles</legend>
-                        <div class="row">
-                          <div
-                            v-for="role in roleFetch"
-                            :key="role.name"
-                            class="col-xs-6 col-sm-6 col-md-4"
-                          >
-                            <q-checkbox
-                              :model-value="value"
-                              :val="role.name"
-                              :label="startCase(role)"
-                              v-bind="field"
-                            />
-                          </div>
-                        </div>
-                      </fieldset>
-                      <!-- v-if="!!errorMessage && value.length === 0" -->
-                      <div
-                        class="text-negative"
-                        style="font-size: 11px"
-                      >
-                        {{ errorMessage }}
+                        <div class="col-12 items-center q-mx-auto">
+                              <validate-field
+                                v-slot="{ value, field, errorMessage }"
+                                v-model="form.image_path"
+                                name="image_path">
+                                <!-- <q-uploader
+                                  v-model="form.image_path"                        
+                                  url="http://localhost:4444/upload"
+                                  style="max-width: 300px"
+                                /> -->
+                                <q-input
+                                    :model-value="value"                      
+                                    type="file"
+                                    outlined
+                                    v-bind="field"
+                                    :error="!!errorMessage"
+                                    :error-message="errorMessage"
+                                  />
+                              
+                            </validate-field>
                       </div>
-                    </validate-field>
-                  </div>
+                    </div>
                 </div>
-              </div>
             </div>
           </q-card-section>
           <!-- <q-card-section> {{}} </q-card-section> -->
@@ -324,20 +334,17 @@
 
 <script setup>
 import { Form as ValidateForm, Field as ValidateField } from 'vee-validate'
-import actions from '../../store/actions'
 import toast from '../../Helper/toast.js'
 import { object, string } from 'yup'
 import { ref, onMounted, watch } from 'vue'
-
 import { useStore } from 'vuex'
 import router from '../../router'
 import dayjs from 'dayjs'
 import api from '../../utils/utility'
 import axios from 'axios'
 import _, { has } from 'lodash'
-
 // import { number } from 'yup/lib/locale';
-
+const store = useStore()
 const formRef = ref('')
 const loading = ref(false)
 const form = ref({
@@ -356,17 +363,19 @@ const roleFetch = ref([])
 const allowedBranchOpts = ref([])
 const roleGroupOpts = ref([])
 const staffOpt = ref([])
+const modelOpt = ref([])
+const colorOpt = ref([])
 const rules = object({
   name: string().required().label('Name'),
-  type: string().required().label('Type'),
-  // staffId: string().required().label('Staff'),
-  fullname: string().required().label('Role'),
-  email: string().required().label('Status'),
-  password: string().required().label('Password'),
-  allowedBranch: string().required().label('Allowed branches'),
-  roleGroupId: string().required().label('Role group'),
-  expiryDay: string().required().label('Expiry day'),
-  status: string().required().label('Status'),
+  // image_path: string().required().label('Image'),
+  // // staffId: string().required().label('Staff'),
+  // fullname: string().required().label('Role'),
+  // email: string().required().label('Status'),
+  // password: string().required().label('Password'),
+  // allowedBranch: string().required().label('Allowed branches'),
+  // roleGroupId: string().required().label('Role group'),
+  // expiryDay: string().required().label('Expiry day'),
+  // status: string().required().label('Status'),
 })
 
 const showId = ref('')
@@ -385,11 +394,9 @@ const onSubmit = async () => {
   const { valid } = await formRef.value.validate()
   // console.log('form', form.value)
   if (valid) {
-    let methods = '/auth/register'
-    // if(showId.value){
-    //   methods = 'driver/updateDriver'
-    // }
-       loading.value = true
+    let methods = '/product/createProduct'
+    form.value.branchId = store.state.auth.branchId
+    loading.value = true
     let res = await api.post(methods, form.value)
     if (res) {
       toast.success({ message: 'Insert successfully' })
@@ -437,6 +444,7 @@ const fetchAllowBranch = async () => {
       console.log(err)
     })
 }
+// get staff
 const getStaff = async () => {
   await api
     .get('/staff/getAllStaff', [])
@@ -444,6 +452,33 @@ const getStaff = async () => {
       console.log('find staff', res.data);
       console.log(res.data)
       staffOpt.value = res.data
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
+// get model 
+
+const getModel = async () => {
+  await api
+    .get('/model/getAllModel/' + store.state.auth.branchId)
+    .then((res) => {    
+      console.log('Get model', res.data);
+      modelOpt.value = res.data
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
+// get Color
+const getColor = async () => {
+  await api
+    .get('/color/getAllColor/' + store.state.auth.branchId)
+    .then((res) => {    
+      console.log('Get model', res.data);
+      colorOpt.value = res.data
     })
     .catch((err) => {
       console.log(err)
@@ -467,6 +502,8 @@ onMounted(() => {
   fetchAllowBranch()
   getStaff()
   fetchAllRoleGroups()
+  getModel()
+  getColor()
  
 })
 </script>

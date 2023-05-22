@@ -575,8 +575,8 @@ const getStaff = async () => {
   await api
     .get('/staff/getAllStaff', [])
     .then((res) => {
-      console.log('find staff', res.data);
-      console.log(res.data)
+      // console.log('find staff', res.data);
+      // console.log(res.data)
       staffOpt.value = res.data
     })
     .catch((err) => {

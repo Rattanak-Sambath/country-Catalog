@@ -474,15 +474,28 @@ const onSubmit = async () => {
     //   methods =  'car/updateCar'
     // }
     // loading.value = true
-    let res = await api.post('staff/createStaff', doc)
-    if (res) {
-      toast.success({ message: 'Insert successfully ' })
+    await api.post('staff/createStaff', doc).then((res)=>{
+     if(res){
+       toast.success({ message: 'Insert successfully ' })
       loading.value = false
       router.go(-1)
-    } else {
-      toast.error({ message: 'There was somehting wrong to add car' })
-      router.go(-1)
-    }
+     }
+    }).catch((err)=>{
+      if(err.response.status == 500 ){
+        toast.error({ message: err.response.data })
+      }
+      else {
+        toast.error({ message: err.data })
+        router.go(-1)
+      }
+    
+    })
+    // if (res) {
+    //  toast.error({ message: err.message })
+    //   router.go(-1)
+    // } else {
+      
+    // }
   }
 }
 const cancel = () => {

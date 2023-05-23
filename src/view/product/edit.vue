@@ -10,7 +10,7 @@
           icon="west"
           outline
           color="primary"
-          @click="$router.go(-1)"
+          @click="cancel()"
           >Back</q-btn
         >
       </q-toolbar>
@@ -27,17 +27,52 @@
           @submit.prevent.stop="onSubmit()"
           class="mt-4 text-center"
         >
-          <q-card-section>
+        <q-card-section>
             <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
-              <div class="col-xs-12 col-md-6 col-lg-6">
+            
+              <div class="col-xs-12 col-md-6 col-lg-4">
                 <div class="row q-col-gutter-y-sm">
+                 
+                  <!-- <q-uploader
+                  outlined
+                    v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                    :model-value="value"
+                    url="http://localhost:4444/upload"
+                   
+                  /> -->
+                  <div class="col-12">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
+                      v-model="form.date"
+                      name="date"
+                    >
+                      <q-input
+                        color="orange-14"
+                        type="date"
+                        outlined
+                        :model-value="value"
+                        v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                      >
+                        <template v-slot:prepend>
+                          <q-icon
+                            name="calendar_month"
+                            color="indigo-10"
+                          />
+                        </template>
+                      </q-input>
+                    </validate-field>
+                  </div>
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
                       v-model="form.name"
                       name="name"
                     >
-                      <q-input
+                    <q-input
                         :model-value="value"
                         label="Name *"
                         outlined
@@ -51,168 +86,12 @@
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
-                      v-model="form.fullname"
-                      name="fullname"
+                      v-model="form.model_id"
+                      name="model_id"
                     >
-                      <q-input
+                    <q-select
                         :model-value="value"
-                        label="Full name *"
-                        outlined
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      />
-                    </validate-field>
-                  </div>
-
-                  <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.email"
-                      name="email"
-                    >
-                      <q-input
-                        :model-value="value"
-                        label="Email *"
-                        outlined
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      />
-                    </validate-field>
-                  </div>
-
-                  <!-- Update  -->
-                  <div
-                    v-if="showId"
-                    class="col-12"
-                  >
-                    <fieldset>
-                      <legend>
-                        Change Password
-                        <q-toggle v-model="isUpdatePassword" />
-                      </legend>
-
-                      <div
-                        v-if="isUpdatePassword"
-                        class="row q-col-gutter-y-sm"
-                      >
-                        <div class="col-12">
-                          <validate-field
-                            v-slot="{ value, field, errorMessage }"
-                            v-model="form.password"
-                            name="password"
-                          >
-                            <q-input
-                              :model-value="value"
-                              label="Password *"
-                              type="password"
-                              outlined
-                              v-bind="field"
-                              :error="!!errorMessage"
-                              :error-message="errorMessage"
-                            />
-                          </validate-field>
-                        </div>
-
-                        <div class="col-12">
-                          <validate-field
-                            v-slot="{ value, field, errorMessage }"
-                            v-model="form.confirmPassword"
-                            name="confirmPassword"
-                          >
-                            <q-input
-                              :model-value="value"
-                              label="Confirm password *"
-                              type="password"
-                              outlined
-                              v-bind="field"
-                              :error="!!errorMessage"
-                              :error-message="errorMessage"
-                            />
-                          </validate-field>
-                        </div>
-                      </div>
-                    </fieldset>
-                  </div>
-
-                  <!-- New -->
-                  <template v-else>
-                    <div class="col-12">
-                      <validate-field
-                        v-slot="{ value, field, errorMessage }"
-                        v-model="form.password"
-                        name="password"
-                      >
-                        <q-input
-                          :model-value="value"
-                          label="Password *"
-                          type="password"
-                          outlined
-                          v-bind="field"
-                          :error="!!errorMessage"
-                          :error-message="errorMessage"
-                        />
-                      </validate-field>
-                    </div>
-
-                    <!-- <div class="col-12">
-                        <validate-field
-                          v-slot="{ value, field, errorMessage }"
-                          v-model="form.confirmPassword"
-                          name="confirmPassword"
-                        >
-                          <q-input
-                            :model-value="value"
-                            label="Confirm Password *"
-                            type="password"
-                            outlined
-                            v-bind="field"
-                            :error="!!errorMessage"
-                            :error-message="errorMessage"
-                          />
-                        </validate-field>
-                      </div> -->
-                  </template>
-                </div>
-              </div>
-
-              <div class="col-xs-12 col-md-6 col-lg-6">
-                <div class="row q-col-gutter-y-sm">
-                  <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.allowedBranch"
-                      name="allowedBranch"
-                    >
-                      <q-select
-                        :model-value="value"
-                        :options="allowedBranchOpts"
-                        map-options
-                        emit-value
-                        option-label="label"
-                        option-value="_id"
-                        color="orange-14"
-                        type="text"
-                        outlined
-                        label="allowed Branch"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      >
-                      </q-select>
-                    </validate-field>
-                  </div>
-
-                  <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.roleGroupId"
-                      name="roleGroupId"
-                    >
-                      <q-select
-                        :model-value="value"
-                        :options="roleGroupOpts"
+                        :options="modelOpt"
                         map-options
                         emit-value
                         option-label="name"
@@ -220,17 +99,11 @@
                         color="orange-14"
                         type="text"
                         outlined
-                        label="Role group"
+                        label="Model *"
                         v-bind="field"
                         :error="!!errorMessage"
                         :error-message="errorMessage"
                       >
-                        <template v-slot:prepend>
-                          <q-icon
-                            name="engineering"
-                            color="indigo-10"
-                          />
-                        </template>
                       </q-select>
                     </validate-field>
                   </div>
@@ -238,37 +111,181 @@
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
-                      v-model.number="form.expiryDay"
-                      name="expiryDay"
+                      v-model="form.color_id"
+                      name="color_id"
                     >
-                      <q-input
+                    <q-select
                         :model-value="value"
-                        label="Expiry day *"
+                        :options="colorOpt"
+                        map-options
+                        emit-value
+                        option-label="name"
+                        option-value="_id"
+                        color="orange-14"
+                        type="text"
+                        outlined
+                        label="Color *"
+                        v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                      >
+                      </q-select>
+                    </validate-field>
+                  </div>     
+
+                  <!-- <div class="col-12">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
+                      v-model="form.qty"
+                      name="qty"
+                    >
+                    <q-input
                         type="number"
+                        :model-value="value"
+                        label="Qty"
                         outlined
                         v-bind="field"
                         :error="!!errorMessage"
                         :error-message="errorMessage"
                       />
-                      <!-- :suffix="form.expiryDate"
-                          @update:model-value="expiryDayChange" -->
+                    </validate-field>
+                  </div> -->
+                  
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-md-6 col-lg-4">
+                <div class="row q-col-gutter-y-sm">
+                  <div class="col-12">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
+                      v-model="form.brand_id"
+                      name="brand_id"
+                    >
+                    <q-select
+                        :model-value="value"
+                        :options="brandOpt"
+                        map-options
+                        emit-value
+                        option-label="name"
+                        option-value="_id"
+                        color="orange-14"
+                        type="text"
+                        outlined
+                        label="Brand *"
+                        v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                      >
+                      </q-select>
+                    </validate-field>
+                  </div>   
+                  <div class="col-12">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
+                      v-model="form.category_id"
+                      name="category_id"
+                    >
+                    <q-select
+                        :model-value="value"
+                        :options="categoryOpt"
+                        map-options
+                        emit-value
+                        option-label="name"
+                        option-value="_id"
+                        color="orange-14"
+                        type="text"
+                        outlined
+                        label="Category *"
+                        v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                      >
+                      </q-select>
+                    </validate-field>
+                  </div>   
+                 
+                 
+                  <div class="col-12">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
+                      v-model="form.cost"
+                      name="cost"
+                    >
+                    <q-input
+                        :model-value="value"
+                        label="Cost *"
+                        outlined
+                        v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                      />
                     </validate-field>
                   </div>
 
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
+                      v-model="form.price"
+                      name="price"
+                    >
+                    <q-input
+                        :model-value="value"
+                        label="Price *"
+                        outlined
+                        v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                      />
+                    </validate-field>
+                  </div>   
+                </div>
+              </div>
+  
+              <div class="  col-xs-12 col-md-6 col-lg-4">
+                   <div class="column q-col-gutter-y-sm">
+                    <div class="col-12">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
+                      v-model.number="form.describtion"
+                      name="describtion"
+                    >
+                      <q-input
+                        :model-value="value"
+                        label="Describtion"
+                        type="text"
+                        outlined
+                        v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                      />
+                      <!-- :suffix="form.expiryDate"
+                        @update:model-value="expiryDayChange" -->
+                    </validate-field>
+                  </div>
+                    <div class="col-12">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
+                      v-model="form.spec"
+                      name="spe"
+                    >
+                    <q-input
+                        :model-value="value"
+                        label="Privide spec of product *"
+                        outlined
+                        v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                      />
+                    </validate-field>
+                  </div>
+                    <div class="col-12 q-my-sm">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
                       v-model="form.status"
                       name="status"
                     >
-                      <!-- <q-option-group
-                          :model-value="value"
-                          :options="statusOpts"
-                          v-bind="field"
-                          color="primary"
-                          inline
-                          style="display: inline-block"
-                        /> -->
+                   
                       <span>Status : </span>
                       <q-radio
                         :model-value="value"
@@ -295,40 +312,29 @@
                       </div>
                     </validate-field>
                   </div>
-                </div>
-              </div>
-              <div class="col-12">
-                <validate-field
-                  v-slot="{ value, field, errorMessage }"
-                  v-model="form.roles"
-                  name="roles"
-                >
-                  <fieldset class="text-left">
-                    <legend>Roles</legend>
-                    <div class="row">
-                      <div
-                        v-for="role in roleFetch"
-                        :key="role.name"
-                        class="col-xs-6 col-sm-6 col-md-4"
-                      >
-                        <q-checkbox
-                          :model-value="value"
-                          :val="role.name"
-                          :label="startCase(role)"
-                          v-bind="field"
-                        />
+                        <div class="col-12 items-center q-mx-auto">
+                              <validate-field
+                                v-slot="{ value, field, errorMessage }"
+                                v-model="form.image_path"
+                                name="image_path">
+                                <!-- <q-uploader
+                                  v-model="form.image_path"                        
+                                  url="http://localhost:4444/upload"
+                                  style="max-width: 300px"
+                                /> -->
+                                <q-input
+                                    :model-value="value"                      
+                                    type="file"
+                                    outlined
+                                    v-bind="field"
+                                    :error="!!errorMessage"
+                                    :error-message="errorMessage"
+                                  />
+                              
+                            </validate-field>
                       </div>
                     </div>
-                  </fieldset>
-                  <!-- v-if="!!errorMessage && value.length === 0" -->
-                  <div
-                    class="text-negative"
-                    style="font-size: 11px"
-                  >
-                    {{ errorMessage }}
-                  </div>
-                </validate-field>
-              </div>
+                </div>
             </div>
           </q-card-section>
           <!-- <q-card-section> {{}} </q-card-section> -->
@@ -373,12 +379,12 @@
         <q-card>
           <q-card-section>
             <div class="text-h6">Confirm</div>
-            <div class="text-subtitle2">are you sure you want to remove ?</div>
+            <div class="text-subtitle2">are you sure you want to remove ? [ {{ removeName }} ] </div>
           </q-card-section>
 
           <q-separator dark />
 
-          <div class="text-right q-mx-md q-my-lg">
+          <div class="text-right q-mx-md q-my-lg flex justify-center">
             <q-btn
               name="remove"
               color="secondary"
@@ -403,16 +409,13 @@
 
 <script setup>
 import { Form as ValidateForm, Field as ValidateField } from 'vee-validate'
-import actions from '../../store/actions'
 import toast from '../../Helper/toast.js'
 import { object, string } from 'yup'
 import { ref, onMounted, watch } from 'vue'
-
 import { useStore } from 'vuex'
 import router from '../../router'
 import dayjs from 'dayjs'
 import api from '../../utils/utility'
-import axios from 'axios'
 import _ from 'lodash'
 import { useRoute } from 'vue-router'
 // import { number } from 'yup/lib/locale';
@@ -422,17 +425,18 @@ const loading = ref(false)
 const diaglogDelete = ref(false)
 const deleting = ref(false)
 const form = ref({
-  username: 'user',
   name: '',
-  fullname: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-  allowedBranch: '',
-  roleGroupId: '',
-  expiryDay: '',
+  model_id: '',
+  color_id: '',
+  image_path: '',
+  describtion: '',
+  price: '',
   status: '',
-  roles: [],
+  qty: '',
+  brand_id:'',
+  category_id:'',
+  date: '',
+  
 })
 const roleFetch = ref([])
 const allowedBranchOpts = ref([])
@@ -473,7 +477,8 @@ const rules = object({
 
 const showId = ref('')
 const concel = () => {
-  showId.value = null
+  
+
   form.value.name = ''
   form.value.address = ''
   form.value.position = ''
@@ -483,34 +488,35 @@ const concel = () => {
 }
 const findDatabyId = async () => {
 
-  let res = await api.get("/auth/getUserById/" + $route.params.user)
+  let res = await api.get("/product/getProductById/" + $route.params.id)
   if (res) {
     console.log('data', res)
     form.value.name = res.data.name
-    form.value.fullname = res.data.fullname
-    form.value.email = res.data.email
-    form.value.allowedBranch = res.data.allowedBranch
-    form.value.roleGroupId = res.data.roleGroupId
-    form.value.expiryDay = res.data.expiryDay
-    form.value.status = res.data.status
-    form.value.roles = res.data.roles
-    // form.value.status = res.data.roleGroup.status
+    form.value.date= res.data.date
+    form.value.model_id = res.data.model_id
+    form.value.color_id = res.data.color_id
+    form.value.brand_id = res.data.brand_id
+    form.value.category_id = res.data.category_id 
+    form.value.cost = res.data.cost
+    form.value.price = res.data.price
+    form.value.describtion = res.data.describtion
+    form.value.spec = res.data.spec
+    form.value.status= res.data.status
+    // form.value.image_path = res.data.image_path
   }
 }
 const startCase = (val) => _.startCase(val)
-const onRemove = async (param) => {
-  // showId.value = param
+const onRemove = async () => { 
+  showId.value = $route.params.id
+  // removeName.value = param.name;
   diaglogDelete.value = true
 }
 const onConfirmDelete = async () => {
-  let data = await api.delete('/auth/removeUser/' + $route.params.user)
+  let data = await api.delete('/product/removeProduct/' + $route.params.id)
   if (data) {
-      // console.log('hi');
       router.go(-1)
       diaglogDelete.value = false
       toast.success({ message: '' })
-     
-  
   } else {
     toast.error(err.data.status)
   }

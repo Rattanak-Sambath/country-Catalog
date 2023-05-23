@@ -49,18 +49,18 @@ const getters = {
 const mutations = {
   SET_AUTH_USER(state, value) {
     state.user = value
-    console.log('status', state)
+    // console.log('status', state)
   },
   SET_AUTH_EMAIL(state, value) {
     state.userEmail = value
-    console.log('status', state)
+    // console.log('set email', value)
   },
   SET_AUTH_TOKEN(state, payload) {
     state.accessToken = payload.token
     // state.refreshToken = token.refresh_token
   },
   SET_BRANCH_ID(state, value) {
-    console.log('state', value)
+    // console.log('state', value)
     state.branchId = value
   },
   SET_AUTHENTICATED(state, value) {
@@ -68,19 +68,20 @@ const mutations = {
   },
   REMOVE_AUTH_TOKEN(state) {
     state.accessToken = null
-    console.log('remove token')
+    // console.log('remove token')
   },
   REMOVE_AUTH_USER(state) {
     state.user = {}
-    console.log('remove user')
+    // console.log('remove user')
   },
   REMOVE_BRANCH_ID(state) {
     state.branchId = {}
-    console.log('remove branch')
+    // console.log('remove branch')
   }, 
   REMOVE_AUTH_EMAIL(state) {
+    console.log('rmove email', state.userEmail);
     state.userEmail = {}
-    console.log('remove branch')
+    // console.log('remove branch')
   },
 }
 
@@ -91,7 +92,7 @@ const actions = {
       api
         .post('http://localhost:5001/api/auth/login', credential)
         .then((response) => {
-          console.log('respone', response)
+          // console.log('respone', response)
           commit('SET_AUTHENTICATED', true)
           commit('SET_AUTH_EMAIL', response.data.user.email)
           commit('SET_AUTH_TOKEN', response.data)

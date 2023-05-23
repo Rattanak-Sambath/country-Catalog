@@ -35,12 +35,12 @@
         <q-card>
           <q-card-section>
             <div class="text-h6">Confirm</div>
-            <div class="text-subtitle2">are you sure you want to remove ?</div>
+            <div class="text-subtitle2">are you sure you want to remove ? [ {{ removeName }} ] </div>
           </q-card-section>
 
           <q-separator dark />
 
-          <div class="text-right q-mx-md q-my-lg">
+          <div class="text-right q-mx-md q-my-lg flex justify-center">
             <q-btn
               name="remove"
               color="secondary"
@@ -79,7 +79,7 @@
             <q-btn
               icon="delete"
               color="negative"
-              @click="onRemove(props.row._id)"
+              @click="onRemove(props.row)"
             ></q-btn>
             <q-btn
               icon="edit"
@@ -96,44 +96,16 @@
                                     </span> -->
           </q-td>
         </template>
-        <template #body-cell-username="props">
+        <template #body-cell-name="props">
           <q-td
             class="text-primary cursor-pointer"
             :props="props"
             @click="onEdit(props.row._id)"
           >
-            <span> {{ props.row.username }}</span>
+            <span> {{ props.row.name }}</span>
           </q-td>
         </template>
-        <template #body-cell-roles="props">
-          <q-td :props="props">
-            <VueJsonPretty
-              :data="props.row.roles"
-              :deep="0"
-            />
-          </q-td>
-        </template>
-        <template #body-cell-allowedBranch="props">
-          <q-td :props="props">
-            <span>
-              {{
-                props.row.allowedBranch ? props.row.allowedBranch : 'No Branch'
-              }}</span
-            >
-          </q-td>
-        </template>
-        <template #body-cell-status="props">
-          <q-td :props="props">
-            <span>
-              {{ props.row.status ? props.row.status : 'No Status' }}</span
-            >
-          </q-td>
-        </template>
-        <template #body-cell-map="props">
-          <q-td :props="props">
-            <span> {{ props.row.map ? props.row.map : 'No Map' }}</span>
-          </q-td>
-        </template>
+    
         <template v-slot:top>
           <q-btn
             color="blue-10"
@@ -179,7 +151,8 @@ import api from '../../utils/utility'
 import _ from 'lodash'
 import { Loading } from 'quasar'
 import VueJsonPretty from 'vue-json-pretty'
-
+import { useStore } from 'vuex'
+const store  = useStore()
 const pagination = ref({
   sortBy: 'name',
   descending: false,
@@ -216,39 +189,53 @@ const columns = [
   //     sortable: true
   // },
   {
-    name: 'username',
+    name: 'name',
     align: 'center',
-    label: 'Username',
-    field: 'username',
+    label: 'Name',
+    field: 'name',
     sortable: true,
   },
 
   {
-    name: 'fullname',
+    name: 'model',
     align: 'center',
-    label: 'Full Name',
-    field: 'fullname',
+    label: 'Model',
+    field: 'model',
     sortable: true,
   },
   {
-    name: 'email',
+    name: 'color',
     align: 'center',
-    label: 'Email',
-    field: 'email',
+    label: 'Color',
+    field: 'color',
     sortable: true,
   },
   {
-    name: 'allowedBranch',
+    name: 'brand',
     align: 'center',
-    label: 'Allows Branch',
-    field: 'allowedBranch',
+    label: 'Brand',
+    field: 'brand',
     sortable: true,
   },
   {
-    name: 'roles',
+    name: 'category',
     align: 'center',
-    label: 'RoleGroup',
-    field: 'roles',
+    label: 'Category',
+    field: 'category',
+    sortable: true,
+  },
+  {
+    name: 'cost',
+    align: 'center',
+    label: 'Cost',
+    field: 'cost',
+    sortable: true,
+  },
+  {
+    name: 'price',
+    align: 'center',
+    label: 'Price',
+    field: 'price',
     sortable: true,
   },
   {
@@ -258,7 +245,23 @@ const columns = [
     field: 'status',
     sortable: true,
   },
-  { name: 'expiryDay', label: 'Expired', field: 'expiryDay' },
+  {
+    name: 'spec',
+    align: 'center',
+    label: 'Spec',
+    field: 'spec',
+    sortable: true,
+  },
+  { name: 'status',
+   label: 'Status', 
+   field: 'status' },
+  {
+    name: 'date',
+    align: 'center',
+    label: 'Date',
+    field: 'date',
+    sortable: true,
+  },
 ]
 watch(
   filter,
@@ -273,11 +276,12 @@ const getDataTable = async () => {
   dataTable.value = []
   const { page, rowsPerPage } = pagination.value
 
-  let data = await api.get('/auth/getUser', {
+  let data = await api.get('/product/getProduct', {
     params: {
       page,
       rowsPerPage,
       search: filter.value,
+      branchId: store.state.auth.branchId,
     },
   })
   loading.value = false
@@ -298,11 +302,12 @@ const editCompo = (param) => {
   // console.log(param);
 }
 const onRemove = async (param) => {
-  showId.value = param
+  showId.value = param._id
+  removeName.value = param.name;
   diaglogDelete.value = true
 }
 const onConfirmDelete = async () => {
-  let data = await api.delete('/branch/removeBranch/' + showId.value)
+  let data = await api.delete('/product/removeProduct/' + showId.value)
   if (data) {
     toast.success({ message: '' })
     getDataTable()
@@ -313,7 +318,7 @@ const onConfirmDelete = async () => {
 }
 const onEdit = async (param) => {
   // console.log(param);
-  router.push({ name: 'user.edit', params: { user: param } })
+  router.push({ name: 'product.edit', params: { id: param } })
 }
 const exportTable = () => {
   // const content = [columns.map(col => wrapCsvValue(col.label))].concat(

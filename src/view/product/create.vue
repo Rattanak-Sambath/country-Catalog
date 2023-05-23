@@ -10,7 +10,7 @@
           icon="west"
           outline
           color="primary"
-          @click="$router.go(-1)"
+          @click="router.go(-1)"
           >Back</q-btn
         >
       </q-toolbar>

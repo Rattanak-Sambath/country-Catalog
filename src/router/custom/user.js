@@ -225,4 +225,20 @@ export default [
     name: 'product.edit',
     component: () => import('../../view/product/edit.vue'),
   },
+  // sale 
+  {
+    path: '/sale',
+    name: 'sale.index',
+    component: () => import('../../view/sale/index.vue'),
+  },
+  {
+    path: '/sale/create',
+    name: 'sale.create',
+    component: () => import('../../view/sale/create.vue'),
+  },
+  {
+    path: '/sale/:id/edit',
+    name: 'sale.edit',
+    component: () => import('../../view/product/edit.vue'),
+  },
 ]

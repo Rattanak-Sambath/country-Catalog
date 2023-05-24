@@ -313,25 +313,27 @@
                     </validate-field>
                   </div>
                         <div class="col-12 items-center q-mx-auto">
-                              <validate-field
+                              <!-- <validate-field
                                 v-slot="{ value, field, errorMessage }"
                                 v-model="form.image_path"
-                                name="image_path">
-                                <!-- <q-uploader
-                                  v-model="form.image_path"                        
-                                  url="http://localhost:4444/upload"
-                                  style="max-width: 300px"
-                                /> -->
+                                name="image_path"> -->
                                 <q-input
+                                       v-model="form.image_path"
+                                      @update:model-value="val => { file = val[0] }"
+                                      filled
+                                      type="file"
+                                      hint="Native file"
+                                    />
+                                <!-- <q-input
                                     :model-value="value"                      
                                     type="file"
                                     outlined
                                     v-bind="field"
                                     :error="!!errorMessage"
                                     :error-message="errorMessage"
-                                  />
+                                  /> -->
                               
-                            </validate-field>
+                            <!-- </validate-field> -->
                       </div>
                     </div>
                 </div>
@@ -396,7 +398,7 @@ const form = ref({
   name: '',
   model_id: '',
   color_id: '',
-  image_path: '',
+  image_path: [],
   describtion: '',
   price: '',
   status: '',
@@ -444,6 +446,7 @@ const onSubmit = async () => {
     let methods = '/product/createProduct'
     form.value.branchId = store.state.auth.branchId
     loading.value = true
+    console.log(form.value);
     let res = await api.post(methods, form.value)
     if (res) {
       toast.success({ message: 'Insert successfully' })

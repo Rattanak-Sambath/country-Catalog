@@ -3,21 +3,21 @@
     <q-card class="flex justify-space-between">
       <q-toolbar>
         <q-toolbar-title class="text-h6 text-bold"
-          ><q-icon name="add"></q-icon> Update User</q-toolbar-title
+          ><q-icon name="add"></q-icon> Create Sale</q-toolbar-title
         >
         <q-space />
         <q-btn
           icon="west"
           outline
           color="primary"
-          @click="cancel()"
+          @click="router.go(-1)"
           >Back</q-btn
         >
       </q-toolbar>
     </q-card>
     <q-card class="q-my-md">
-      <q-card-section class="text-grey-15">
-        Fill the form below to update new Driver
+      <q-card-section class="text-grey-15 text-bold">
+        Fill the form below to crate new Sale
       </q-card-section>
       <ValidateForm
         ref="formRef"
@@ -27,7 +27,7 @@
           @submit.prevent.stop="onSubmit()"
           class="mt-4 text-center"
         >
-        <q-card-section>
+          <q-card-section>
             <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
             
               <div class="col-xs-12 col-md-6 col-lg-4">
@@ -312,30 +312,18 @@
                       </div>
                     </validate-field>
                   </div>
-                  <div class="col-12 items-center q-mx-auto">
-                                 <q-input
+                        <div class="col-12 items-center q-mx-auto">
+                              <!-- <validate-field
+                                v-slot="{ value, field, errorMessage }"
+                                v-model="form.image_path"
+                                name="image_path"> -->
+                                <q-input
                                        v-model="form.image_path"
                                       @update:model-value="val => { file = val[0] }"
                                       filled
                                       type="file"
                                       hint="Native file"
                                     />
-                              <!-- <validate-field
-                                v-slot="{ value, field, errorMessage }"
-                                v-model="form.image_path"
-                                name="image_path">
-                                <q-uploader
-                                  v-model="form.image_path"                        
-                                  url="http://localhost:4444/upload"
-                                  style="max-width: 300px"
-                                />
-                                <div
-                                    v-if="!!errorMessage"
-                                    class="text-negative"
-                                    style="font-size: 11px"
-                                  >
-                                    {{ errorMessage }}
-                                  </div> -->
                                 <!-- <q-input
                                     :model-value="value"                      
                                     type="file"
@@ -344,8 +332,8 @@
                                     :error="!!errorMessage"
                                     :error-message="errorMessage"
                                   /> -->
-<!--                               
-                            </validate-field> -->
+                              
+                            <!-- </validate-field> -->
                       </div>
                     </div>
                 </div>
@@ -370,7 +358,6 @@
                 icon="remove"
                 label="Remove"
                 no-caps
-                :disable="deleting"
                 :loading="loading"
                 @click="onRemove()"
               />
@@ -386,37 +373,6 @@
           </q-card-section>
         </q-form>
       </ValidateForm>
-      <q-dialog
-        v-model="diaglogDelete"
-        max-width="500"
-      >
-        <q-card>
-          <q-card-section>
-            <div class="text-h6">Confirm</div>
-            <div class="text-subtitle2">are you sure you want to remove ? [ {{ removeName }} ] </div>
-          </q-card-section>
-
-          <q-separator dark />
-
-          <div class="text-right q-mx-md q-my-lg flex justify-center">
-            <q-btn
-              name="remove"
-              color="secondary"
-              outlined
-              :disabled="deleting"
-              @click="diaglogDelete = false"
-              >Cancel</q-btn
-            >
-            <q-btn
-              class="q-mx-md"
-              name="confirm"
-              color="negative"
-              @click="onConfirmDelete"
-              >Confirm</q-btn
-            >
-          </div>
-        </q-card>
-      </q-dialog>
     </q-card>
   </div>
 </template>
@@ -430,63 +386,38 @@ import { useStore } from 'vuex'
 import router from '../../router'
 import dayjs from 'dayjs'
 import api from '../../utils/utility'
-import _ from 'lodash'
-import { useRoute } from 'vue-router'
+import axios from 'axios'
+import _, { has } from 'lodash'
 // import { number } from 'yup/lib/locale';
-
-const $route = useRoute()
 const store = useStore()
 const formRef = ref('')
 const loading = ref(false)
-const diaglogDelete = ref(false)
-const deleting = ref(false)
 const brandOpt = ref([])
 const categoryOpt = ref([])
-const modelOpt = ref([])
-const colorOpt = ref([])
-const removeName = ref('')
 const form = ref({
   name: '',
   model_id: '',
   color_id: '',
-  image_path: '',
+  image_path: [],
   describtion: '',
   price: '',
   status: '',
   qty: '',
   brand_id:'',
   category_id:'',
-  date: '',
+  date:  dayjs(new Date()).format('YYYY-MM-DD'),
   
 })
 const roleFetch = ref([])
 const allowedBranchOpts = ref([])
 const roleGroupOpts = ref([])
-const statusOpts = ref([
-  {
-    name: 'Inactive',
-    value: 'Inactive',
-  },
-  {
-    name: 'Active',
-    value: 'Active',
-  },
-])
-// const positionOpt = ref([
-//   {
-//     name: 'Pre-driver',
-//     value:'Pre-driver'
-//   },
-//   {
-//     name: 'Driver',
-//     value: 'Driver'
-//   }
-// ])
-// password: '',
-// confirmPassword: '',
-
+const staffOpt = ref([])
+const modelOpt = ref([])
+const colorOpt = ref([])
 const rules = object({
   name: string().required().label('Name'),
+  // image_path: string().required().label('Image'),
+  // // staffId: string().required().label('Staff'),
   // fullname: string().required().label('Role'),
   // email: string().required().label('Status'),
   // password: string().required().label('Password'),
@@ -498,8 +429,7 @@ const rules = object({
 
 const showId = ref('')
 const concel = () => {
-  
-
+  showId.value = null
   form.value.name = ''
   form.value.address = ''
   form.value.position = ''
@@ -507,62 +437,78 @@ const concel = () => {
   form.value.salary = ''
   loading.value = false
 }
-const findDatabyId = async () => {
-
-  let res = await api.get("/product/getProductById/" + $route.params.id)
-  if (res) {
-    // console.log('data', res)
-    removeName.value = res.data.name
-    form.value.name = res.data.name
-    form.value.date= res.data.date
-    form.value.model_id = res.data.model_id
-    form.value.color_id = res.data.color_id
-    form.value.brand_id = res.data.brand_id
-    form.value.category_id = res.data.category_id 
-    form.value.cost = res.data.cost
-    form.value.price = res.data.price
-    form.value.describtion = res.data.describtion
-    form.value.spec = res.data.spec
-    form.value.status= res.data.status
-    form.value.image_path = res.data.image_path
-  }
-}
 const startCase = (val) => _.startCase(val)
-const onRemove = async () => { 
-  showId.value = $route.params.id
-  // removeName.value = param.name;
-  diaglogDelete.value = true
-}
-const onConfirmDelete = async () => {
-  let data = await api.delete('/product/removeProduct/' + $route.params.id)
-  if (data) {
-      router.go(-1)
-      diaglogDelete.value = false
-      toast.success({ message: '' })
-  } else {
-    toast.error(err.data.status)
-  }
-}
-
-// onSubmit
 
 const onSubmit = async () => {
   const { valid } = await formRef.value.validate()
+  // console.log('form', form.value)
   if (valid) {
+    let methods = '/product/createProduct'
     form.value.branchId = store.state.auth.branchId
-    // let methods = '' + 
-  
     loading.value = true
-    let res = await api.put('/product/updateProduct/' + $route.params.id, form.value)
+    console.log(form.value);
+    let res = await api.post(methods, form.value)
     if (res) {
       toast.success({ message: 'Insert successfully' })
       router.go(-1)
+      loading.value = false
     } else {
       toast.error({ message: 'There was somehting wrong to add car' })
       throw 'There was something wrong !!'
     }
   }
 }
+// const val = form.value.roleGroupId
+watch(
+  () => form.value.roleGroupId,
+  (newValue) => {
+    if (newValue) {
+      api
+        .get('roleGroup/getRoleGroupbyId/' + newValue)
+        .then((res) => {
+          roleFetch.value = []
+          roleFetch.value = res.data.roleGroup.role
+          form.value.roles = roleFetch.value
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  },
+  { deep: true, immediate: true }
+)
+
+watch(()=>form.value.type, (newValue)=>{
+  if(newValue){
+      form.value.staffId = null
+  }
+})
+const fetchAllowBranch = async () => {
+  await api
+    .get('/branch/fetchAllBranch', [])
+    .then((res) => {
+      // console.log(res.data)
+      allowedBranchOpts.value = res.data
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+// get staff
+const getStaff = async () => {
+  await api
+    .get('/staff/getAllStaff', [])
+    .then((res) => {
+      console.log('find staff', res.data);
+      console.log(res.data)
+      staffOpt.value = res.data
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
+// get model 
 
 const getModel = async () => {
   await api
@@ -600,6 +546,7 @@ const getBrand = async () => {
       console.log(err)
     })
 }
+// get Category
 const getCategory = async () => {
   await api
     .get('/category/getAllCategory/' + store.state.auth.branchId)
@@ -611,52 +558,11 @@ const getCategory = async () => {
       console.log(err)
     })
 }
-// const val = form.value.roleGroupId
-watch(
-  () => form.value.roleGroupId,
-  (newValue) => {
-    if (newValue) {
-      api
-        .get('roleGroup/getRoleGroupbyId/' + newValue)
-        .then((res) => {
-          roleFetch.value = []
-          roleFetch.value = res.data.roleGroup.role
-          form.value.roles = roleFetch.value
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }
-  },
-  { deep: true, immediate: true }
-)
-// watch to get showId
-watch(()=> $route.params, (newValue)=>{
-  if(newValue){
-      showId.value = newValue;
-      console.log('hi', newValue);
-  }
-}, { deep: true, immediate: true })
-
-// get Allow Branch
-
-const fetchAllowBranch = async () => {
-  await api
-    .get('/branch/fetchAllBranch', [])
-    .then((res) => {
-      // console.log(res.data)
-      allowedBranchOpts.value = res.data
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
-// fetchRole
 const fetchAllRoleGroups = async () => {
   await api
     .get('roleGroup/getAllRoleGroup', [])
     .then((res) => {
-      // console.log('roleGroup', res.data)
+      console.log('roleGroup', res.data)
       roleGroupOpts.value = res.data
     })
     .catch((err) => {
@@ -666,26 +572,15 @@ const fetchAllRoleGroups = async () => {
 const cancel = () => {
   router.go(-1)
 }
-// count User
-const countUser = async () =>{
-    await api.get('auth/countUser', [])
-    .then((res)=>{
-       if(res.data <= 1){
-          deleting.value = true
-       }
-    }).catch((err)=>{
-      console.log(err);
-    })
-}
 onMounted(() => {
-  findDatabyId()
   fetchAllowBranch()
+  getStaff()
   fetchAllRoleGroups()
-  countUser()
   getModel()
   getColor()
   getBrand()
   getCategory()
+ 
 })
 </script>
 

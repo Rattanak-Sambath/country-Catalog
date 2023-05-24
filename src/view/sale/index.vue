@@ -120,10 +120,10 @@
           <q-btn
             color="blue-10"
             icon="add"
-            label="Add Product"
+            label="Add Sale"
             @click="addRow"
             class="q-mx-md"
-            :to="{ name: 'product.create' }"
+            :to="{ name: 'sale.create' }"
           />
 
           <q-btn
@@ -176,9 +176,9 @@ const showId = ref('')
 const diaglogDelete = ref(false)
 const breadcrumbs = ref([
   {
-    label: 'Dashboard / Product',
+    label: 'Dashboard / Sale ',
     icon: 'dashboard',
-    route: '/product',
+    route: '/sale',
   },
   // {
   //     label: 'Car',

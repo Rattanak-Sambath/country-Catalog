@@ -210,7 +210,7 @@
               </q-item-section>
             </q-item>
 
-            <q-item
+            <!-- <q-item
               exact-active-class="q-item--active "
               clickable
               v-ripple
@@ -222,7 +222,7 @@
               </q-item-section>
 
               <q-item-section> {{ $t('receipt') }} </q-item-section>
-            </q-item>
+            </q-item> -->
             <q-item
               exact-active-class="q-item--active"
               v-ripple
@@ -235,7 +235,7 @@
               <q-item-section> {{ $t('purchase') }}</q-item-section>
             </q-item>
 
-            <q-item
+            <!-- <q-item
               exact-active-class="q-item--active"
               v-ripple
               :to="{ name: 'payment.index' }"
@@ -246,7 +246,7 @@
               </q-item-section>
 
               <q-item-section> {{ $t('payment') }}</q-item-section>
-            </q-item>
+            </q-item> -->
             <q-item
               exact-active-class="q-item--active"
               v-ripple

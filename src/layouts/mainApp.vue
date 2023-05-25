@@ -427,6 +427,18 @@
 
               <q-item-section>{{ $t('model') }}</q-item-section>
             </q-item>
+            <q-item
+              exact-active-class="q-item--active"
+              v-ripple
+              :to="{ name: 'supplier.index' }"
+              v-if="userIsInRole(['supplier'])"
+            >
+              <q-item-section avatar>
+                <q-icon name="inventory" />
+              </q-item-section>
+
+              <q-item-section>{{ $t('supplier') }}</q-item-section>
+            </q-item>
                 <!-- <q-item
                   clickable
                   v-ripple
@@ -494,7 +506,7 @@
                   clickable
                   v-ripple
                   exact-active-class="q-item--active"
-                  v-if="userIsInRole(['goods_transfer_report'])"
+                  v-if="userIsInRole(['sale_report_detail'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="description" />
@@ -508,7 +520,7 @@
                   clickable
                   v-ripple
                   exact-active-class="q-item--active"
-                  v-if="userIsInRole(['goods_transfer_report'])"
+                  v-if="userIsInRole(['sale_report_summary'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="description" />
@@ -522,7 +534,7 @@
                   clickable
                   v-ripple
                   exact-active-class="q-item--active"
-                  v-if="userIsInRole(['goods_transfer_report'])"
+                  v-if="userIsInRole(['sale_report_by_product'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="description" />
@@ -539,7 +551,7 @@
                   clickable
                   v-ripple
                   exact-active-class="q-item--active"
-                  v-if="userIsInRole(['goods_transfer_report'])"
+                  v-if="userIsInRole(['purchase_report_by_detail'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="description" />
@@ -554,7 +566,7 @@
                   clickable
                   v-ripple
                   exact-active-class="q-item--active"
-                  v-if="userIsInRole(['goods_transfer_report'])"
+                  v-if="userIsInRole(['purchase_report_by_summary'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="description" />
@@ -569,7 +581,7 @@
                   clickable
                   v-ripple
                   exact-active-class="q-item--active"
-                  v-if="userIsInRole(['goods_transfer_report'])"
+                  v-if="userIsInRole(['purchase_report_by_product'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="description" />
@@ -585,7 +597,7 @@
                   clickable
                   v-ripple
                   exact-active-class="q-item--active"
-                  v-if="userIsInRole(['goods_transfer_report'])"
+                  v-if="userIsInRole(['product_report'])"
                 >
                   <q-item-section avatar>
                     <q-icon name="description" />
@@ -597,7 +609,7 @@
                 </q-item>
 
                 <!-- Payment -->
-                <q-item
+                <!-- <q-item
                   clickable
                   v-ripple
                   exact-active-class="q-item--active"
@@ -610,9 +622,9 @@
                   <q-item-section>
                   Payment Report By Details
                   </q-item-section>
-                </q-item>
+                </q-item> -->
 
-                <q-item
+                <!-- <q-item
                   clickable
                   v-ripple
                   exact-active-class="q-item--active"
@@ -625,10 +637,10 @@
                   <q-item-section>
                   Payment Report By Summary
                   </q-item-section>
-                </q-item>
+                </q-item> -->
 
                 <!-- receipt  -->
-
+<!-- 
                 <q-item
                   clickable
                   v-ripple
@@ -642,9 +654,9 @@
                   <q-item-section>
                   Receipt Report By Details
                   </q-item-section>
-                </q-item>
+                </q-item> -->
 
-                <q-item
+                <!-- <q-item
                   clickable
                   v-ripple
                   exact-active-class="q-item--active"
@@ -657,9 +669,9 @@
                   <q-item-section>
                   Receipt Report By Summary
                   </q-item-section>
-                </q-item>
+                </q-item> -->
 
-                <q-item
+                <!-- <q-item
                   clickable
                   v-ripple
                   exact-active-class="q-item--active"
@@ -672,7 +684,7 @@
                   <q-item-section>
                   Payment Report By Summary
                   </q-item-section>
-                </q-item>
+                </q-item> -->
 
                 
               </q-card-section>

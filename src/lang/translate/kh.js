@@ -19,4 +19,5 @@ export default {
   branch: 'សាខា',
   staff: 'បុគ្គលិក',
   report: 'របាយការណ៍',
+  supplier: 'អ្នកផ្គត់ផ្គង់'
 }

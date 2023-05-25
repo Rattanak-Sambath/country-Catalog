@@ -19,4 +19,5 @@ export default {
   branch: 'Branch',
   staff: 'Staff',
   report: 'Report',
+  supplier:'Supplier'
 }

@@ -208,7 +208,22 @@ export default [
     name: 'model.edit',
     component: () => import('../../view/modelsModel/edit.vue'),
   },
-
+// Supplier
+{
+  path: '/supplier',
+  name: 'supplier.index',
+  component: () => import('../../view/supplier/index.vue'),
+},
+{
+  path: '/supplier/create',
+  name: 'supplier.create',
+  component: () => import('../../view/supplier/create.vue'),
+},
+{
+  path: '/supplier/:id/edit',
+  name: 'supplier.edit',
+  component: () => import('../../view/supplier/edit.vue'),
+},
   // product
   {
     path: '/product',
@@ -240,5 +255,22 @@ export default [
     path: '/sale/:id/edit',
     name: 'sale.edit',
     component: () => import('../../view/product/edit.vue'),
+  },
+
+  // purchase 
+  {
+    path: '/purchase',
+    name: 'purchase.index',
+    component: () => import('../../view/purchase/index.vue'),
+  },
+  {
+    path: '/purchase/create',
+    name: 'purchase.create',
+    component: () => import('../../view/purchase/create.vue'),
+  },
+  {
+    path: '/purchase/:id/edit',
+    name: 'purchase.edit',
+    component: () => import('../../view/purchase/edit.vue'),
   },
 ]

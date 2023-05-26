@@ -325,7 +325,7 @@
                 no-caps
                 :disable="invisibleBtn"
                 :loading="loading"
-                @click="onSubmit()"
+                @click="onUpdate()"
               />
               <q-btn
                 v-if="showId"
@@ -357,7 +357,7 @@
 import { Form as ValidateForm, Field as ValidateField } from 'vee-validate'
 import actions from '../../store/actions'
 import toast from '../../Helper/toast.js'
-import { object, string } from 'yup'
+import { object, string, date } from 'yup'
 import { ref, onMounted } from 'vue'
 // import store from '../../store/';
 // import api from '../../utils/utility'
@@ -367,11 +367,12 @@ import dayjs from 'dayjs'
 import api from '../../utils/utility'
 import axios from 'axios'
 import { useRoute } from 'vue-router'
+const store = useStore()
 const branchOpt = ref([])
-
 const formRef = ref('')
 const loading = ref(false)
 const preBranchId = ref('')
+
 const form = ref({
   name: '',
   phone: '',
@@ -379,7 +380,7 @@ const form = ref({
   gender: '',
   address: '',
   salary: '',
-  date: dayjs(new Date()).format('YYYY-MM-DD'),
+  date: '',
 })
 const $route = useRoute()
 const positionOpt = ref([
@@ -406,12 +407,11 @@ const driverOpt = ref([])
 const invisibleBtn = ref(false)
 const rules = object({
   name: string().required().label('Name'),
-  positionId: string().required().label('Position'),
   phone: string().required().label('Phone'),
-  gender: string().required().label('Gender'),
+  code: string().required().label('Code'),
   address: string().required().label('Address'),
-  salary: string().required().label('Salary'),
-  date: string().required().label('Date'),
+  status: string().required().label('Status'),
+  date: date().required().label('Date'),
 })
 const showId = ref('')
 const cancel = () => {
@@ -442,17 +442,16 @@ const getBranch = async () => {
 const onUpdate = async () => {
   const { valid } = await formRef.value.validate()
   if (valid) {
-    // let  methods = 'car/updateCar'
     loading.value = true
     const res = await api.put(
-      `staff/updateStaff/` + $route.params.staff,
+      `supplier/updateSupplier/` + $route.params.id,
       form.value
     )
     if (res) {
-      toast.success({ message: 'Update car successfully' })
+      toast.success({ message: 'Update supplier successfully' })
       cancel()
     } else {
-      toast.error({ message: 'There was somehting wrong to add car' })
+      toast.error({ message: 'There was somehting wrong to add supplier' })
       throw 'There was something wrong !!'
     }
   }
@@ -460,31 +459,32 @@ const onUpdate = async () => {
 const findDatabyId = async () => {
   let id = showId.value
   // console.log('find', id);
-  let res = await api.get(`/staff/getStaffbyId/` + $route.params.staff)
+  let res = await api.get(`/supplier/getSupplierbyId/` + $route.params.id)
   // console.log(res)
   if (res) {
+    form.value.date = res.data.date
     form.value.code = res.data.code
     form.value.name = res.data.name
     form.value.phone = res.data.phone
-    form.value.positionId = res.data.positionId
-    form.value.gender = res.data.gender
+    form.value.company = res.data.company 
     form.value.address = res.data.address
-    form.value.salary = res.data.salary
+    form.value.status = res.data.status
+    form.value.branchId = res.data.branchId
     // console.log('hi',res.data)
   }
 }
 
-const findDriver = async () => {
-  await api.get('/driver/getDriver').then((res) => {
-    if (res) {
-      console.log(res.data.items)
-      driverOpt.value = res.data.items
-    }
-  })
-}
+// const findDriver = async () => {
+//   await api.get('/driver/getDriver').then((res) => {
+//     if (res) {
+//       console.log(res.data.items)
+//       driverOpt.value = res.data.items
+//     }
+//   })
+// }
 
 onMounted(() => {
-  findDriver()
+  // findDriver()
   findDatabyId()
   getBranch()
   if ($route.params.id) {

@@ -113,33 +113,41 @@
             />
           </q-td>
         </template>
-        <template #body-cell-allowedBranch="props">
+        <template #body-cell-allowedBranchName="props">
           <q-td :props="props">
             <span>
               {{
-                props.row.allowedBranch ? props.row.allowedBranch : 'No Branch'
+                props.row.allowedBranchName ? props.row.allowedBranchName : 'No Branch'
               }}</span
             >
           </q-td>
         </template>
-        <template #body-cell-status="props">
-          <q-td :props="props">
-            <span>
-              {{ props.row.status ? props.row.status : 'No Status' }}</span
-            >
-          </q-td>
-        </template>
+      
         <template #body-cell-map="props">
           <q-td :props="props">
             <span> {{ props.row.map ? props.row.map : 'No Map' }}</span>
           </q-td>
-        </template>
+        </template> 
+         <template #body-cell-expiryDay="props">
+          <q-td :props="props">
+            <span> {{ props.row.expiryDay ? props.row.expiryDay : 'No expiryDay' }}</span>
+          </q-td>
+        </template> 
+        <template #body-cell-status="props">
+          <q-td :props="props" v-if="props.row.status">
+            <q-badge outline align="middle" color="teal">
+                  {{ props.row.status }}
+            </q-badge>
+          </q-td>
+          <q-td :props="props" v-else>
+            No status
+          </q-td>
+        </template> 
         <template v-slot:top>
           <q-btn
             color="blue-10"
             icon="add"
             label="Add User"
-            @click="addRow"
             class="q-mx-md"
             :to="{ name: 'user.create' }"
           />
@@ -238,10 +246,10 @@ const columns = [
     sortable: true,
   },
   {
-    name: 'allowedBranch',
+    name: 'allowedBranchName',
     align: 'center',
     label: 'Allows Branch',
-    field: 'allowedBranch',
+    field: 'allowedBranchName',
     sortable: true,
   },
   {

@@ -105,6 +105,13 @@
             <span> {{ props.row.name }}</span>
           </q-td>
         </template>
+        <template #body-cell-image_path="props">
+          <q-td    
+            :props="props"        
+          >
+            <span> {{ props.row.image_path ? props.row.image_path : 'No Image'  }}</span>
+          </q-td>
+        </template>
         <template #body-cell-status="props">
           <q-td
             class="text-primary cursor-pointer"
@@ -207,10 +214,10 @@ const columns = [
   },
 
   {
-    name: 'model',
+    name: 'modelName',
     align: 'center',
     label: 'Model',
-    field: 'model',
+    field: 'modelName',
     sortable: true,
   },
   {
@@ -221,24 +228,24 @@ const columns = [
     sortable: true,
   },
   {
-    name: 'color',
+    name: 'colorName',
     align: 'center',
     label: 'Color',
-    field: 'color',
+    field: 'colorName',
     sortable: true,
   },
   {
-    name: 'brand',
+    name: 'brandName',
     align: 'center',
     label: 'Brand',
-    field: 'brand',
+    field: 'brandName',
     sortable: true,
   },
   {
-    name: 'category',
+    name: 'categoryName',
     align: 'center',
     label: 'Category',
-    field: 'category',
+    field: 'categoryName',
     sortable: true,
   },
   {
@@ -286,6 +293,7 @@ watch(
   }, 0)
 )
 const dataTable = ref([])
+
 const getDataTable = async () => {
   // loading.value = true
   dataTable.value = []

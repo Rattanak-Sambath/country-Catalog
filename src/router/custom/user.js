@@ -51,7 +51,22 @@ export default [
     name: 'driver.edit',
     component: () => import('../../view/driver/edit.vue'),
   },
-
+  // customer
+  {
+    path: '/customer',
+    name: 'customer.index',
+    component: () => import('../../view/customer/index.vue'),
+  },
+  {
+    path: '/customer/create',
+    name: 'customer.create',
+    component: () => import('../../view/customer/create.vue'),
+  },
+  {
+    path: '/customer/:id/edit',
+    name: 'customer.edit',
+    component: () => import('../../view/customer/edit.vue'),
+  },
   // branch
 
   {

@@ -366,6 +366,7 @@
 
                   <q-item-section> {{ $t('branch') }} </q-item-section>
                 </q-item>
+
                 <q-item
                   clickable
                   v-ripple
@@ -378,6 +379,19 @@
                   </q-item-section>
 
                   <q-item-section> {{ $t('staff') }} </q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  v-ripple
+                  exact-active-class="q-item--active"
+                  :to="{ name: 'customer.index' }"
+                  v-if="userIsInRole(['customer'])"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="groups_2" />
+                  </q-item-section>
+
+                  <q-item-section> {{ $t('customer') }} </q-item-section>
                 </q-item>
                 <q-item
               exact-active-class="q-item--active"

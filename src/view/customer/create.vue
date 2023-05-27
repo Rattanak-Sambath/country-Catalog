@@ -280,26 +280,7 @@ const form = ref({
   address: '',
   status: '',
 })
-// const positionOpt = ref([
-//   {
-//     name: 'Cashier',
-//     value: 'Cashier',
-//   },
-//   {
-//     name: 'Teller',
-//     value: 'Teller',
-//   },
-// ])
-// const genderOpt = ref([
-//   {
-//     name: 'Male',
-//     value: 'Male',
-//   },
-//   {
-//     name: 'Female',
-//     value: 'Female',
-//   },
-// ])
+
 const driverOpt = ref([])
 const invisibleBtn = ref(false)
 const rules = object({
@@ -333,7 +314,7 @@ const onSubmit = async () => {
   const { valid } = await formRef.value.validate()
   if (valid) {
     form.value.branchId = store.state.auth.branchId
-    console.log('form', form.value);
+    // console.log('form', form.value);
     await api.post('customer/createCustomer', form.value).then((res)=>{
      if(res){
       toast.success({ message: 'Insert customer successfully ' })

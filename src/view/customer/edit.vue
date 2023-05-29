@@ -4,7 +4,7 @@
       <!-- {{ this.$route.params.car }} -->
       <q-toolbar>
         <q-toolbar-title class="text-h6 text-bold"
-          ><q-icon name="add"></q-icon> Edit Supplier</q-toolbar-title
+          ><q-icon name="add"></q-icon> Edit Customer</q-toolbar-title
         >
         <q-space />
         <q-btn
@@ -18,7 +18,7 @@
     </q-card>
     <q-card class="q-my-md">
       <q-card-section class="text-grey-15">
-        Fill the form below to crate new Supplier
+        Fill the form below to crate new Customer
       </q-card-section>
       <ValidateForm
         ref="formRef"
@@ -29,7 +29,7 @@
           class="mt-4 text-center"
         >
         <q-card-section>
-            <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
+          <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
               <div class="col-xs-12 col-md-6 col-lg-6">
                 <div class="row q-col-gutter-y-md">
                   <!-- start left side -->
@@ -83,31 +83,7 @@
                       </q-input>
                     </validate-field>
                   </div>
-                  <!-- <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.branchId"
-                      name="branchId"
-                    >
-                      <q-input
-                        color="orange-14"
-                        type="text"
-                        outlined
-                        :model-value="value"
-                        label="Branch"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      >
-                        <template v-slot:prepend>
-                          <q-icon
-                            name="apartment"
-                            color="indigo-10"
-                          />
-                        </template>
-                      </q-input>
-                    </validate-field>
-                  </div> -->
+                
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
@@ -133,6 +109,14 @@
                       </q-input>
                     </validate-field>
                   </div>
+                 
+                
+                </div>
+                <!-- end-left-side  -->
+              </div>
+
+              <div class="col-xs-12 col-md-6 col-lg-6">
+                <div class="row q-col-gutter-y-md">
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
@@ -152,91 +136,6 @@
                         <template v-slot:prepend>
                           <q-icon
                             name="phone"
-                            color="indigo-10"
-                          />
-                        </template>
-                      </q-input>
-                    </validate-field>
-                  </div>
-                
-                </div>
-                <!-- end-left-side  -->
-              </div>
-
-              <div class="col-xs-12 col-md-6 col-lg-6">
-                <div class="row q-col-gutter-y-md">
-                  <!-- right-side  -->
-                  <!-- <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.positionId"
-                      name="positionId"
-                    >
-                      <q-select
-                        :model-value="value"
-                        :options="positionOpt"
-                        map-options
-                        emit-value
-                        option-label="name"
-                        option-value="value"
-                        color="orange-14"
-                        type="text"
-                        outlined
-                        label="Position"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      >
-                        <template v-slot:prepend>
-                          <q-icon
-                            name="picture_in_picture"
-                            color="indigo-10"
-                          />
-                        </template>
-                      </q-select>
-                    </validate-field>
-                  </div> -->
-                  <div class="col-12 q-mb-lg" v-show="branchOpt.length != 0">
-                    
-                       <q-input
-                       readonly
-                       class="text-bold"
-                        color="orange-14"
-                        type="text"
-                        outlined
-                        v-model="preBranchId"
-                        >
-                        <!-- v-bind="field"                        -->
-                      
-                        <template v-slot:prepend>
-                          <q-icon
-                            name="account_balance"
-                            color="indigo-10"
-                          />
-                        </template>
-                        </q-input>
-                   
-                  </div>
-                 
-                  <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.company"
-                      name="company"
-                    >
-                      <q-input
-                        color="orange-14"
-                        type="text"
-                        outlined
-                        :model-value="value"
-                        label="Company"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      >
-                        <template v-slot:prepend>
-                          <q-icon
-                            name="business"
                             color="indigo-10"
                           />
                         </template>
@@ -444,7 +343,7 @@ const onUpdate = async () => {
   if (valid) {
     loading.value = true
     const res = await api.put(
-      `supplier/updateSupplier/` + $route.params.id,
+      `customer/updateCustomer/` + $route.params.id,
       form.value
     )
     if (res) {
@@ -457,16 +356,13 @@ const onUpdate = async () => {
   }
 }
 const findDatabyId = async () => {
-  let id = showId.value
-  // console.log('find', id);
-  let res = await api.get(`/supplier/getSupplierbyId/` + $route.params.id)
+  let res = await api.get(`/customer/getCustomerbyId/` + $route.params.id)
   // console.log(res)
   if (res) {
     form.value.date = res.data.date
     form.value.code = res.data.code
     form.value.name = res.data.name
     form.value.phone = res.data.phone
-    form.value.company = res.data.company 
     form.value.address = res.data.address
     form.value.status = res.data.status
     form.value.branchId = res.data.branchId

@@ -1,11 +1,5 @@
 import numeral from 'numeral'
-//
-// export const numeralFormat = (value: number) => {
-//   return numeral(value).format(0, 0)
-// }
-
-//
-export const decimalNumber = (val, digit) => {
+const  decimalNumber = (val, digit) => {
   if (!digit) digit = 0
   else digit = Number(digit)
   //
@@ -35,3 +29,5 @@ export const decimalNumber = (val, digit) => {
 
   return numeral(val).format(formatNumber)
 }
+
+export default decimalNumber

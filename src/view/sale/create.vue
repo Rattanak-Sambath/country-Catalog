@@ -15,23 +15,29 @@
         >
       </q-toolbar>
     </q-card>
-    <q-card class="q-my-md">
-      <q-card-section class="text-grey-15 text-bold">
+    <q-card class="q-my-md  ">
+      <div class="flex justify-between">
+        <q-card-section class="text-grey-15 text-bold">
         Fill the form below to crate new Sale
       </q-card-section>
+      <q-card-section class="text-grey-15 text-bold"> 
+        Current Exchange 1$ =  {{currentExchage  }}៛
+      </q-card-section>
+      </div>
+      <div class="q-mx-auto">
       <ValidateForm
         ref="formRef"
         :validation-schema="rules"
       >
         <q-form
           @submit.prevent.stop="onSubmit()"
-          class="mt-4 text-center"
+          class="mt-4 text-center q-mx-auto"
         >
-          <q-card-section>
-            <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
+          <q-card-section class="">
+            <div class="row q-col-gutter-x-xl q-col-gutter-y-md ">
             
-              <div class="col-xs-12 col-md-6 col-lg-6">
-                <div class="row q-col-gutter-y-sm">
+              <div class="col-xs-12 col-md-6 col-lg-6 q-mx-auto ">
+                <div class="row q-col-gutter-y-sm q-mx-auto">
                  
                   <!-- <q-uploader
                   outlined
@@ -86,19 +92,27 @@
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
-                      v-model="form.customer"
-                      name="customer"
+                      v-model="form.customerId"
+                      name="customerId"
                     >
-                    <q-input
+                    <q-select
                         :model-value="value"
-                        label="Customer *"
+                        :options="customerOpt"
+                        map-options
+                        emit-value
+                        option-label="label"
+                        option-value="_id"
+                        color="orange-14"
+                        type="text"
                         outlined
+                        label="Customer *"
                         v-bind="field"
                         :error="!!errorMessage"
                         :error-message="errorMessage"
-                      />
+                      >
+                      </q-select>
                     </validate-field>
-                  </div>
+                  </div>   
                   <div class="col-12 q-my-sm text-left bg-blue-grey-2 text-gray-4 q-pa-md rounded-borders" >
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
@@ -131,75 +145,7 @@
                         {{ errorMessage }}
                       </div>
                     </validate-field>
-                  </div>
-                  <!-- <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.model_id"
-                      name="model_id"
-                    >
-                    <q-select
-                        :model-value="value"
-                        :options="modelOpt"
-                        map-options
-                        emit-value
-                        option-label="name"
-                        option-value="_id"
-                        color="orange-14"
-                        type="text"
-                        outlined
-                        label="Model *"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      >
-                      </q-select>
-                    </validate-field>
-                  </div> -->
-
-                  <!-- <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.color_id"
-                      name="color_id"
-                    >
-                    <q-select
-                        :model-value="value"
-                        :options="colorOpt"
-                        map-options
-                        emit-value
-                        option-label="name"
-                        option-value="_id"
-                        color="orange-14"
-                        type="text"
-                        outlined
-                        label="Color *"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      >
-                      </q-select>
-                    </validate-field>
-                  </div>      -->
-
-                  <!-- <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.qty"
-                      name="qty"
-                    >
-                    <q-input
-                        type="number"
-                        :model-value="value"
-                        label="Qty"
-                        outlined
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      />
-                    </validate-field>
-                  </div> -->
-                  
+                  </div>              
                 </div>
               </div>
 
@@ -216,7 +162,7 @@
                         :options="staffOpt"
                         map-options
                         emit-value
-                        option-label="name"
+                        option-label="label"
                         option-value="_id"
                         color="orange-14"
                         type="text"
@@ -229,33 +175,6 @@
                       </q-select>
                     </validate-field>
                   </div>   
-                  <!-- <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.category_id"
-                      name="category_id"
-                    >
-                    <q-select
-                        :model-value="value"
-                        :options="categoryOpt"
-                        map-options
-                        emit-value
-                        option-label="name"
-                        option-value="_id"
-                        color="orange-14"
-                        type="text"
-                        outlined
-                        label="Category *"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
-                      >
-                      </q-select>
-                    </validate-field>
-                  </div>    -->
-                 
-                  
-                  
 
                   <div class="col-12">
                     <validate-field
@@ -281,7 +200,7 @@
             </div>
 
             <!-- item detail  -->
-            <div class="q-my-md">
+            <div class="q-my-md ">
               <q-markup-table
     flat
     bordered
@@ -349,7 +268,7 @@
           style="width: 180px"
         >
           <q-input
-            readonly
+            
             v-model.number="it.price"
             type="number"
             dense
@@ -362,7 +281,7 @@
           class="text-left"
           style="width: 180px"
         >
-          <span>{{ it.amount }}</span>
+          <span>{{ it.amount }} $</span>
         </td> 
          <td
           class="text-left q-gutter-x-md"
@@ -412,7 +331,22 @@
                   side
                   class="text-black"
                 >
-                  {{ totalAmount }}
+                  {{ decimalNumber(totalAmount, 2) }} $
+                </q-item-section>
+              </q-item>
+              <q-item>
+                <q-item-section avatar>
+                  <q-icon
+                    name="payments"
+                    color="green"
+                  />
+                </q-item-section>
+                <q-item-section class="text-subtitle2">Total: </q-item-section>
+                <q-item-section
+                  side
+                  class="text-black"
+                >
+                  {{ decimalNumber(form.totalRiel, 2)}} ៛
                 </q-item-section>
               </q-item>
               <!-- <q-item>
@@ -468,6 +402,7 @@
           </q-card-section>
         </q-form>
       </ValidateForm>
+    </div>
     </q-card>
   </div>
 </template>
@@ -475,7 +410,7 @@
 <script setup>
 import { Form as ValidateForm, Field as ValidateField } from 'vee-validate'
 import toast from '../../Helper/toast.js'
-import { object, string } from 'yup'
+import { date, object, string } from 'yup'
 import { ref, onMounted, watch , computed} from 'vue'
 import { useStore } from 'vuex'
 import router from '../../router'
@@ -483,50 +418,49 @@ import dayjs from 'dayjs'
 import api from '../../utils/utility'
 import axios from 'axios'
 import _, { has } from 'lodash'
+
+import decimalNumber from '../../lib/numeral.js'; 
 // import { number } from 'yup/lib/locale';
 const store = useStore()
 const formRef = ref('')
 const loading = ref(false)
 const productOpt = ref([])
+const currentExchage = 4100;
 // const categoryOpt = ref([])
 const formDetail = ref([
   {
     index:1,
     productId: '',
-    color: '',
     qty: 1,
     price: 0,
     amount:0
+    
   }
 ]
- 
 )
 const form = ref({
   code: '001',
-  customer: '',
+  customerId: '',
   staffId: '',
   type: '',
   note: '',
   date:  dayjs(new Date()).format('YYYY-MM-DD'),
+  totalAmount: 0,
+  totalRiel: 0
   
 })
 const roleFetch = ref([])
-const allowedBranchOpts = ref([])
 const roleGroupOpts = ref([])
 const staffOpt = ref([])
 const modelOpt = ref([])
-const colorOpt = ref([])
+const customerOpt = ref([])
+
 const rules = object({
-  name: string().required().label('Name'),
-  // image_path: string().required().label('Image'),
-  // // staffId: string().required().label('Staff'),
-  // fullname: string().required().label('Role'),
-  // email: string().required().label('Status'),
-  // password: string().required().label('Password'),
-  // allowedBranch: string().required().label('Allowed branches'),
-  // roleGroupId: string().required().label('Role group'),
-  // expiryDay: string().required().label('Expiry day'),
-  // status: string().required().label('Status'),
+  customerId: string().required().label('Customer'),
+  staffId: string().required().label('Staff'),
+  type: string().required().label('Type'),
+  code: string().required().label('Code'),
+  date: date().required().label('Date'),
 })
 const addEmptyRow = () => {
   const row = {
@@ -542,29 +476,41 @@ const totalAmount = computed(()=>{
   let total = 0 ;
   formDetail.value.forEach((it)=>{
     total += it.amount;
+   form.value.totalRiel = total * 4100; 
+    form.value.totalAmount = total 
   })
   return total ;
-
 })
+
 const onRemoveRow = (it, index)=>{
     formDetail.value.splice(index,1)
 }
 const rowChange =async (it, index)=>{
-    
     let selector = it.productId;
     await api
     .get('/product/getProductById/' +  selector)
     .then((res) => {
-
+    
       it.price = res.data.price
-      it.amount = it.price * it.qty
-
+      it.amount = it.price * it.qty   
+      if(it.productId === null){
+        console.log('welcome' );
+      }  
       // formDetail.value.price = res.data.price
     })
     .catch((err) => {
+      it.price = 0
+      it.amount = 0
       console.log(err)
     })
 }
+// watch(()=>formDetail.value.productId,(newValue)=>{
+//   if(newValue !== null){
+//     totalAmount()
+//   }else {
+//     totalAmount()
+//   }
+// },{deep: true, immediate: true })
 const titles = ref([
   {
     label: 'No',
@@ -606,25 +552,52 @@ const concel = () => {
   loading.value = false
 }
 const startCase = (val) => _.startCase(val)
+const countSale = async()=>{
 
+    await  api.get('sale/countSale',{
+      params:{
+         branchId: store.state.auth.branchId
+      }
+    }).then((res)=>{
+      if(res){
+          form.value.code = res.data.length + 1;
+      }
+    }).catch((err)=>{
+      console.log(err);
+    })
+}
 const onSubmit = async () => {
   const { valid } = await formRef.value.validate()
   // console.log('form', form.value)
-  if (valid) {
-    let methods = '/product/createProduct'
-    form.value.branchId = store.state.auth.branchId
-    loading.value = true
-    console.log(form.value);
-    let res = await api.post(methods, form.value)
-    if (res) {
-      toast.success({ message: 'Insert successfully' })
-      router.go(-1)
-      loading.value = false
-    } else {
-      toast.error({ message: 'There was somehting wrong to add car' })
-      throw 'There was something wrong !!'
+  const check =  formDetail.value.forEach((item)=>{
+      let data = '';
+      if(!item.productId){
+        data = false;
+        toast.error({message: 'Please Check Product Again !!'})
+      }
+      return data;
+  })
+  if(check !==  false){
+      if (valid) {
+      form.value.branchId = store.state.auth.branchId
+      
+      let res = await api.post('/sale/createSale',
+        {
+        form: form.value, details: formDetail.value
+        }
+        )
+      if (res) {
+        toast.success({ message: 'Insert successfully' })
+        router.go(-1)
+        loading.value = false
+      } else {
+        toast.error({ message: 'There was somehting wrong to add car' })
+        throw 'There was something wrong !!'
+      }
     }
   }
+
+
 }
 // const val = form.value.roleGroupId
 watch(
@@ -646,19 +619,36 @@ watch(
   { deep: true, immediate: true }
 )
 
-watch(()=>form.value.type, (newValue)=>{
-  if(newValue){
-      form.value.staffId = null
-  }
-})
+
 
 // get staff
 const getStaff = async () => {
   await api
-    .get('/staff/getAllStaff', [])
+    .get('staff/getAllStaff', {
+      params:{
+        branchId: store.state.auth.branchId,
+        status: 'Active'
+      }
+    })
     .then((res) => {
       console.log('find staff', res.data);
       staffOpt.value = res.data
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+const getCustomer = async () => {
+  await api
+    .get('customer/getAllStaff', {
+      params:{
+        branchId: store.state.auth.branchId,
+        status: 'Active'
+      }
+    })
+    .then((res) => {
+      console.log('find customer', res.data);
+      customerOpt.value = res.data
     })
     .catch((err) => {
       console.log(err)
@@ -707,7 +697,8 @@ onMounted(() => {
   getProduct()
   getStaff()
   fetchAllRoleGroups()
- 
+  getCustomer()
+  countSale()
  
 })
 </script>

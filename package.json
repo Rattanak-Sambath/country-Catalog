@@ -16,6 +16,7 @@
     "formidable": "^2.1.1",
     "fs": "^0.0.1-security",
     "lodash": "^4.17.21",
+    "numeral": "^2.0.6",
     "quasar": "^2.11.7",
     "sass": "^1.32.12",
     "start": "^5.1.0",

@@ -61,7 +61,7 @@
       <q-table
         title="Cars"
         :rows="dataTable"
-        :columns="columns"
+        :columns="columns"    
         row-key="_id"
         :filter="filter"
         :loading="loading"
@@ -96,6 +96,9 @@
         </template>
         <template #body-cell-salary="props">
           <q-td :props="props"> $ {{ props.row.salary }} </q-td>
+        </template>
+        <template #body-cell-code="props">
+          <q-td :props="props" @click="onEdit(props.row._id)" > [ {{ props.row.code }} ] </q-td>
         </template>
          <template #body-cell-status="props">
           <q-td :props="props"> 
@@ -148,7 +151,7 @@ import { onMounted, ref, watch } from 'vue'
 import toast from '../../Helper/toast'
 import router from '../../router'
 import api from '../../utils/utility'
-import _ from 'lodash'
+import _, { keyBy } from 'lodash'
 import { Loading } from 'quasar'
 import { useStore } from 'vuex'
 const store = useStore()
@@ -177,6 +180,7 @@ const breadcrumbs = ref([
   // }
 ])
 const columns = [
+ 
   {
     name: 'code',
     required: true,
@@ -203,7 +207,6 @@ const columns = [
     sortable: true,
   },
   { name: 'address', label: 'Address', field: 'address' },
-  { name: 'company', label: 'Company', field: 'company' },
   { name: 'status', label: 'Status', field: 'status' },
   { name: 'date', label: 'Date', field: 'date' },
   { name: 'action', label: 'Action', field: '' },
@@ -221,7 +224,7 @@ const getDataTable = async () => {
   dataTable.value = []
   const { page, rowsPerPage } = pagination.value
 
-  let data = await api.get('supplier/getSupplier', {
+  let data = await api.get('customer/getCustomer', {
     params: {
       page,
       rowsPerPage,
@@ -232,6 +235,7 @@ const getDataTable = async () => {
   })
   loading.value = false
   if (data) {
+     
     console.log(data.data)
     dataTable.value = data.data.items
     pagination.value.rowsNumber = data.data.totalItems
@@ -255,10 +259,8 @@ const onRemove = async (param) => {
   diaglogDelete.value = true
 }
 const onConfirmDelete = async () => {
-  let data = await api.delete('/supplier/removeSupplier/' + showId.value)
-
+  let data = await api.delete('/customer/removeCustomer/' + showId.value)
   if (data) {
-    // console.log('data', data)
     toast.success(data.data.status)
     getDataTable()
     diaglogDelete.value = false
@@ -267,7 +269,7 @@ const onConfirmDelete = async () => {
   }
 }
 const onEdit = async (param) => {
-  router.push({ name: 'supplier.edit', params: { id: param } })
+  router.push({ name: 'customer.edit', params: { id: param } })
 }
 const exportTable = () => {
   // const content = [columns.map(col => wrapCsvValue(col.label))].concat(

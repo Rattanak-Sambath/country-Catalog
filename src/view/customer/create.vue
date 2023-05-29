@@ -274,7 +274,7 @@ const branchOpt = ref([])
 // const name = ref('')
 const form = ref({
   date: dayjs(new Date()).format('YYYY-MM-DD'),
-  code: '001',
+  code: Date.now() + Math.random().toString(36).substring(2, 3).toUpperCase(),
   name: '',
   phone: '',
   address: '',
@@ -309,7 +309,22 @@ watch(
   },
   { immediate: true }
 )
-
+// const countCustomer = async () => {
+//   await api
+//     .get('customer/countCustomer', {
+//       params:{
+//         branchId: store.state.auth.branchId,
+//         status: 'Active'
+//       }
+//     })
+//     .then((res) => {
+//       console.log('find customer', res.data);
+//       form.value.code = res.data.length  + 1;
+//     })
+//     .catch((err) => {
+//       console.log(err)
+//     })
+// }
 const onSubmit = async () => {
   const { valid } = await formRef.value.validate()
   if (valid) {
@@ -344,7 +359,6 @@ const cancel = () => {
 }
 
 onMounted(() => {
-
 })
 </script>
 

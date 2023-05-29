@@ -269,7 +269,7 @@ export default [
   {
     path: '/sale/:id/edit',
     name: 'sale.edit',
-    component: () => import('../../view/product/edit.vue'),
+    component: () => import('../../view/sale/edit.vue'),
   },
 
   // purchase 

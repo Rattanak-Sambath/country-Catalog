@@ -60,6 +60,7 @@
         </q-card>
       </q-dialog>
       <q-table
+        class="text-centers"
         title="Cars"
         :rows="dataTable"
         :columns="columns"
@@ -96,14 +97,37 @@
                                     </span> -->
           </q-td>
         </template>
-        <template #body-cell-name="props">
+        <template #body-cell-code="props">
           <q-td
             class="text-primary cursor-pointer"
             :props="props"
             @click="onEdit(props.row._id)"
           >
+            <span> {{ props.row.code }}</span>
+          </q-td>
+        </template>
+        <template #body-cell-name="props">
+          <q-td
+            class="text-primary cursor-pointer"
+            :props="props"
+           
+          >
             <span> {{ props.row.name }}</span>
           </q-td>
+        </template>
+        <template #body-cell-actions="props"   >
+           <q-td auto-width>
+              <q-btn
+                v-show="props.row.productDoc.length > 0"
+                size="sm"
+                color="primary"
+                round
+                flat
+                dense
+                :icon="props.expand ? 'remove' : 'add'"
+                @click="expand = expand"
+              />
+            </q-td>
         </template>
         <template #body-cell-status="props">
           <q-td
@@ -147,8 +171,15 @@
             </template>
           </q-input>
         </template>
+        <template>
+          asdasdasd
+        </template>
+
       </q-table>
+      
+     
     </q-card>
+
   </div>
 </template>
 
@@ -174,6 +205,7 @@ const filter = ref('')
 const loading = ref(false)
 const showId = ref('')
 const diaglogDelete = ref(false)
+const expand =ref(false)
 const breadcrumbs = ref([
   {
     label: 'Dashboard / Sale ',
@@ -199,77 +231,56 @@ const columns = [
   //     sortable: true
   // },
   {
-    name: 'name',
+    name: 'actions',
     align: 'center',
-    label: 'Name',
-    field: 'name',
+    label: '',
+    field: 'actions',
+    sortable: true,
+  },
+  {
+    name: 'code',
+    align: 'center',
+    label: 'Code',
+    field: 'code',
+    sortable: true,
+  },
+  {
+    name: 'customerName',
+    align: 'center',
+    label: 'Cus_Name',
+    field: 'customerName',
     sortable: true,
   },
 
   {
-    name: 'model',
+    name: 'staffName',
     align: 'center',
-    label: 'Model',
-    field: 'model',
+    label: 'Staff_Name',
+    field: 'staffName',
     sortable: true,
   },
   {
-    name: 'image_path',
+    name: 'totalAmount',
     align: 'center',
-    label: 'Image',
-    field: 'image_path',
+    label: 'TotalAmount',
+    field: 'totalAmount',
     sortable: true,
   },
   {
-    name: 'color',
+    name: 'type',
     align: 'center',
-    label: 'Color',
-    field: 'color',
+    label: 'Type',
+    field: 'type',
     sortable: true,
   },
   {
-    name: 'brand',
+    name: 'note',
     align: 'center',
-    label: 'Brand',
-    field: 'brand',
+    label: 'Note',
+    field: 'note',
     sortable: true,
   },
-  {
-    name: 'category',
-    align: 'center',
-    label: 'Category',
-    field: 'category',
-    sortable: true,
-  },
-  {
-    name: 'cost',
-    align: 'center',
-    label: 'Cost',
-    field: 'cost',
-    sortable: true,
-  },
-  {
-    name: 'price',
-    align: 'center',
-    label: 'Price',
-    field: 'price',
-    sortable: true,
-  },
-
-  {
-    name: 'spec',
-    align: 'center',
-    label: 'Spec',
-    field: 'spec',
-    sortable: true,
-  },
-  {
-    name: 'status',
-    align: 'center',
-    label: 'Status',
-    field: 'status',
-    sortable: true,
-  },
+  
   {
     name: 'date',
     align: 'center',
@@ -291,7 +302,7 @@ const getDataTable = async () => {
   dataTable.value = []
   const { page, rowsPerPage } = pagination.value
 
-  let data = await api.get('/product/getProduct', {
+  let data = await api.get('/sale/getSale', {
     params: {
       page,
       rowsPerPage,
@@ -333,7 +344,7 @@ const onConfirmDelete = async () => {
 }
 const onEdit = async (param) => {
   // console.log(param);
-  router.push({ name: 'product.edit', params: { id: param } })
+  router.push({ name: 'sale.edit', params: { id: param } })
 }
 const exportTable = () => {
   // const content = [columns.map(col => wrapCsvValue(col.label))].concat(

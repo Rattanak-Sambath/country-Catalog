@@ -129,15 +129,23 @@
               />
             </q-td>
         </template>
-        <template #body-cell-status="props">
+        <template #body-cell-type ="props">
           <q-td
             class="text-primary cursor-pointer"
             :props="props"          
           >
-            <span> <q-badge outline align="middle" color="teal">
-                {{ props.row.status }}
+            <span> <q-badge outline align="middle" :color="props.row.type === 'Cash' ? 'teal' : 'negative' ">
+                {{ props.row.type }}
               </q-badge></span>
           </q-td>
+        </template>
+        <template #body-cell-note="props">
+          <q-td
+            
+            :props="props"          
+          >
+            {{ props.row.note ? props.row.note : 'No note'}}
+            </q-td>
         </template>
        
         <template v-slot:top>
@@ -333,7 +341,7 @@ const onRemove = async (param) => {
   diaglogDelete.value = true
 }
 const onConfirmDelete = async () => {
-  let data = await api.delete('/product/removeProduct/' + showId.value)
+  let data = await api.delete('/sale/removeSale/' + showId.value)
   if (data) {
     toast.success({ message: '' })
     getDataTable()

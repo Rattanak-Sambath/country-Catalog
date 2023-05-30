@@ -429,6 +429,7 @@ const currentExchage = 4100;
 // const categoryOpt = ref([])
 const formDetail = ref([
   {
+    
     index:1,
     productId: '',
     qty: 1,
@@ -439,7 +440,7 @@ const formDetail = ref([
 ]
 )
 const form = ref({
-  code: '001',
+  code: Date.now() + Math.random().toString(36).substring(2, 3).toUpperCase(),
   customerId: '',
   staffId: '',
   type: '',
@@ -454,7 +455,7 @@ const roleGroupOpts = ref([])
 const staffOpt = ref([])
 const modelOpt = ref([])
 const customerOpt = ref([])
-
+const dataDoc = ref([]);
 const rules = object({
   customerId: string().required().label('Customer'),
   staffId: string().required().label('Staff'),
@@ -464,6 +465,7 @@ const rules = object({
 })
 const addEmptyRow = () => {
   const row = {
+    
     index:0,
     productId: '',   
     qty: 1,
@@ -560,7 +562,7 @@ const countSale = async()=>{
       }
     }).then((res)=>{
       if(res){
-          form.value.code = res.data.length + 1;
+          // form.value.code = res.data.length + 1;
       }
     }).catch((err)=>{
       console.log(err);
@@ -569,26 +571,31 @@ const countSale = async()=>{
 const onSubmit = async () => {
   const { valid } = await formRef.value.validate()
   // console.log('form', form.value)
-  const check =  formDetail.value.forEach((item)=>{
-      let data = '';
-      if(!item.productId){
-        data = false;
+    dataDoc.value = []
+    // check if productId is select
+    formDetail.value.forEach((item)=>{
+      if(item.productId){
+        dataDoc.value.push(item)
+      }
+      // else {
+      //   formDetail.value.splice(item, )
+      // }
+      if(formDetail.value[0].productId === "" ){
         toast.error({message: 'Please Check Product Again !!'})
       }
-      return data;
-  })
-  if(check !==  false){
+    })
+        console.log(form.value, dataDoc.value);
+  if(dataDoc.value.length){
       if (valid) {
       form.value.branchId = store.state.auth.branchId
-      
       let res = await api.post('/sale/createSale',
         {
-        form: form.value, details: formDetail.value
+        form: form.value, details: dataDoc.value
         }
         )
       if (res) {
         toast.success({ message: 'Insert successfully' })
-        router.go(-1)
+        router.go(-1) 
         loading.value = false
       } else {
         toast.error({ message: 'There was somehting wrong to add car' })

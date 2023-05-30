@@ -457,6 +457,7 @@ const formRef = ref('')
 const loading = ref(false)
 const diaglogDelete = ref(false)
 const deleting = ref(false)
+const dataDoc = ref([]);
 
 const productOpt = ref([])
 const customerOpt = ref([])
@@ -475,7 +476,7 @@ const form = ref({
 })
 const formDetail = ref([
 {
-    index:1,
+  
     productId: '',
     qty: 1,
     price: 0,
@@ -537,7 +538,7 @@ const statusOpts = ref([
 // confirmPassword: '',
 
 const rules = object({
-  name: string().required().label('Name'),
+  // name: string().required().label('Name'),
   // fullname: string().required().label('Role'),
   // email: string().required().label('Status'),
   // password: string().required().label('Password'),
@@ -560,7 +561,7 @@ const concel = () => {
 }
 const addEmptyRow = () => {
   const row = {
-    index:0,
+    
     productId: '',   
     qty: 1,
     price: 0,
@@ -579,7 +580,8 @@ const totalAmount = computed(()=>{
 })
 
 const onRemoveRow = (it, index)=>{
-    formDetail.value.splice(index,1)
+    console.log('index', it);
+    formDetail.value.splice(it,1)
 }
 const rowChange =async (it, index)=>{
     
@@ -677,7 +679,7 @@ const onRemove = async () => {
   diaglogDelete.value = true
 }
 const onConfirmDelete = async () => {
-  let data = await api.delete('/product/removeProduct/' + $route.params.id)
+  let data = await api.delete('/sale/removeSale/' + showId.value)
   if (data) {
       router.go(-1)
       diaglogDelete.value = false
@@ -685,26 +687,38 @@ const onConfirmDelete = async () => {
   } else {
     toast.error(err.data.status)
   }
-}
+}   
 
 // onSubmit
 
 const onSubmit = async () => {
   const { valid } = await formRef.value.validate()
-  if (valid) {
-    form.value.branchId = store.state.auth.branchId
-    // let methods = '' + 
-  
-    loading.value = true
-    let res = await api.put('/product/updateProduct/' + $route.params.id, form.value)
-    if (res) {
-      toast.success({ message: 'Insert successfully' })
-      router.go(-1)
-    } else {
-      toast.error({ message: 'There was somehting wrong to add car' })
-      throw 'There was something wrong !!'
+     dataDoc.value = []
+    // check if productId is select
+    formDetail.value.forEach((item)=>{
+      if(item.productId){
+        dataDoc.value.push(item)
+      }
+      if(formDetail.value[0].productId === "" ){
+        toast.error({message: 'Please Check Product Again !!'})
+      }
+    })
+    if(dataDoc.value.length){
+        if (valid) {
+          form.value.branchId = store.state.auth.branchId   
+          loading.value = true
+          let res = await api.put('/sale/updateSale/' + $route.params.id,
+            {form:form.value, details : dataDoc.value}
+          )
+          if (res) {
+            toast.success({ message: 'Updated Sale successfully' })
+            router.go(-1)
+          } else {
+            toast.error({ message: 'There was somehting wrong to add car' })
+            throw 'There was something wrong !!'
+          }
+        }
     }
-  }
 }
 
 watch(

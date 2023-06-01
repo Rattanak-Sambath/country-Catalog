@@ -520,6 +520,21 @@
                   clickable
                   v-ripple
                   exact-active-class="q-item--active"
+                  v-if="userIsInRole(['sale'])"
+                  :to="{ name: 'report.saleReport' }"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="description" />
+                  </q-item-section>
+
+                  <q-item-section>
+                   Sale
+                  </q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  v-ripple
+                  exact-active-class="q-item--active"
                   v-if="userIsInRole(['sale_report_detail'])"
                 >
                   <q-item-section avatar>
@@ -560,6 +575,20 @@
                 </q-item>
 
                 <!-- purchase -->
+                <q-item
+                  clickable
+                  v-ripple
+                  exact-active-class="q-item--active"
+                  v-if="userIsInRole(['purchase'])"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="description" />
+                  </q-item-section>
+
+                  <q-item-section>
+                   Purchase
+                  </q-item-section>
+                </q-item>
 
                 <q-item
                   clickable

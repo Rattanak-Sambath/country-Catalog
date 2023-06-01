@@ -288,4 +288,10 @@ export default [
     name: 'purchase.edit',
     component: () => import('../../view/purchase/edit.vue'),
   },
+  // report
+  {
+    path: '/report/saleReport',
+    name: 'report.saleReport',
+    component: () => import('../../report/saleReport.vue'),
+  },
 ]

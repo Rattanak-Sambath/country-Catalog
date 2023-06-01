@@ -60,6 +60,7 @@
         </q-card>
       </q-dialog>
       <q-table
+        class="text-centers"
         title="Cars"
         :rows="dataTable"
         :columns="columns"
@@ -86,37 +87,173 @@
               color="primary"
               class="q-mx-md"
             ></q-btn>
-            <!-- @click="onEdit(props.row._id)" -->
-            <!-- <span
-                                    class="ra-text-link "
-                                    @click="editCompo(props.row.id)"
-                                    style="color: dodgerblue;"
-                                    >
-                                    {{ props.row.name }}
-                                    </span> -->
           </q-td>
         </template>
-        <template #body-cell-name="props">
+        <!-- <template #body-cell-code="props">
           <q-td
             class="text-primary cursor-pointer"
             :props="props"
             @click="onEdit(props.row._id)"
           >
+            <span> {{ props.row.code }}</span>
+          </q-td>
+        </template> -->
+        <!-- <template #body-cell-name="props">
+          <q-td
+            class="text-primary cursor-pointer"
+            :props="props"
+           
+          >
             <span> {{ props.row.name }}</span>
           </q-td>
-        </template>
-        <template #body-cell-status="props">
+        </template> -->
+        <!-- <template #body-cell-actions="props"   >
+           <q-td auto-width>
+              <q-btn
+                v-show="props.row.productDoc.length > 0"
+                size="sm"
+                color="primary"
+                round
+                flat
+                dense
+                :icon="props.expand ? 'remove' : 'add'"
+                @click="onExpand(props.row)"
+              />
+            </q-td>
+        </template> -->
+        <!-- <template #body-cell-type ="props">
           <q-td
             class="text-primary cursor-pointer"
             :props="props"          
           >
-            <span> <q-badge outline align="middle" color="teal">
-                {{ props.row.status }}
+            <span> <q-badge outline align="middle" :color="props.row.type === 'Cash' ? 'teal' : 'negative' ">
+                {{ props.row.type }}
               </q-badge></span>
           </q-td>
+        </template> -->
+        <!-- <template #body-cell-note="props">
+          <q-td
+            
+            :props="props"          
+          >
+            {{ props.row.note ? props.row.note : 'No note'}}
+            </q-td>
+        </template> -->
+        <template #body="props" >
+          <q-tr :props="props">
+            <q-td auto-width>
+              <q-btn
+                v-show="props.row.productDoc.length > 0"
+                size="sm"
+                color="primary"
+                round
+                flat
+                dense
+                :icon="expand ? 'remove' : 'add'"
+                @click="expand = !expand"
+              />
+            </q-td>
+            <q-td
+              class="ra-text-link text-blue text-center"
+              key="code"
+              :props="props.code"
+            >
+              <span
+                class="ra-text-link"
+                @click="onEdit(props.row._id)"
+              >
+                {{ props.row.code }}
+              </span>
+            </q-td>
+            <q-td
+              key="customerName"
+              :props="props.supplierName"
+              class="text-center"
+            >
+              {{ props.row.supplierName }}
+            </q-td>
+            <q-td
+              class="text-center"
+              key="staffName"
+              :props="props.staffName"
+            >
+              {{ props.row.staffName }}
+            </q-td>
+            <q-td
+              class="text-center"
+              key="totalAmount"
+              :props="props.totalAmount"
+            >
+              {{ props.row.totalAmount  }}
+            </q-td>
+            <q-td
+              class="text-center"
+              key="type"
+              :props="props.type"
+            >
+            <span> <q-badge outline align="middle" :color="props.row.type === 'Cash' ? 'teal': 'negative' ">
+                {{ props.row.type }}
+              </q-badge></span>
+            </q-td>
+            <q-td
+              class="text-center"
+              key="note"
+              :props="props.note"
+            >
+              {{ props.row.note ?  props.row.note : 'No Note' }}
+            </q-td>
+            <q-td
+              class="text-center"
+              key="date"
+              :props="props.date"
+            >
+              {{ props.row.date }}
+            </q-td>
+          </q-tr>
+          <q-tr
+            v-show="expand"
+            :props="props.row"
+          >
+            <q-td colspan="100%">
+              <q-markup-table
+                bordered
+                flat
+              >
+                <thead>
+                  <tr>
+                    <th class="text-left">No</th>
+                    <th class="text-left">Product</th>
+                    <th class="text-left">Qty</th>
+                    <th class="text-left">Cost</th>
+                    <th class="text-left">Amount</th>
+                  </tr>
+                </thead>
+                <tbody> 
+                   <tr
+                    v-for="(item, index) in props.row.productDoc"
+                    :key="index">
+
+                    <td class="text-left">{{ index + 1 }}</td>
+                    <td class="text-left">{{ item.name }}</td>
+                    <td class="text-left">{{ item.qty }}</td>
+                    <td class="text-left">{{ item.cost }} </td>
+                    <td class="text-left">{{ item.amount }}</td>
+                  </tr>
+                </tbody>
+              </q-markup-table>
+              <!-- <div
+                class="text-left"
+                v-for="(item, i) in props.row.items"
+                :key="i"
+              >
+                {{ item.retailPrice }}
+              </div> -->
+            </q-td>
+          </q-tr>
         </template>
-       
-        <template v-slot:top>
+        <!-- :props="props" -->
+        
+        <template v-slot:top >
           <q-btn
             color="blue-10"
             icon="add"
@@ -147,8 +284,15 @@
             </template>
           </q-input>
         </template>
+        <template>
+          asdasdasd
+        </template>
+
       </q-table>
+      
+     
     </q-card>
+
   </div>
 </template>
 
@@ -174,6 +318,7 @@ const filter = ref('')
 const loading = ref(false)
 const showId = ref('')
 const diaglogDelete = ref(false)
+const expand =ref(false)
 const breadcrumbs = ref([
   {
     label: 'Dashboard / Purchase ',
@@ -199,77 +344,56 @@ const columns = [
   //     sortable: true
   // },
   {
-    name: 'name',
+    name: 'actions',
     align: 'center',
-    label: 'Name',
-    field: 'name',
+    label: '',
+    field: 'actions',
+    sortable: true,
+  },
+  {
+    name: 'code',
+    align: 'center',
+    label: 'Code',
+    field: 'code',
+    sortable: true,
+  },
+  {
+    name: 'supplierName',
+    align: 'center',
+    label: 'Supplier_Name',
+    field: 'supplierName',
     sortable: true,
   },
 
   {
-    name: 'model',
+    name: 'staffName',
     align: 'center',
-    label: 'Model',
-    field: 'model',
+    label: 'Staff_Name',
+    field: 'staffName',
     sortable: true,
   },
   {
-    name: 'image_path',
+    name: 'totalAmount',
     align: 'center',
-    label: 'Image',
-    field: 'image_path',
+    label: 'TotalAmount',
+    field: 'totalAmount',
     sortable: true,
   },
   {
-    name: 'color',
+    name: 'type',
     align: 'center',
-    label: 'Color',
-    field: 'color',
+    label: 'Type',
+    field: 'type',
     sortable: true,
   },
   {
-    name: 'brand',
+    name: 'note',
     align: 'center',
-    label: 'Brand',
-    field: 'brand',
+    label: 'Note',
+    field: 'note',
     sortable: true,
   },
-  {
-    name: 'category',
-    align: 'center',
-    label: 'Category',
-    field: 'category',
-    sortable: true,
-  },
-  {
-    name: 'cost',
-    align: 'center',
-    label: 'Cost',
-    field: 'cost',
-    sortable: true,
-  },
-  {
-    name: 'price',
-    align: 'center',
-    label: 'Price',
-    field: 'price',
-    sortable: true,
-  },
-
-  {
-    name: 'spec',
-    align: 'center',
-    label: 'Spec',
-    field: 'spec',
-    sortable: true,
-  },
-  {
-    name: 'status',
-    align: 'center',
-    label: 'Status',
-    field: 'status',
-    sortable: true,
-  },
+  
   {
     name: 'date',
     align: 'center',
@@ -286,12 +410,16 @@ watch(
   }, 0)
 )
 const dataTable = ref([])
+const onExpand = ()=>{
+    expand.value  = !expand.value
+    console.log(expand.value);
+}
 const getDataTable = async () => {
   // loading.value = true
   dataTable.value = []
   const { page, rowsPerPage } = pagination.value
 
-  let data = await api.get('/product/getProduct', {
+  let data = await api.get('/purchase/getPurchase', {
     params: {
       page,
       rowsPerPage,
@@ -322,7 +450,7 @@ const onRemove = async (param) => {
   diaglogDelete.value = true
 }
 const onConfirmDelete = async () => {
-  let data = await api.delete('/product/removeProduct/' + showId.value)
+  let data = await api.delete('/sale/removeSale/' + showId.value)
   if (data) {
     toast.success({ message: '' })
     getDataTable()
@@ -333,7 +461,7 @@ const onConfirmDelete = async () => {
 }
 const onEdit = async (param) => {
   // console.log(param);
-  router.push({ name: 'product.edit', params: { id: param } })
+  router.push({ name: 'purchase.edit', params: { id: param } })
 }
 const exportTable = () => {
   // const content = [columns.map(col => wrapCsvValue(col.label))].concat(

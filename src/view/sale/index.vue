@@ -184,7 +184,7 @@
               key="totalAmount"
               :props="props.totalAmount"
             >
-              {{ props.row.totalAmount  }}
+              {{ props.row.totalAmount  }} $
             </q-td>
             <q-td
               class="text-center"
@@ -236,8 +236,8 @@
                     <td class="text-left">{{ index + 1 }}</td>
                     <td class="text-left">{{ item.name }}</td>
                     <td class="text-left">{{ item.qty }}</td>
-                    <td class="text-left">{{ item.price }} </td>
-                    <td class="text-left">{{ item.amount }}</td>
+                    <td class="text-left">{{ item.price }} $ </td>
+                    <td class="text-left">{{ item.amount }} $</td>
                   </tr>
                 </tbody>
               </q-markup-table>

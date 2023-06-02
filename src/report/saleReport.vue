@@ -523,16 +523,20 @@
             status,
             saleType,
             productDetailId,
+            fromDate,
+            toDate
           }
           doc.branchId  = store.state.auth.branchId;
           //
-          doc.fromDate = dayjs(fromDate).startOf('day').toDate()
-          doc.toDate = dayjs(toDate).endOf('day').toDate()
-          
-          await api.get('/sale/saleReport', doc).then((res)=>{
+          // doc.fromDate = dayjs(fromDate).startOf('day').toDate()
+          // doc.toDate = dayjs(toDate).endOf('day').toDate()
+          console.log('doc', doc);
+          await api.get('/sale/saleReport', {
+            params: doc
+          }).then((res)=>{
             if(res){
                 reportData.value = res.data;
-                console.log('res', data);
+                console.log('res', res.data);
             }
           }).catch((err)=>{
             console.log('err', err);

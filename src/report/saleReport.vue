@@ -198,10 +198,10 @@
                     @clear="form.saleType = []"
                   />
                   <q-select
-                    v-model="form.oilMachineDetailId"
+                    v-model="form.productOpt"
                     label="Product"
-                    :options="oilMachineOpts"
-                    option-value="value"
+                    :options="ProductOpts"
+                    option-value="_id"
                     option-label="label"
                     outlined
                     map-options
@@ -211,7 +211,7 @@
                     use-chips
                     multiple
                     style="margin-bottom: 25px"
-                    @clear="form.oilMachineDetailId = []"
+                    @clear="productNameOpts= []"
                   />
                 </div>
               </div>
@@ -261,8 +261,8 @@
               <div class="ra-mt-sm" />
             </div>
             <div class="col colspan-4">
-              <span class="title"> Job : </span>
-              {{ jobNameOpts }}
+              <span class="title"> Product : </span>
+              {{ productNameOpts }}
               <div class="ra-mt-sm" />
             </div>
             <div class="col colspan-4">
@@ -309,7 +309,7 @@
                 <th v-if="showMoreHeader('staff')">Staff</th>
                 <th v-if="showMoreHeader('saleType')">Sale Type</th>
                 <th v-if="showMoreHeader('status')">Status</th>
-                <th v-if="showMoreHeader('oil')">Oil</th>
+                <th v-if="showMoreHeader('product')">Product</th>
                 <th class="text-right">Qty</th>
                 <th class="text-right">Price</th>
                 <th class="text-right">Amount</th>
@@ -399,8 +399,8 @@
       const reportNameEn = ref('Sale')
       const columns = ref([
         {
-          label: 'Job',
-          value: 'job',
+          label: 'Product',
+          value: 'product',
         },
         {
           label: 'Staff',
@@ -414,18 +414,15 @@
           label: 'Status',
           value: 'status',
         },
-        {
-          label: 'Pump',
-          value: 'pump',
-        },
-        {
-          label: 'Oil',
-          value: 'oil',
-        },
+        
+        // {
+        //   label: 'Oil',
+        //   value: 'oil',
+        // },
       ])
   
       const checkedColumns = ref([
-        'job',
+        'product',
         'staff',
         'saleType',
         'status',
@@ -445,7 +442,7 @@
         status: [],
         
         job: [],
-        oilMachineDetailId: [],
+        productOpt: [],
       })
   
       const formRef = ref('')
@@ -457,7 +454,7 @@
       const customerNameOpts = ref([])
       const staffNameOpts = ref([])
       const jobNameOpts = ref([])
-      const branchName = ref('')
+      const branchName = ref('')  
       const saleTypeOpts = ref([
         {
           label: 'Cash',
@@ -544,23 +541,42 @@
         }
       }
   
-      //find oilMachine
-      const oilMachineOpts = ref([])
-    //   const getOilMachineOpts = () => {
-    //     const selector = {
-    //       companyId: form.value.companyId,
-    //     }
-    //     const { call } = useMethod('gas.getOilMachineOpts', null)
-    //     call({ selector })
-    //       .then((res) => {
-    //         oilMachineOpts.value = res
-    //         // console.log(res, 'hey')
-    //       })
-    //       .catch((error) => {
-    //         // eslint-disable-next-line no-console
-    //         console.log('error ', error)
-    //       })
-    //   }
+      //find product
+      const ProductOpts = ref([])
+      const getProductOpts = async () => {
+        // const selector = {
+        //   branchId: store.state.auth.branchId,     
+        // }
+        // console.log(selector);
+        await api
+                .get('/product/getProductReport' , {
+                  params: {
+                    branchId: store.state.auth.branchId
+                  }
+                })
+                .then((res) => {   
+                    if (res) {
+                      console.log('res', res.data);
+                      ProductOpts.value = res.data
+                    }
+                    })
+                .catch((err) => {
+                console.log(err)
+                })
+        
+      }  
+      const productNameOpts = ref([])
+      const handleProductChange = (newVal) => {
+        let customerName = []
+        if (newVal) {
+          customerName = ProductOpt.value
+            .filter((it) => newVal.includes(it._id))
+            .map((it) => it.name)
+          productNameOpts.value = customerName
+        } else {
+          form.value.customerId = []
+        }
+      }
       // find customer
       const customerOpts = ref([])
       const getCustomerOpts = async () => {
@@ -657,7 +673,7 @@
         getBranch()
         getCustomerOpts()
         findStaffs()
-        // getJobOpts()
+        getProductOpts()
         // getOilMachineOpts()
       })
   
@@ -677,12 +693,11 @@
         changeColumn,
         showMoreHeader,
         customerOpts,
-        oilMachineOpts,
         staffOpts,
         rules,
         formRef,
-        //
-        // allowedCompanies,
+        ProductOpts,
+        productNameOpts,
         statusOpts,
         decimalNumber,
         jobOpts,
@@ -690,6 +705,7 @@
   
         handleCustomerChange,
         handleStaffChange,
+        handleProductChange,
         customerNameOpts,
         staffNameOpts,
         jobNameOpts,

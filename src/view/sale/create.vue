@@ -584,7 +584,7 @@ const onSubmit = async () => {
         toast.error({message: 'Please Check Product Again !!'})
       }
     })
-        console.log(form.value, dataDoc.value);
+        // console.log(form.value, dataDoc.value);
   if(dataDoc.value.length){
       if (valid) {
       form.value.branchId = store.state.auth.branchId
@@ -594,8 +594,10 @@ const onSubmit = async () => {
         }
         )
       if (res) {
-        toast.success({ message: 'Insert successfully' })
-        router.go(-1) 
+        router.push({name: 'print.index', params: {id : res.data.createSale._id}})
+        // console.log('res', res.data.createSale._id);
+        // toast.success({ message: 'Insert successfully' })
+        // router.go(-1) 
         loading.value = false
       } else {
         toast.error({ message: 'There was somehting wrong to add car' })
@@ -638,7 +640,7 @@ const getStaff = async () => {
       }
     })
     .then((res) => {
-      console.log('find staff', res.data);
+      // console.log('find staff', res.data);
       staffOpt.value = res.data
     })
     .catch((err) => {
@@ -654,7 +656,7 @@ const getCustomer = async () => {
       }
     })
     .then((res) => {
-      console.log('find customer', res.data);
+      // console.log('find customer', res.data);
       customerOpt.value = res.data
     })
     .catch((err) => {
@@ -677,7 +679,7 @@ const getProduct = async () => {
       }
     })
     .then((res) => {
-      console.log('find product', res.data);
+      // console.log('find product', res.data);
       productOpt.value = res.data
     })
     .catch((err) => {
@@ -690,7 +692,7 @@ const fetchAllRoleGroups = async () => {
   await api
     .get('roleGroup/getAllRoleGroup', [])
     .then((res) => {
-      console.log('roleGroup', res.data)
+      // console.log('roleGroup', res.data)
       roleGroupOpts.value = res.data
     })
     .catch((err) => {

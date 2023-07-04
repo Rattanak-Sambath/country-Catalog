@@ -26,6 +26,11 @@ export default [
     component: () => import('../../view/car/index.vue'),
   },
   {
+    path: '/print/:id',
+    name: 'print.index',
+    component: () => import('../../layouts/printd.vue'),
+  },
+  {
     path: '/car/create',
     name: 'car.create',
     component: () => import('../../view/car/create.vue'),

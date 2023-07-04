@@ -502,14 +502,7 @@ const onSubmit = async () => {
 const cancel = () => {
   router.go(-1)
 }
-const findDriver = async () => {
-  await api.get('/driver/getDriver').then((res) => {
-    if (res) {
-      console.log(res.data.items)
-      driverOpt.value = res.data.items
-    }
-  })
-}
+
 
 // count for increase code 
 const countStaff = async ( )=>{
@@ -520,13 +513,14 @@ const countStaff = async ( )=>{
     }
   }).then((res) => {
     if(res){
+      console.log('res', res);
       form.value.code = res.data.length + 1;
         // console.log('hi', res);
     }
   })
 }
 onMounted(() => {
-  findDriver()
+
   countStaff()
   
   // if (store.state.auth.branchId) {

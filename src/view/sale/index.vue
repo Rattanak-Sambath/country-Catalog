@@ -149,10 +149,11 @@
                 round
                 flat
                 dense
-                :icon="expand ? 'remove' : 'add'"
-                @click="expand = !expand"
+                :icon="props.row.visible ? 'remove' : 'add'"
+                @click="props.row.visible = !props.row.visible"
               />
             </q-td>
+          
             <q-td
               class="ra-text-link text-blue text-center"
               key="code"
@@ -211,7 +212,7 @@
             </q-td>
           </q-tr>
           <q-tr
-            v-show="expand"
+            v-show="props.row.visible"
             :props="props.row"
           >
             <q-td colspan="100%">
@@ -432,6 +433,9 @@ const getDataTable = async () => {
     console.log(data.data)
     dataTable.value = data.data.items
     pagination.value.rowsNumber = data.data.totalItems
+    for(item in dataTable){
+      item.visible = false;
+    }
   }
 }
 const onChangePagination = (val) => {

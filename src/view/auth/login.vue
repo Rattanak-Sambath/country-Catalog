@@ -41,6 +41,7 @@
                 class="q-my-md"
                 color="orange-14"
                 filled
+                type="password"
                 v-model="password"
                 label="Password"
                 :rules="[(val) => !!val || 'password is required']"

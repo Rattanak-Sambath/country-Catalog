@@ -3,7 +3,7 @@
     <q-card class="flex justify-space-between">
       <q-toolbar>
         <q-toolbar-title class="text-h6 text-bold"
-          ><q-icon name="add"></q-icon> Create Sale</q-toolbar-title
+          ><q-icon name="add"></q-icon> Create Purchase</q-toolbar-title
         >
         <q-space />
         <q-btn
@@ -18,7 +18,7 @@
     <q-card class="q-my-md  ">
       <div class="flex justify-between">
         <q-card-section class="text-grey-15 text-bold">
-        Fill the form below to crate new Sale
+        Fill the form below to crate new Purchase
       </q-card-section>
       <q-card-section class="text-grey-15 text-bold"> 
         Current Exchange 1$ =  {{currentExchage  }}៛

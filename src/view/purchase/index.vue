@@ -89,56 +89,7 @@
             ></q-btn>
           </q-td>
         </template>
-        <!-- <template #body-cell-code="props">
-          <q-td
-            class="text-primary cursor-pointer"
-            :props="props"
-            @click="onEdit(props.row._id)"
-          >
-            <span> {{ props.row.code }}</span>
-          </q-td>
-        </template> -->
-        <!-- <template #body-cell-name="props">
-          <q-td
-            class="text-primary cursor-pointer"
-            :props="props"
-           
-          >
-            <span> {{ props.row.name }}</span>
-          </q-td>
-        </template> -->
-        <!-- <template #body-cell-actions="props"   >
-           <q-td auto-width>
-              <q-btn
-                v-show="props.row.productDoc.length > 0"
-                size="sm"
-                color="primary"
-                round
-                flat
-                dense
-                :icon="props.expand ? 'remove' : 'add'"
-                @click="onExpand(props.row)"
-              />
-            </q-td>
-        </template> -->
-        <!-- <template #body-cell-type ="props">
-          <q-td
-            class="text-primary cursor-pointer"
-            :props="props"          
-          >
-            <span> <q-badge outline align="middle" :color="props.row.type === 'Cash' ? 'teal' : 'negative' ">
-                {{ props.row.type }}
-              </q-badge></span>
-          </q-td>
-        </template> -->
-        <!-- <template #body-cell-note="props">
-          <q-td
-            
-            :props="props"          
-          >
-            {{ props.row.note ? props.row.note : 'No note'}}
-            </q-td>
-        </template> -->
+      
         <template #body="props" >
           <q-tr :props="props">
             <q-td auto-width>
@@ -149,8 +100,8 @@
                 round
                 flat
                 dense
-                :icon="expand ? 'remove' : 'add'"
-                @click="expand = !expand"
+                :icon="props.row.visible ? 'remove' : 'add'"
+                @click="props.row.visible = !props.row.visible"
               />
             </q-td>
             <q-td
@@ -211,7 +162,7 @@
             </q-td>
           </q-tr>
           <q-tr
-            v-show="expand"
+            v-show="props.row.visible"
             :props="props.row"
           >
             <q-td colspan="100%">
@@ -432,6 +383,9 @@ const getDataTable = async () => {
     console.log(data.data)
     dataTable.value = data.data.items
     pagination.value.rowsNumber = data.data.totalItems
+    for(item in dataTable){
+        item.visible = false
+    }
   }
 }
 const onChangePagination = (val) => {

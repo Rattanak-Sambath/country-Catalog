@@ -167,7 +167,7 @@
             />
           </q-avatar>
           <q-toolbar-title class="text-white text-subtitle1 text-weight-medium">
-              PhonShop MS
+              {{ branch ? branch : 'No Branch' }}
           </q-toolbar-title>
         </q-toolbar>
         <q-scroll-area
@@ -805,6 +805,7 @@ const user = ref({})
 const store = useStore()
 const t = useI18n()
 const branchName = ref('')
+const branch = ref('')
 // const transitionName = ref('fade-out')
 //     onMounted(() => {
 
@@ -824,6 +825,7 @@ const getBranch = async () => {
       // console.log(res.data)
       if (res) {
         branchName.value = res.data.name + '[ ' + res.data.code + ' ]'
+        branch.value = res.data.name
       }
     })
     .catch((err) => {

@@ -3,7 +3,7 @@
     <q-card class="flex justify-space-between">
       <q-toolbar>
         <q-toolbar-title class="text-h6 text-bold"
-          ><q-icon name="add"></q-icon> Update Sale</q-toolbar-title
+          ><q-icon name="add"></q-icon> Update Purchase</q-toolbar-title
 
 
 
@@ -21,7 +21,7 @@
     </q-card>
     <q-card class="q-my-md">
       <q-card-section class="text-grey-15">
-        Fill the form below to update new Sale
+        Fill the form below to update new Purchase
       </q-card-section>
       <ValidateForm
         ref="formRef"

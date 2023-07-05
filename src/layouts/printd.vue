@@ -25,7 +25,7 @@
                                 <th>Total</th>
                             </tr>
                         </thead>
-                        <tbody v-for="(items, index) in dataDoc" :key="idx" border="0">
+                        <tbody v-for="(items, index) in dataDoc" :id="index"  border="0">
                             <!-- @foreach($saleDetails as $saleDetail) -->
                             <tr v-for="(it, index) in items.productDoc" :key="index" style="  border-top: 1px solid #000;
                                         padding-top: 5px;
@@ -35,8 +35,8 @@
                                 <td style="text-align: center; width: 30px">{{ index + 1  }}</td>
                                 <td style="text-align: center; width: 180px">{{ it.name }}</td>
                                 <td style="text-align: center; width: 50px">{{ it.qty }}</td>
-                                <td style="text-align: center; width: 55px">{{ it.price }}</td>
-                                <td style="text-align: center; width: 65px">{{ it.qty * it.price }}</td>
+                                <td style="text-align: center; width: 55px">{{ it.price }} </td>
+                                <td style="text-align: center; width: 65px">{{ it.qty * it.price }} $</td>
                             </tr>
                             <!-- @endforeach -->
                         </tbody>
@@ -54,13 +54,15 @@
                                         border-right: 1px solid #999;
                                         font-weight: bold;
                                     "
-                                >  </td>
-                                <!-- {{ dataDoc.totalQty }} -->
+                                
+                                > {{ totalQty }} </td>
                                 <td style="text-align: left; padding-left: 1.5%">
                                     Total
                                 </td>
-                                <td style="text-align: right; font-weight: bold"> $</td>
-                                <!-- {{ dataDoc.totalAmount }} -->
+                                <td style="text-align: right; font-weight: bold">  
+                                  {{ totalAmount }}
+                                  $</td>
+                               
                             </tr>
                             <tr style="background-color: #cccccc">
                                 <td
@@ -83,8 +85,10 @@
                                         font-weight: bold;
                                         padding-right: 5px;
                                     "
-                                > </td>
-                                <!-- {{ dataDoc.type }} -->
+                                >
+                                {{ type }}
+                              </td>
+                                
                             </tr>
                             <tr style="background-color: #cccccc">
                                 <td
@@ -109,9 +113,9 @@
                                         padding-right: 5px;
                                     "
                                 >
+                                  {{ totalAmount }}
                                     $
                                 </td>
-                                <!-- {{ dataDoc.totalAmount }} -->
                             </tr>
         
                             <tr style="background-color: #cccccc">
@@ -137,8 +141,8 @@
 
                                     "
                                 >
+                                {{ totalRiel }}
                                    ៛
-                                   <!-- {{ dataDoc.totalRiel }} -->
                                 </td>
                             </tr>
                         </tbody>
@@ -177,9 +181,9 @@ import {ref} from 'vue'
 import { useStore } from "vuex";
 import api from '../utils/utility';
 import router from '../router/index.js'
-//   import decimalNumber from '../lib/numeral.js'; 
-import _, { divide, has } from 'lodash'
-
+  import decimalNumber from '../lib/numeral.js'; 
+// import _, { has } from 'lodash'
+// import {} from '../lib/numeral.js';
 export default {
   
   data() {
@@ -187,8 +191,12 @@ export default {
     const $route = useRouter();
     // const router = router()
     const visible = true;
-    const dataDoc = [];
+    const dataDoc = ref([]);
     const branchName =  ref('');
+    const totalAmount = ref(0)
+    const totalRiel = ref(0)
+    const totalQty = ref(0)
+    const type = ref(0)
     const code = ref()
       return {
           isPrint: true,
@@ -211,7 +219,7 @@ export default {
                 // console.log(res.data)
                 if (res) {
                     this.branchName= res.data.name 
-                    this.code = res.data.code
+                    // this.code = res.data.code
                 }
                 })
                 .catch((err) => {
@@ -226,8 +234,14 @@ export default {
             }
         })
         .then((result) => {
-            this.dataDoc = result.data.data[0];
-            console.log('res', result.data.data[0]);
+          // console.log('res',result);
+            this.dataDoc = result.data.data
+            this.code = result.data.data[0].code;
+            this.type = result.data.data[0].type
+            this.totalQty = result.data.data[0].totalQty;
+            this.totalAmount= result.data.data[0].totalAmount
+            this.totalRiel= result.data.data[0].totalRiel
+            console.log('res', result.data.data);
         })
         .catch((err) => {
             console.log('err', err);
@@ -290,7 +304,7 @@ h3 {
       },
   },
   mounted() {
-        console.log('params', this.$route.params.id);
+        // console.log('params', this.$route.params.id);
       this.getBranch()
       this.findDataById()
       this.d = new Printd();

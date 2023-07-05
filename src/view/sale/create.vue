@@ -217,14 +217,14 @@
     </thead>
     <tbody>
         <tr
-        v-for="(it, idx) in formDetail"
-        :key="idx"
+        v-for="(it, index) in formDetail"
+        :key="index"
       >
         <td
           class="text-left"
           style="width: 30px"
         >
-          {{  idx + 1 }}
+          {{  index + 1 }}
         </td>
         <td
           class="text-left"
@@ -240,7 +240,7 @@
             option-value="_id"
             dense
             outlined
-            @update:model-value="rowChange(it, 'productId')"
+            @update:model-value="rowChange(it, index, 'productId')"
           />
         </td>
         <td
@@ -429,13 +429,11 @@ const currentExchage = 4100;
 // const categoryOpt = ref([])
 const formDetail = ref([
   {
-    
     index:1,
     productId: '',
     qty: 1,
     price: 0,
     amount:0
-    
   }
 ]
 )
@@ -465,8 +463,7 @@ const rules = object({
 })
 const addEmptyRow = () => {
   const row = {
-    
-    index:0,
+    index: formDetail.value.length + 1,
     productId: '',   
     qty: 1,
     price: 0,
@@ -487,22 +484,29 @@ const totalAmount = computed(()=>{
 const onRemoveRow = (it, index)=>{
     formDetail.value.splice(index,1)
 }
-const rowChange =async (it, index)=>{
-    let selector = it.productId;
+const rowChange =async (item, index, string)=>{
+  console.log('index', item);
+    let selector = item.productId;
     await api
     .get('/product/getProductById/' +  selector)
     .then((res) => {
-    
-      it.price = res.data.price
-      it.amount = it.price * it.qty   
-      if(it.productId === null){
-        console.log('welcome' );
-      }  
-      // formDetail.value.price = res.data.price
+      console.log('res',res);
+      if(formDetail.value.length > 1){
+          item.price = res.data.price
+          item.amount = item.price * item.qty   
+            const found = formDetail.value.find((it)=>
+            // console.log('it', it, 'items', item)
+              it.productId === item.productId
+            )
+            console.log('same', found);
+            if(found){
+                item.productId = ''
+            }
+        }
     })
     .catch((err) => {
-      it.price = 0
-      it.amount = 0
+      item.price = 0
+      item.amount = 0
       console.log(err)
     })
 }

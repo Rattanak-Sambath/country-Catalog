@@ -3,11 +3,7 @@
     <q-card class="flex justify-space-between">
       <q-toolbar>
         <q-toolbar-title class="text-h6 text-bold"
-          ><q-icon name="add"></q-icon> Update Purchase</q-toolbar-title
-
-
-
-          
+          ><q-icon name="add"></q-icon> Update Purchase</q-toolbar-title        
         >
         <q-space />
         <q-btn
@@ -721,12 +717,28 @@ const onSubmit = async () => {
         toast.error({message: 'Please Check Product Again !!'})
       }
     })
+    const arrData = [];
+          const arrLen = dataDoc.value.length;
+          // const isFound = {}
+            for (let i = 0;  i < arrLen; i ++ )  {
+              const item = dataDoc.value[i];
+             
+              if(item.productId) {
+
+               const  isFound = arrData.find((it) => it.productId == item.productId);
+              if(isFound) {
+                isFound.qty++;
+              } else {
+                arrData.push(item);
+              }          
+              }
+    }
     if(dataDoc.value.length){
         if (valid) {
           form.value.branchId = store.state.auth.branchId   
           loading.value = true
           let res = await api.put('/purchase/updatePurchase/' + $route.params.id,
-            {form:form.value, details : dataDoc.value}
+            {form:form.value, details : arrData}
           )
           if (res) {
             toast.success({ message: 'Updated Purchase successfully' })

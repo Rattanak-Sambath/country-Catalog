@@ -185,7 +185,14 @@
               key="totalAmount"
               :props="props.totalAmount"
             >
-              {{ props.row.totalAmount  }} $
+              {{ decimalNumber(props.row.totalAmount, 2)  }} $
+            </q-td>
+            <q-td
+              class="text-center"
+              key="totalAmount"
+              :props="props.totalAmount"
+            >
+              {{ decimalNumber(props.row.totalRiel)  }} ៛
             </q-td>
             <q-td
               class="text-center"
@@ -307,6 +314,7 @@ import _ from 'lodash'
 import { Loading } from 'quasar'
 import VueJsonPretty from 'vue-json-pretty'
 import { useStore } from 'vuex'
+import decimalNumber from '../../lib/numeral.js'
 const store  = useStore()
 const pagination = ref({
   sortBy: 'name',
@@ -378,6 +386,13 @@ const columns = [
     align: 'center',
     label: 'TotalAmount',
     field: 'totalAmount',
+    sortable: true,
+  },
+  {
+    name: 'totalRiel',
+    align: 'center',
+    label: 'totalRiel',
+    field: 'totalRiel',
     sortable: true,
   },
   {

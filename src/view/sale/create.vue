@@ -240,7 +240,7 @@
             option-value="_id"
             dense
             outlined
-            @update:model-value="rowChange(it, index, 'productId')"
+            @update:model-value="rowChange(it, 'productId')"
           />
         </td>
         <td
@@ -454,6 +454,7 @@ const staffOpt = ref([])
 const modelOpt = ref([])
 const customerOpt = ref([])
 const dataDoc = ref([]);
+const finalData = ref([]); 
 const rules = object({
   customerId: string().required().label('Customer'),
   staffId: string().required().label('Staff'),
@@ -484,25 +485,31 @@ const totalAmount = computed(()=>{
 const onRemoveRow = (it, index)=>{
     formDetail.value.splice(index,1)
 }
-const rowChange =async (item, index, string)=>{
-  console.log('index', item);
+
+const rowChange =async (item)=>{
+    // console.log('item', item);
+    // console.log('index', index);
     let selector = item.productId;
     await api
     .get('/product/getProductById/' +  selector)
     .then((res) => {
-      console.log('res',res);
-      if(formDetail.value.length > 1){
+      // console.log('res',res);
+      // if(formDetail.value.length > 1){
+          // item.productId = res.data.productId
           item.price = res.data.price
           item.amount = item.price * item.qty   
-            const found = formDetail.value.find((it)=>
-            // console.log('it', it, 'items', item)
-              it.productId === item.productId
-            )
-            console.log('same', found);
-            if(found){
-                item.productId = ''
-            }
-        }
+              // formDetail.value.find((it)=>   {
+              // console.log('it', it.productId);
+              // console.log('item', item.productId);
+              //       if(it.productId === item.productId){
+              //           // if()
+              //         // formDetail.value[index].productId = ''
+              //         // toast.warning({message : "Item Already Selected !!"}) 
+              //       }
+              //   }  
+              // )
+          
+        // }
     })
     .catch((err) => {
       item.price = 0
@@ -584,24 +591,65 @@ const onSubmit = async () => {
       // else {
       //   formDetail.value.splice(item, )
       // }
-      if(formDetail.value[0].productId === "" ){
+      if(formDetail.value.length < 1  || formDetail.value[0].productId === "" ){
         toast.error({message: 'Please Check Product Again !!'})
       }
     })
         // console.log(form.value, dataDoc.value);
+
+    // dataDoc.value.forEach((item)=>{
+    //   if(item.productId){
+    //     // console.log('item', item);
+    //             if(!finalData.value.length){
+    //                   finalData.value.push(item)
+    //               }
+    //               else {
+    //                 finalData.value.find((it)=> {
+    //                   // console.log('it', it)
+    //                   // console.log('item', item);
+    //                   if(it.productId === item.productId){
+    //                     it.qty ++;
+    //                   }else {
+    //                     finalData.value.push(item)
+    //                   }
+    //                 })
+                        
+                    
+    //               }
+    //         }
+    //       });
+          // console.log('data', finalData.value);\
+          const arrData = [];
+          const arrLen = dataDoc.value.length;
+          // const isFound = {}
+            for (let i = 0;  i < arrLen; i ++ )  {
+              const item = dataDoc.value[i];
+             
+              if(item.productId) {
+
+               const  isFound = arrData.find((it) => it.productId == item.productId);
+              if(isFound) {
+                isFound.qty++;
+              } else {
+                arrData.push(item);
+              }          
+              }
+            }
+            // console.log(arrData,'data');
   if(dataDoc.value.length){
       if (valid) {
+        
       form.value.branchId = store.state.auth.branchId
       let res = await api.post('/sale/createSale',
         {
-        form: form.value, details: dataDoc.value
+        form: form.value, details: arrData
         }
         )
       if (res) {
         router.push({name: 'print.index', params: {id : res.data.createSale._id}})
-        // console.log('res', res.data.createSale._id);
-        // toast.success({ message: 'Insert successfully' })
-        // router.go(-1) 
+        console.log('res', res.data.createSale._id);
+        toast.success({ message: 'Insert successfully' })
+        router.go(-1) 
         loading.value = false
       } else {
         toast.error({ message: 'There was somehting wrong to add car' })

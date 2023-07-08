@@ -584,13 +584,29 @@ const onSubmit = async () => {
         toast.error({message: 'Please Check Product Again !!'})
       }
     })
-        console.log(form.value, dataDoc.value);
+        // console.log(form.value, dataDoc.value);
+        const arrData = [];
+          const arrLen = dataDoc.value.length;
+          // const isFound = {}
+            for (let i = 0;  i < arrLen; i ++ )  {
+              const item = dataDoc.value[i];
+             
+              if(item.productId) {
+
+               const  isFound = arrData.find((it) => it.productId == item.productId);
+              if(isFound) {
+                isFound.qty++;
+              } else {
+                arrData.push(item);
+              }          
+              }
+    }
   if(dataDoc.value.length){
       if (valid) {
       form.value.branchId = store.state.auth.branchId
       let res = await api.post('/purchase/createPurchase',
         {
-        form: form.value, details: dataDoc.value
+        form: form.value, details: arrData
         }
         )
       if (res) {

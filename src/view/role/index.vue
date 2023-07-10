@@ -69,14 +69,14 @@
                     <template v-slot:top>
                         <q-btn   color="blue-10" icon="add" label="Add Role" @click="addRow" class="q-mx-md" :to="{name: 'role.create'}" />
 
-                        <q-btn
+                        <!-- <q-btn
                          
                         color="green-14"
                         icon-right="archive"
                         label="Export to csv"
                         no-caps
                         @click="exportTable()"
-                        />
+                        /> -->
    
                         <q-space />
                         <q-input  dense debounce="500"  outlined v-model="filter"  style="">

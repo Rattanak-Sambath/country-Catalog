@@ -114,13 +114,13 @@
             :to="{ name: 'category.create' }"
           />
 
-          <q-btn
+          <!-- <q-btn
             color="green-14"
             icon-right="archive"
             label="Export to csv"
             no-caps
             @click="exportTable()"
-          />
+          /> -->
 
           <q-space />
           <q-input

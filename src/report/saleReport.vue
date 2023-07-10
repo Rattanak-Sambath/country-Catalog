@@ -302,7 +302,7 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Ref No</th>
+                <th>Code</th>
                 <th>Date</th>
                 <th>Customer</th>
                
@@ -326,7 +326,7 @@
                     class="ra-text-link"
                     @click="onRoute(doc.router)"
                   >
-                    {{ doc.refNo }}
+                    {{ doc.code }}
                   </span>
                 </td>
                 <td>{{ doc.date }}</td>
@@ -336,7 +336,7 @@
                   </b>
                 </td>
                 <td v-if="showMoreHeader('staff')">{{ doc.staff }}</td>
-                <td v-if="showMoreHeader('saleType')">{{ doc.saleType }}</td>
+                <td v-if="showMoreHeader('saleType')">{{ doc.type }}</td>
                 <td v-if="showMoreHeader('status')">{{ doc.status }}</td>
                 <td v-if="showMoreHeader('oil')">{{ doc.oil }}</td>
   
@@ -356,7 +356,7 @@
   import { onMounted, ref, computed, nextTick, watch } from 'vue'
   import ReportLayoutVue from '../layouts/ReportLayout.vue'
   import { Form as ValidateForm, Field as ValidateField } from 'vee-validate'
-  import { object, string } from 'yup'
+  import { object, string , date} from 'yup'
   import { useStore } from 'vuex'
   import { useRouter } from 'vue-router'
   import decimalNumber from '../lib/numeral'
@@ -450,8 +450,8 @@
   
       const formRef = ref('')
       const rules = object({
-        fromDate: string().required(),
-        toDate: string().required(),
+        // fromDate: date().required(),
+        // toDate: date().required(),
         // branchId: string().required().label('Company'),
       })
       const customerNameOpts = ref([])
@@ -530,13 +530,13 @@
           //
           // doc.fromDate = dayjs(fromDate).startOf('day').toDate()
           // doc.toDate = dayjs(toDate).endOf('day').toDate()
-          console.log('doc', doc);
+          // console.log('doc', doc);
           await api.get('/sale/saleReport', {
             params: doc
           }).then((res)=>{
             if(res){
-                reportData.value = res.data;
-                console.log('res', res.data);
+              console.log('res', res.data.data);
+                reportData.value = res.data.data;
             }
           }).catch((err)=>{
             console.log('err', err);
@@ -559,7 +559,7 @@
                 })
                 .then((res) => {   
                     if (res) {
-                      console.log('res', res.data);
+                      // console.log('res', res.data);
                       ProductOpts.value = res.data
                     }
                     })

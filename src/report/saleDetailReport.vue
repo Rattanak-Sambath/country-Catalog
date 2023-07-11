@@ -142,7 +142,24 @@
                     @update:model-value="handleCustomerChange"
                     @clear="customerNameOpts = []"
                   />
-                
+                  <q-select
+                    v-model="form.staffId"
+                    :options="staffOpts"
+                    option-value="_id"
+                    option-label="label"
+                    multiple
+                    use-chips
+                    use-input
+                    clearable
+                    map-options
+                    emit-value
+                    label="Staff"
+                    outlined
+                    dense
+                    style="margin-bottom: 25px"
+                    @update:model-value="handleStaffChange"
+                    @clear="staffNameOpts = []"
+                  />
                 </div>
   
                 <div class="col-xs-12 col-md-6 col-lg-6 q-my-md">
@@ -163,24 +180,7 @@
                     style="margin-bottom: 25px"
                     @clear="form.status = []"
                   /> -->
-                  <q-select
-                    v-model="form.staffId"
-                    :options="staffOpts"
-                    option-value="_id"
-                    option-label="label"
-                    multiple
-                    use-chips
-                    use-input
-                    clearable
-                    map-options
-                    emit-value
-                    label="Staff"
-                    outlined
-                    dense
-                    style="margin-bottom: 25px"
-                    @update:model-value="handleStaffChange"
-                    @clear="staffNameOpts = []"
-                  />
+  
                   <q-select
                     v-model="form.saleType"
                     label="Sale Type"
@@ -197,7 +197,7 @@
                     style="margin-bottom: 25px"
                     @clear="form.saleType = []"
                   />
-                  <!-- <q-select
+                  <q-select
                     v-model="form.productOpt"
                     label="Product"
                     :options="ProductOpts"
@@ -212,7 +212,7 @@
                     multiple
                     style="margin-bottom: 25px"
                     @clear="productNameOpts= []"
-                  /> -->
+                  />
                 </div>
               </div>
             </q-card-section>
@@ -308,19 +308,20 @@
                
                 <th v-if="showMoreHeader('staff')">Staff</th>
                 <th v-if="showMoreHeader('saleType')">Sale Type</th>
-                <!-- <th v-if="showMoreHeader('status')">Status</th>
-                <th v-if="showMoreHeader('product')">Product</th>
-                <th class="text-right">Qty</th> -->
+                <th v-if="showMoreHeader('status')">Product</th>
+                <th class="text-left">Qty</th>
+                <th v-if="showMoreHeader('product')">Price</th>
+                <th class="text-right">Amount</th>
                 <th class="text-right">totalRiel</th>
                 <th class="text-right">totalAmount</th>
               </tr>
             </thead>
             <tbody>
-              <tr
+              <template   
                 v-for="(doc, index) in reportData"
-                :key="index"
-                
-              >
+                :key="index">
+        
+              <tr>
                 <td>{{ index + 1 }}</td>
                 <td>
                   <span
@@ -338,15 +339,44 @@
                 </td>
                 <td v-if="showMoreHeader('staff')">{{ doc.staffName }}</td>
                 <td v-if="showMoreHeader('saleType')">{{ doc.type }}</td>
-                <!-- <td v-if="showMoreHeader('status')">{{ doc.status }}</td>
-                <td v-if="showMoreHeader('oil')">{{ doc.oil }}</td>
-  
-                <td class="text-right">{{ decimalNumber(doc.qty, 2) }}</td> -->
-                <td class="text-right"><b>{{ decimalNumber(doc.totalRiel, 2) }} ៛</b></td>
-                <td class="text-right"><b>{{ decimalNumber(doc.totalAmount, 2) }} $</b> </td>
+                <td v-if="showMoreHeader('status')">{{ doc.status }}</td>
+                <td v-if="showMoreHeader('oil')"></td>
+                <td v-if="showMoreHeader('oil')"></td>
+                
+                <td class="text-right"></td>
+                <td class="text-right"><b>{{ decimalNumber(doc.totalRiel, 2) }} ៛</b> </td>
+                <td class="text-right"><b>{{ decimalNumber(doc.totalAmount, 2) }} $</b>  </td>
               </tr>
+              <!-- detail data -->
+             
+              <tr v-for="(item , index ) in doc.productDoc"    style="background:#e4ecf5;">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td v-if="showMoreHeader('staff')"></td>
+                <td v-if="showMoreHeader('saleType')"> - </td>
+                <td v-if="showMoreHeader('status')"><b>{{ item.productName }}</b></td>
+                <td class="text-left"><b>{{ item.qty }}</b></td>
+                <td v-if="showMoreHeader('oil')"><b>{{ item.price }} $</b></td>
+  
+                <td class="text-right"><b>{{ item.amount }} $</b></td>
+                <td class="text-right"><b></b></td>
+                <td class="text-right">{{  }}</td>
+              </tr>
+             
+                    
+            </template>
+           
+             
             </tbody>
+            
           </table>
+          <div style="max-width: 1900px; " class="flex justify-end q-my-sm" >
+              <tr class=" flex justify-end">
+                   <b>TOTAL : {{ decimalNumber(totalAllAmount, 2) }} $</b>
+              </tr>
+            </div>
         </div>
       </ReportLayoutVue>
     </div>
@@ -376,6 +406,7 @@
       const store = useStore()
       const router = useRouter()
       const startCase = (val) => _.startCase(val)
+      // const totalAllAmount = ref(0)
       const currentCompanyId = computed(() => {
         return store.state.auth.branchId
       })
@@ -500,6 +531,13 @@
       const changeColumn = (val) => {
         checkedColumns.value = val
       }
+      const totalAllAmount = computed(()=>{
+          let total = 0;
+          reportData.value.forEach(element => {
+               total += element.totalAmount;
+          });
+          return total;
+      })
       const showMoreHeader = (field) => {
         return includes(checkedColumns.value, field)
       }
@@ -682,6 +720,7 @@
       })
   
       return {
+        totalAllAmount,
         reportNameEn,
         branchName,
         saleTypeOpts,

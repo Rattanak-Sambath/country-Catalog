@@ -296,7 +296,12 @@ export default [
   // report
   {
     path: '/report/saleReport',
-    name: 'report.saleReport',
+    name: 'saleReport',
     component: () => import('../../report/saleReport.vue'),
+  },
+  {
+    path: '/report/saleDetailReport',
+    name: 'saleDetailReport',
+    component: () => import('../../report/saleDetailReport.vue'),
   },
 ]

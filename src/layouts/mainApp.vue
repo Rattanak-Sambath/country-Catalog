@@ -547,41 +547,13 @@
                    Sale Report Details
                   </q-item-section>
                 </q-item>
-                <!-- <q-item
-                  clickable
-                  v-ripple
-                  exact-active-class="q-item--active"
-                  v-if="userIsInRole(['sale_report_summary'])"
-                >
-                  <q-item-section avatar>
-                    <q-icon name="description" />
-                  </q-item-section>
-
-                  <q-item-section>
-                   Sale Report By Summary
-                  </q-item-section>
-                </q-item> -->
-                <!-- <q-item
-                  clickable
-                  v-ripple
-                  exact-active-class="q-item--active"
-                  v-if="userIsInRole(['sale_report_by_product'])"
-                >
-                  <q-item-section avatar>
-                    <q-icon name="description" />
-                  </q-item-section>
-
-                  <q-item-section>
-                   Sale Report By Product
-                  </q-item-section>
-                </q-item> -->
-
-                <!-- purchase -->
+             
                 <q-item
                   clickable
                   v-ripple
                   exact-active-class="q-item--active"
                   v-if="userIsInRole(['purchase'])"
+                  :to="{name: 'purchaseReport'}"
                 >
                   <q-item-section avatar>
                     <q-icon name="description" />
@@ -597,6 +569,7 @@
                   v-ripple
                   exact-active-class="q-item--active"
                   v-if="userIsInRole(['purchase_report_by_detail'])"
+                  :to="{name: 'purchaseDetailReport'}"
                 >
                   <q-item-section avatar>
                     <q-icon name="description" />

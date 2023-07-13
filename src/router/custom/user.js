@@ -27,7 +27,7 @@ export default [
   },
   {
     path: '/print/:id',
-    name: 'print.index',
+    name: 'print',
     component: () => import('../../layouts/printd.vue'),
   },
   {

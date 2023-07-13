@@ -640,14 +640,17 @@ const onSubmit = async () => {
       if (valid) {
         
       form.value.branchId = store.state.auth.branchId
-      let res = await api.post('/sale/createSale',
+      const res = await api.post('/sale/createSale',
         {
         form: form.value, details: arrData
         }
         )
-      if (res) {
-        router.push({name: 'print.index', params: {id : res.data.createSale._id}})
-        console.log('res', res.data.createSale._id);
+        if (res) {
+          
+        router.push({name:'print', params:{id: res.data.createSale._id}})
+        // params: { id : res.data.createSale._id}
+        // console.log('res', res);
+        // console.log('res', res.data.createSale._id);
         toast.success({ message: 'Insert successfully' })
         router.go(-1) 
         loading.value = false

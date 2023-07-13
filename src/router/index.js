@@ -28,20 +28,20 @@ const routes = [
       requiresAuth: false,
     },
   },
-  {
-    path: '/',
-    component: () => import('../layouts/printLayout.vue'),
-    children: [
-      {
-        path: '/printChemKun/:id',
-        name: 'print',
-        component: () => import('../view/print.vue'),
-      },
-    ],
-    meta: {
-      requiresAuth: true,
-    },
-  },
+  // {
+  //   path: '/',
+  //   component: () => import('../layouts/printLayout.vue'),
+  //   children: [
+  //     {
+  //       path: '/printChemKun/:id',
+  //       name: 'print',
+  //       component: () => import('../view/print.vue'),
+  //     },
+  //   ],
+  //   meta: {
+  //     requiresAuth: true,
+  //   },
+  // },
 ]
 
 const router = createRouter({

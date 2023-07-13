@@ -378,7 +378,7 @@ watch(
 const dataTable = ref([])
 const onExpand = ()=>{
     expand.value  = !expand.value
-    console.log(expand.value);
+    // console.log(expand.value);
 }
 const getDataTable = async () => {
   // loading.value = true
@@ -395,7 +395,7 @@ const getDataTable = async () => {
   })
   loading.value = false
   if (data) {
-    console.log(data.data)
+    // console.log(data.data)
     dataTable.value = data.data.items
     pagination.value.rowsNumber = data.data.totalItems
     for(item in dataTable){

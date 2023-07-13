@@ -644,20 +644,24 @@ const onSubmit = async () => {
         {
         form: form.value, details: arrData
         }
-        )
-        if (res) {
-          
-        router.push({name:'print', params:{id: res.data.createSale._id}})
-        // params: { id : res.data.createSale._id}
-        // console.log('res', res);
-        // console.log('res', res.data.createSale._id);
-        toast.success({ message: 'Insert successfully' })
-        router.go(-1) 
+        ).then((res)=>{
+          if(res){  
+            router.push({name:'print', params:{id: res.data.createSale._id}})
+            toast.success({ message: 'Insert successfully' })
+            // router.go(-1) 
         loading.value = false
-      } else {
-        toast.error({ message: 'There was somehting wrong to add car' })
-        throw 'There was something wrong !!'
-      }
+          }
+        }).catch((err)=>{
+          toast.error({message: err})
+          console.log('err', err);
+        })
+        // if (res) {
+          
+       
+      // } else {
+      //   toast.error({ message: 'There was somehting wrong to add car' })
+      //   throw 'There was something wrong !!'
+      // }
     }
   }
 

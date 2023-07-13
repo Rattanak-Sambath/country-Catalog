@@ -310,7 +310,7 @@
                 <th v-if="showMoreHeader('saleType')">Sale Type</th>
                 <th v-if="showMoreHeader('status')">Product</th>
                 <th class="text-left">Qty</th>
-                <th v-if="showMoreHeader('product')">Price</th>
+                <th v-if="showMoreHeader('product')">Cost</th>
                 <th class="text-right">Amount</th>
                 <th class="text-right">totalRiel</th>
                 <th class="text-right">totalAmount</th>
@@ -358,7 +358,7 @@
                 <td v-if="showMoreHeader('saleType')"> - </td>
                 <td v-if="showMoreHeader('status')"><b>{{ item.productName }}</b></td>
                 <td class="text-left"><b>{{ item.qty }}</b></td>
-                <td v-if="showMoreHeader('oil')"><b>{{ item.price }} $</b></td>
+                <td v-if="showMoreHeader('oil')"><b>{{ item.cost }} $</b></td>
   
                 <td class="text-right"><b>{{ item.amount }} $</b></td>
                 <td class="text-right"><b></b></td>
@@ -574,7 +574,7 @@
             params: doc
           }).then((res)=>{
             if(res){
-            //   console.log('res', res.data);
+              console.log('res', res.data);
                 reportData.value = res.data.data;
             }
           }).catch((err)=>{

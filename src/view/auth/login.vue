@@ -12,10 +12,7 @@
             class="mt-4 text-center"
             lazy-validation
           >
-            <q-avatar
-              size="200px"
-              font-size="52px"
-            >
+            <q-avatar size="200px" font-size="52px">
               <q-img
                 style="width: 250px"
                 src="../../../public/04100fe4-ab2f-4971-8f95-9b05c778d5a1.jpg-output.png"
@@ -31,10 +28,7 @@
                 :rules="[(val) => !!val || 'email is required']"
               >
                 <template v-slot:prepend>
-                  <q-icon
-                    name="person"
-                    color="orange-14"
-                  />
+                  <q-icon name="person" color="orange-14" />
                 </template>
               </q-input>
               <q-input
@@ -47,10 +41,7 @@
                 :rules="[(val) => !!val || 'password is required']"
               >
                 <template v-slot:prepend>
-                  <q-icon
-                    name="lock"
-                    color="orange-14"
-                  />
+                  <q-icon name="lock" color="orange-14" />
                 </template>
               </q-input>
               <q-btn
@@ -66,17 +57,9 @@
                 type="submit"
               />
             </div>
-            <div
-              class="footer"
-              style="margin-top: 80px"
-            >
+            <div class="footer" style="margin-top: 80px">
               © copyright and reserved by
-              <a
-                href="https://www.facebook.com/nak.khochjit.756/"
-                class=""
-                style="font-weight: bold"
-                >CodeNeverSleep</a
-              >
+              <a href="" class="" style="font-weight: bold">CodeNeverSleep</a>
             </div>
           </q-form>
         </q-card>
@@ -87,32 +70,32 @@
 
 <script setup>
 // import router from '../../router';
-import toast from '../../Helper/toast'
-import { ref, onMounted } from 'vue'
+import toast from "../../Helper/toast";
+import { ref, onMounted } from "vue";
 // import store from '../../store/';
-import api from '../../utils/utility'
+import api from "../../utils/utility";
 
-import { useStore } from 'vuex'
-import router from '../../router'
-const refForm = ref('')
-const loading = ref(false)
-const email = ref('admin@gmail.com')
-const password = ref('admin123')
-const store = useStore()
+import { useStore } from "vuex";
+import router from "../../router";
+const refForm = ref("");
+const loading = ref(false);
+const email = ref("admin@gmail.com");
+const password = ref("admin123");
+const store = useStore();
 const onLogin = async () => {
-  const { valid } = await refForm.value?.validate()
+  const { valid } = await refForm.value?.validate();
   if (!valid) {
     let form = {
       email: email.value,
       password: password.value,
-    }
+    };
 
-    store.dispatch('auth/login', form).catch(() => {
-      toast.error({ message: 'Email or Password is not correct' })
-    })
-    router.push({ name: 'home' })
+    store.dispatch("auth/login", form).catch(() => {
+      toast.error({ message: "Email or Password is not correct" });
+    });
+    router.push({ name: "home" });
   }
-}
+};
 </script>
 
 <style scoped></style>

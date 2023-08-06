@@ -3,36 +3,24 @@
     <q-card class="flex justify-space-between">
       <q-toolbar>
         <q-toolbar-title class="text-h6 text-bold"
-          ><q-icon name="add"></q-icon> Update User</q-toolbar-title
+          ><q-icon name="add"></q-icon> Update Product</q-toolbar-title
         >
         <q-space />
-        <q-btn
-          icon="west"
-          outline
-          color="primary"
-          @click="cancel()"
+        <q-btn icon="west" outline color="primary" @click="cancel()"
           >Back</q-btn
         >
       </q-toolbar>
     </q-card>
     <q-card class="q-my-md">
       <q-card-section class="text-grey-15">
-        Fill the form below to update new Driver
+        Fill the form below to update new Product
       </q-card-section>
-      <ValidateForm
-        ref="formRef"
-        :validation-schema="rules"
-      >
-        <q-form
-          @submit.prevent.stop="onSubmit()"
-          class="mt-4 text-center"
-        >
-        <q-card-section>
+      <ValidateForm ref="formRef" :validation-schema="rules">
+        <q-form @submit.prevent.stop="onSubmit()" class="mt-4 text-center">
+          <q-card-section>
             <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
-            
               <div class="col-xs-12 col-md-6 col-lg-4">
                 <div class="row q-col-gutter-y-sm">
-                 
                   <!-- <q-uploader
                   outlined
                     v-bind="field"
@@ -58,10 +46,7 @@
                         :error-message="errorMessage"
                       >
                         <template v-slot:prepend>
-                          <q-icon
-                            name="calendar_month"
-                            color="indigo-10"
-                          />
+                          <q-icon name="calendar_month" color="indigo-10" />
                         </template>
                       </q-input>
                     </validate-field>
@@ -72,7 +57,7 @@
                       v-model="form.name"
                       name="name"
                     >
-                    <q-input
+                      <q-input
                         :model-value="value"
                         label="Name *"
                         outlined
@@ -89,7 +74,7 @@
                       v-model="form.model_id"
                       name="model_id"
                     >
-                    <q-select
+                      <q-select
                         :model-value="value"
                         :options="modelOpt"
                         map-options
@@ -114,7 +99,7 @@
                       v-model="form.color_id"
                       name="color_id"
                     >
-                    <q-select
+                      <q-select
                         :model-value="value"
                         :options="colorOpt"
                         map-options
@@ -131,7 +116,7 @@
                       >
                       </q-select>
                     </validate-field>
-                  </div>     
+                  </div>
 
                   <!-- <div class="col-12">
                     <validate-field
@@ -150,7 +135,6 @@
                       />
                     </validate-field>
                   </div> -->
-                  
                 </div>
               </div>
 
@@ -162,7 +146,7 @@
                       v-model="form.brand_id"
                       name="brand_id"
                     >
-                    <q-select
+                      <q-select
                         :model-value="value"
                         :options="brandOpt"
                         map-options
@@ -179,14 +163,14 @@
                       >
                       </q-select>
                     </validate-field>
-                  </div>   
+                  </div>
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
                       v-model="form.category_id"
                       name="category_id"
                     >
-                    <q-select
+                      <q-select
                         :model-value="value"
                         :options="categoryOpt"
                         map-options
@@ -203,16 +187,15 @@
                       >
                       </q-select>
                     </validate-field>
-                  </div>   
-                 
-                 
+                  </div>
+
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
                       v-model="form.cost"
                       name="cost"
                     >
-                    <q-input
+                      <q-input
                         :model-value="value"
                         label="Cost *"
                         outlined
@@ -229,7 +212,7 @@
                       v-model="form.price"
                       name="price"
                     >
-                    <q-input
+                      <q-input
                         :model-value="value"
                         label="Price *"
                         outlined
@@ -238,13 +221,13 @@
                         :error-message="errorMessage"
                       />
                     </validate-field>
-                  </div>   
+                  </div>
                 </div>
               </div>
-  
-              <div class="  col-xs-12 col-md-6 col-lg-4">
-                   <div class="column q-col-gutter-y-sm">
-                    <div class="col-12">
+
+              <div class="col-xs-12 col-md-6 col-lg-4">
+                <div class="column q-col-gutter-y-sm">
+                  <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
                       v-model.number="form.describtion"
@@ -263,13 +246,13 @@
                         @update:model-value="expiryDayChange" -->
                     </validate-field>
                   </div>
-                    <div class="col-12">
+                  <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
                       v-model="form.spec"
                       name="spe"
                     >
-                    <q-input
+                      <q-input
                         :model-value="value"
                         label="Privide spec of product *"
                         outlined
@@ -279,13 +262,12 @@
                       />
                     </validate-field>
                   </div>
-                    <div class="col-12 q-my-sm">
+                  <div class="col-12 q-my-sm">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
                       v-model="form.status"
                       name="status"
                     >
-                   
                       <span>Status : </span>
                       <q-radio
                         :model-value="value"
@@ -313,14 +295,18 @@
                     </validate-field>
                   </div>
                   <div class="col-12 items-center q-mx-auto">
-                                 <q-input
-                                       v-model="form.image_path"
-                                      @update:model-value="val => { file = val[0] }"
-                                      filled
-                                      type="file"
-                                      hint="Native file"
-                                    />
-                              <!-- <validate-field
+                    <q-input
+                      v-model="form.image_path"
+                      @update:model-value="
+                        (val) => {
+                          file = val[0];
+                        }
+                      "
+                      filled
+                      type="file"
+                      hint="Native file"
+                    />
+                    <!-- <validate-field
                                 v-slot="{ value, field, errorMessage }"
                                 v-model="form.image_path"
                                 name="image_path">
@@ -336,7 +322,7 @@
                                   >
                                     {{ errorMessage }}
                                   </div> -->
-                                <!-- <q-input
+                    <!-- <q-input
                                     :model-value="value"                      
                                     type="file"
                                     outlined
@@ -344,11 +330,11 @@
                                     :error="!!errorMessage"
                                     :error-message="errorMessage"
                                   /> -->
-<!--                               
+                    <!--                               
                             </validate-field> -->
-                      </div>
-                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
           </q-card-section>
           <!-- <q-card-section> {{}} </q-card-section> -->
@@ -386,14 +372,13 @@
           </q-card-section>
         </q-form>
       </ValidateForm>
-      <q-dialog
-        v-model="diaglogDelete"
-        max-width="500"
-      >
+      <q-dialog v-model="diaglogDelete" max-width="500">
         <q-card>
           <q-card-section>
             <div class="text-h6">Confirm</div>
-            <div class="text-subtitle2">are you sure you want to remove ? [ {{ removeName }} ] </div>
+            <div class="text-subtitle2">
+              are you sure you want to remove ? [ {{ removeName }} ]
+            </div>
           </q-card-section>
 
           <q-separator dark />
@@ -422,56 +407,55 @@
 </template>
 
 <script setup>
-import { Form as ValidateForm, Field as ValidateField } from 'vee-validate'
-import toast from '../../Helper/toast.js'
-import { object, string } from 'yup'
-import { ref, onMounted, watch } from 'vue'
-import { useStore } from 'vuex'
-import router from '../../router'
-import dayjs from 'dayjs'
-import api from '../../utils/utility'
-import _ from 'lodash'
-import { useRoute } from 'vue-router'
+import { Form as ValidateForm, Field as ValidateField } from "vee-validate";
+import toast from "../../Helper/toast.js";
+import { object, string } from "yup";
+import { ref, onMounted, watch } from "vue";
+import { useStore } from "vuex";
+import router from "../../router";
+import dayjs from "dayjs";
+import api from "../../utils/utility";
+import _ from "lodash";
+import { useRoute } from "vue-router";
 // import { number } from 'yup/lib/locale';
 
-const $route = useRoute()
-const store = useStore()
-const formRef = ref('')
-const loading = ref(false)
-const diaglogDelete = ref(false)
-const deleting = ref(false)
-const brandOpt = ref([])
-const categoryOpt = ref([])
-const modelOpt = ref([])
-const colorOpt = ref([])
-const removeName = ref('')
+const $route = useRoute();
+const store = useStore();
+const formRef = ref("");
+const loading = ref(false);
+const diaglogDelete = ref(false);
+const deleting = ref(false);
+const brandOpt = ref([]);
+const categoryOpt = ref([]);
+const modelOpt = ref([]);
+const colorOpt = ref([]);
+const removeName = ref("");
 const form = ref({
-  name: '',
-  model_id: '',
-  color_id: '',
-  image_path: '',
-  describtion: '',
-  price: '',
-  status: '',
-  qty: '',
-  brand_id:'',
-  category_id:'',
-  date: '',
-  
-})
-const roleFetch = ref([])
-const allowedBranchOpts = ref([])
-const roleGroupOpts = ref([])
+  name: "",
+  model_id: "",
+  color_id: "",
+  image_path: "",
+  describtion: "",
+  price: "",
+  status: "",
+  qty: "",
+  brand_id: "",
+  category_id: "",
+  date: "",
+});
+const roleFetch = ref([]);
+const allowedBranchOpts = ref([]);
+const roleGroupOpts = ref([]);
 const statusOpts = ref([
   {
-    name: 'Inactive',
-    value: 'Inactive',
+    name: "Inactive",
+    value: "Inactive",
   },
   {
-    name: 'Active',
-    value: 'Active',
+    name: "Active",
+    value: "Active",
   },
-])
+]);
 // const positionOpt = ref([
 //   {
 //     name: 'Pre-driver',
@@ -486,7 +470,7 @@ const statusOpts = ref([
 // confirmPassword: '',
 
 const rules = object({
-  name: string().required().label('Name'),
+  name: string().required().label("Name"),
   // fullname: string().required().label('Role'),
   // email: string().required().label('Status'),
   // password: string().required().label('Password'),
@@ -494,199 +478,205 @@ const rules = object({
   // roleGroupId: string().required().label('Role group'),
   // expiryDay: string().required().label('Expiry day'),
   // status: string().required().label('Status'),
-})
+});
 
-const showId = ref('')
+const showId = ref("");
 const concel = () => {
-  
-
-  form.value.name = ''
-  form.value.address = ''
-  form.value.position = ''
-  form.value.gender = ''
-  form.value.salary = ''
-  loading.value = false
-}
+  form.value.name = "";
+  form.value.address = "";
+  form.value.position = "";
+  form.value.gender = "";
+  form.value.salary = "";
+  loading.value = false;
+};
 const findDatabyId = async () => {
-
-  let res = await api.get("/product/getProductById/" + $route.params.id)
+  let res = await api.get("/product/getProductById/" + $route.params.id);
   if (res) {
     // console.log('data', res)
-    removeName.value = res.data.name
-    form.value.name = res.data.name
-    form.value.date= res.data.date
-    form.value.model_id = res.data.model_id
-    form.value.color_id = res.data.color_id
-    form.value.brand_id = res.data.brand_id
-    form.value.category_id = res.data.category_id 
-    form.value.cost = res.data.cost
-    form.value.price = res.data.price
-    form.value.describtion = res.data.describtion
-    form.value.spec = res.data.spec
-    form.value.status= res.data.status
-    form.value.image_path = res.data.image_path
+    removeName.value = res.data.name;
+    form.value.name = res.data.name;
+    form.value.date = res.data.date;
+    form.value.model_id = res.data.model_id;
+    form.value.color_id = res.data.color_id;
+    form.value.brand_id = res.data.brand_id;
+    form.value.category_id = res.data.category_id;
+    form.value.cost = res.data.cost;
+    form.value.price = res.data.price;
+    form.value.describtion = res.data.describtion;
+    form.value.spec = res.data.spec;
+    form.value.status = res.data.status;
+    form.value.image_path = res.data.image_path;
   }
-}
-const startCase = (val) => _.startCase(val)
-const onRemove = async () => { 
-  showId.value = $route.params.id
+};
+const startCase = (val) => _.startCase(val);
+const onRemove = async () => {
+  showId.value = $route.params.id;
   // removeName.value = param.name;
-  diaglogDelete.value = true
-}
+  diaglogDelete.value = true;
+};
 const onConfirmDelete = async () => {
-  let data = await api.delete('/product/removeProduct/' + $route.params.id)
+  let data = await api.delete("/product/removeProduct/" + $route.params.id);
   if (data) {
-      router.go(-1)
-      diaglogDelete.value = false
-      toast.success({ message: '' })
+    router.go(-1);
+    diaglogDelete.value = false;
+    toast.success({ message: "" });
   } else {
-    toast.error(err.data.status)
+    toast.error(err.data.status);
   }
-}
+};
 
 // onSubmit
 
 const onSubmit = async () => {
-  const { valid } = await formRef.value.validate()
+  const { valid } = await formRef.value.validate();
   if (valid) {
-    form.value.branchId = store.state.auth.branchId
-    // let methods = '' + 
-  
-    loading.value = true
-    let res = await api.put('/product/updateProduct/' + $route.params.id, form.value)
+    form.value.branchId = store.state.auth.branchId;
+    // let methods = '' +
+
+    loading.value = true;
+    let res = await api.put(
+      "/product/updateProduct/" + $route.params.id,
+      form.value
+    );
     if (res) {
-      toast.success({ message: 'Insert successfully' })
-      router.go(-1)
+      toast.success({ message: "Insert successfully" });
+      router.go(-1);
     } else {
-      toast.error({ message: 'There was somehting wrong to add car' })
-      throw 'There was something wrong !!'
+      toast.error({ message: "There was somehting wrong to add car" });
+      throw "There was something wrong !!";
     }
   }
-}
+};
 
 const getModel = async () => {
   await api
-    .get('/model/getAllModel/' + store.state.auth.branchId)
-    .then((res) => {    
-      console.log('Get model', res.data);
-      modelOpt.value = res.data
+    .get("/model/getAllModel/" + store.state.auth.branchId)
+    .then((res) => {
+      console.log("Get model", res.data);
+      modelOpt.value = res.data;
     })
     .catch((err) => {
-      console.log(err)
-    })
-}
+      console.log(err);
+    });
+};
 
 // get Color
 const getColor = async () => {
   await api
-    .get('/color/getAllColor/' + store.state.auth.branchId)
-    .then((res) => {    
-      console.log('Get model', res.data);
-      colorOpt.value = res.data
+    .get("/color/getAllColor/" + store.state.auth.branchId)
+    .then((res) => {
+      console.log("Get model", res.data);
+      colorOpt.value = res.data;
     })
     .catch((err) => {
-      console.log(err)
-    })
-}
+      console.log(err);
+    });
+};
 // get brand
 const getBrand = async () => {
   await api
-    .get('/brand/getAllBrand/' + store.state.auth.branchId)
-    .then((res) => {    
-      console.log('Get brand', res.data);
-      brandOpt.value = res.data
+    .get("/brand/getAllBrand/" + store.state.auth.branchId)
+    .then((res) => {
+      console.log("Get brand", res.data);
+      brandOpt.value = res.data;
     })
     .catch((err) => {
-      console.log(err)
-    })
-}
+      console.log(err);
+    });
+};
 const getCategory = async () => {
   await api
-    .get('/category/getAllCategory/' + store.state.auth.branchId)
-    .then((res) => {    
-      console.log('Get category', res.data);
-      categoryOpt.value = res.data
+    .get("/category/getAllCategory/" + store.state.auth.branchId)
+    .then((res) => {
+      console.log("Get category", res.data);
+      categoryOpt.value = res.data;
     })
     .catch((err) => {
-      console.log(err)
-    })
-}
+      console.log(err);
+    });
+};
 // const val = form.value.roleGroupId
 watch(
   () => form.value.roleGroupId,
   (newValue) => {
     if (newValue) {
       api
-        .get('roleGroup/getRoleGroupbyId/' + newValue)
+        .get("roleGroup/getRoleGroupbyId/" + newValue)
         .then((res) => {
-          roleFetch.value = []
-          roleFetch.value = res.data.roleGroup.role
-          form.value.roles = roleFetch.value
+          roleFetch.value = [];
+          roleFetch.value = res.data.roleGroup.role;
+          form.value.roles = roleFetch.value;
         })
         .catch((err) => {
-          console.log(err)
-        })
+          console.log(err);
+        });
     }
   },
   { deep: true, immediate: true }
-)
+);
 // watch to get showId
-watch(()=> $route.params, (newValue)=>{
-  if(newValue){
+watch(
+  () => $route.params,
+  (newValue) => {
+    if (newValue) {
       showId.value = newValue;
-      console.log('hi', newValue);
-  }
-}, { deep: true, immediate: true })
+      console.log("hi", newValue);
+    }
+  },
+  { deep: true, immediate: true }
+);
 
 // get Allow Branch
 
 const fetchAllowBranch = async () => {
   await api
-    .get('/branch/fetchAllBranch', [])
+    .get("/branch/fetchAllBranch", [])
     .then((res) => {
       // console.log(res.data)
-      allowedBranchOpts.value = res.data
+      allowedBranchOpts.value = res.data;
     })
     .catch((err) => {
-      console.log(err)
-    })
-}
+      console.log(err);
+    });
+};
 // fetchRole
 const fetchAllRoleGroups = async () => {
   await api
-    .get('roleGroup/getAllRoleGroup', [])
+    .get("roleGroup/getAllRoleGroup", [])
     .then((res) => {
       // console.log('roleGroup', res.data)
-      roleGroupOpts.value = res.data
+      roleGroupOpts.value = res.data;
     })
     .catch((err) => {
-      console.log(err)
-    })
-}
-const cancel = () => {
-  router.go(-1)
-}
-// count User
-const countUser = async () =>{
-    await api.get('auth/countUser', [])
-    .then((res)=>{
-       if(res.data <= 1){
-          deleting.value = true
-       }
-    }).catch((err)=>{
       console.log(err);
+    });
+};
+const cancel = () => {
+  router.go(-1);
+};
+// count User
+const countUser = async () => {
+  await api
+    .get("auth/countUser", [])
+    .then((res) => {
+      if (res.data <= 1) {
+        deleting.value = true;
+      }
     })
-}
+    .catch((err) => {
+      console.log(err);
+    });
+};
 onMounted(() => {
-  findDatabyId()
-  fetchAllowBranch()
-  fetchAllRoleGroups()
-  countUser()
-  getModel()
-  getColor()
-  getBrand()
-  getCategory()
-})
+  findDatabyId();
+  fetchAllowBranch();
+  fetchAllRoleGroups();
+  countUser();
+  getModel();
+  getColor();
+  getBrand();
+  getCategory();
+});
 </script>
 
 <style scoped></style>

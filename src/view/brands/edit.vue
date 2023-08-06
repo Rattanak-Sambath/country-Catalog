@@ -7,11 +7,7 @@
           ><q-icon name="add"></q-icon> Edit Brand</q-toolbar-title
         >
         <q-space />
-        <q-btn
-          icon="west"
-          outline
-          color="primary"
-          @click="$router.go(-1)"
+        <q-btn icon="west" outline color="primary" @click="$router.go(-1)"
           >Back</q-btn
         >
       </q-toolbar>
@@ -20,15 +16,9 @@
       <q-card-section class="text-grey-15">
         Fill the form below to crate new Brand
       </q-card-section>
-      <ValidateForm
-        ref="formRef"
-        :validation-schema="rules"
-      >
-        <q-form
-          @submit.prevent.stop="onSubmit()"
-          class="mt-4 text-center"
-        >
-        <q-card-section>
+      <ValidateForm ref="formRef" :validation-schema="rules">
+        <q-form @submit.prevent.stop="onSubmit()" class="mt-4 text-center">
+          <q-card-section>
             <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
               <div class="col-xs-12 col-md-6 col-lg-6">
                 <div class="row q-col-gutter-y-md">
@@ -49,15 +39,12 @@
                         :error-message="errorMessage"
                       >
                         <template v-slot:prepend>
-                          <q-icon
-                            name="calendar_month"
-                            color="indigo-10"
-                          />
+                          <q-icon name="calendar_month" color="indigo-10" />
                         </template>
                       </q-input>
                     </validate-field>
                   </div>
-              
+
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
@@ -75,10 +62,7 @@
                         :error-message="errorMessage"
                       >
                         <template v-slot:prepend>
-                          <q-icon
-                            name="person"
-                            color="indigo-10"
-                          />
+                          <q-icon name="person" color="indigo-10" />
                         </template>
                       </q-input>
                     </validate-field>
@@ -88,7 +72,6 @@
                       v-slot="{ value, field, errorMessage }"
                       v-model="form.status"
                       name="status"
-                      
                     >
                       <!-- <q-option-group
                         :model-value="value"
@@ -124,22 +107,19 @@
                       </div>
                     </validate-field>
                   </div>
-                 
                 </div>
                 <!-- end-left-side  -->
               </div>
 
               <div class="col-xs-12 col-md-6 col-lg-6">
                 <div class="row q-col-gutter-y-md">
-                 
-                 
-                 <div class="col-12">
+                  <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
                       v-model="form.describtion"
                       name="describtion"
                     >
-                     <q-input
+                      <q-input
                         color="orange-14"
                         type="textarea"
                         outlined
@@ -150,19 +130,14 @@
                         :error-message="errorMessage"
                       >
                         <template v-slot:prepend>
-                          <q-icon
-                            name="person"
-                            color="indigo-10"
-                          />
+                          <q-icon name="person" color="indigo-10" />
                         </template>
-                        </q-input>
+                      </q-input>
                     </validate-field>
                   </div>
-                  
-                  
+                </div>
               </div>
             </div>
-          </div>
           </q-card-section>
           <q-card-section>
             <div class="text-right q-gutter-x-md">
@@ -192,135 +167,135 @@
 </template>
 
 <script setup>
-import { Form as ValidateForm, Field as ValidateField } from 'vee-validate'
-import actions from '../../store/actions'
-import toast from '../../Helper/toast.js'
-import { object, string } from 'yup'
-import { ref, onMounted } from 'vue'
+import { Form as ValidateForm, Field as ValidateField } from "vee-validate";
+import actions from "../../store/actions";
+import toast from "../../Helper/toast.js";
+import { object, string } from "yup";
+import { ref, onMounted } from "vue";
 // import store from '../../store/';
 // import api from '../../utils/utility'
-import { useStore } from 'vuex'
-import router from '../../router'
-import dayjs from 'dayjs'
-import api from '../../utils/utility'
-import axios from 'axios'
-import { useRoute } from 'vue-router'
-const branchOpt = ref([])
-const store = useStore()
-const formRef = ref('')
-const loading = ref(false)
-const preBranchId = ref('')
+import { useStore } from "vuex";
+import router from "../../router";
+import dayjs from "dayjs";
+import api from "../../utils/utility";
+import axios from "axios";
+import { useRoute } from "vue-router";
+const branchOpt = ref([]);
+const store = useStore();
+const formRef = ref("");
+const loading = ref(false);
+const preBranchId = ref("");
 const form = ref({
-  name: '',
-  status: '',
-  describtion: '',
-  date: '',
-})
-const $route = useRoute()
+  name: "",
+  status: "",
+  describtion: "",
+  date: "",
+});
+const $route = useRoute();
 const positionOpt = ref([
   {
-    name: 'Delivery',
-    value: 'Delivery',
+    name: "Delivery",
+    value: "Delivery",
   },
   {
-    name: 'Staff Office',
-    value: 'Staff Office',
+    name: "Staff Office",
+    value: "Staff Office",
   },
-])
+]);
 const genderOpt = ref([
   {
-    name: 'Male',
-    value: 'Male',
+    name: "Male",
+    value: "Male",
   },
   {
-    name: 'Female',
-    value: 'Female',
+    name: "Female",
+    value: "Female",
   },
-])
-const driverOpt = ref([])
-const invisibleBtn = ref(false)
+]);
+const driverOpt = ref([]);
+const invisibleBtn = ref(false);
 const rules = object({
-  name: string().required().label('Name'),
-  status: string().required().label('Status'),
-  date: string().required().label('Date'),
-})
-const showId = ref('')
+  name: string().required().label("Name"),
+  status: string().required().label("Status"),
+  date: string().required().label("Date"),
+});
+const showId = ref("");
 const cancel = () => {
-  showId.value = null
-  form.value.name = ''
-  form.value.status = ''
-  form.value.date = ''
-  
-  loading.value = false
-  router.go(-1)
-}
+  showId.value = null;
+  form.value.name = "";
+  form.value.status = "";
+  form.value.date = "";
+
+  loading.value = false;
+  router.go(-1);
+};
 const getBranch = async () => {
   await api
-    .get('branch/getCurrentBranch/' + store.state.auth.branchId)
+    .get("branch/getCurrentBranch/" + store.state.auth.branchId)
     .then((res) => {
       console.log(res.data);
       if (res) {
-          branchOpt.value  = res.data
-          preBranchId.value = res.data.name + ' [ ' + res.data.code + ' ] ' ;
-           // return res.data.name;
+        branchOpt.value = res.data;
+        preBranchId.value = res.data.name + " [ " + res.data.code + " ] ";
+        // return res.data.name;
       }
     })
     .catch((err) => {
-      console.log(err)
-    })
-}
+      console.log(err);
+    });
+};
 const onUpdate = async () => {
-  const { valid } = await formRef.value.validate()
+  const { valid } = await formRef.value.validate();
   if (valid) {
     // let  methods = 'car/updateCar'
-    form.value.branchId = store.state.auth.branchId
-    loading.value = true
+    form.value.branchId = store.state.auth.branchId;
+    loading.value = true;
     const res = await api.put(
       `brand/updateBrand/` + $route.params.id,
       form.value
-    )
+    );
     if (res) {
-      toast.success({ message: 'Update car successfully' })
-      cancel()
+      toast.success({ message: "Update brand successfully" });
+      cancel();
     } else {
-      toast.error({ message: 'There was somehting wrong to add car' })
-      throw 'There was something wrong !!'
+      toast.error({ message: "There was somehting wrong to add brand" });
+      throw "There was something wrong !!";
     }
   }
-}
+};
 const findDatabyId = async () => {
-  let id = showId.value
+  let id = showId.value;
   // console.log('find', id);
-  let res = await api.get(`/brand/getBrandbyId/` + $route.params.id)
+  let res = await api.get(`/brand/getBrandbyId/` + $route.params.id);
   // console.log(res)
   if (res) {
-    form.value.status = res.data.status
-    form.value.name = res.data.name
-    form.value.describtion = res.data.describtion
-    form.value.date = res.data.date  
+    form.value.status = res.data.status;
+    form.value.name = res.data.name;
+    form.value.describtion = res.data.describtion;
+    form.value.date = res.data.date;
     // console.log('hi',res.data)
   }
-}
+};
 
 const findDriver = async () => {
-  await api.get('/driver/getDriver').then((res) => {
+  await api.get("/driver/getDriver").then((res) => {
     if (res) {
-      console.log(res.data.items)
-      driverOpt.value = res.data.items
+      console.log(res.data.items);
+      driverOpt.value = res.data.items;
     }
-  })
-}
+  });
+};
 
 onMounted(() => {
-  findDriver()
-  findDatabyId()
-  getBranch()
+  findDriver();
+  findDatabyId();
+  getBranch();
   if ($route.params.id) {
-    showId.value = $route.params.id
+    showId.value = $route.params.id;
     // console.log(showId.value);
     // console.log($route.params.car);
   }
-})
+});
 </script>
 
 <style scoped></style>

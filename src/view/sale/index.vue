@@ -1,41 +1,29 @@
 <template>
   <div>
     <q-card>
-      <q-card-section
-        v-if="loading === false"
-        class="flex"
-      >
+      <q-card-section v-if="loading === false" class="flex">
         <q-breadcrumbs
           v-for="(i, index) in breadcrumbs"
           :key="index"
           class="q-mx-md"
         >
-          <q-breadcrumbs-el
-            :label="i.label"
-            :icon="i.icon"
-            :to="i.route"
-          />
+          <q-breadcrumbs-el :label="i.label" :icon="i.icon" :to="i.route" />
         </q-breadcrumbs>
       </q-card-section>
-      <q-skeleton
-        style="100%"
-        height="100px"
-        v-else
-      >
+      <q-skeleton style="100%" height="100px" v-else>
         <q-skeleton class="text-h6 q-mb-md"></q-skeleton>
         <q-skeleton class="text-subtitle2"></q-skeleton>
       </q-skeleton>
     </q-card>
 
     <q-card class="q-my-sm">
-      <q-dialog
-        v-model="diaglogDelete"
-        max-width="500"
-      >
+      <q-dialog v-model="diaglogDelete" max-width="500">
         <q-card>
           <q-card-section>
             <div class="text-h6">Confirm</div>
-            <div class="text-subtitle2">are you sure you want to remove ? [ {{ removeName }} ] </div>
+            <div class="text-subtitle2">
+              are you sure you want to remove ? [ {{ removeName }} ]
+            </div>
           </q-card-section>
 
           <q-separator dark />
@@ -82,11 +70,7 @@
               color="negative"
               @click="onRemove(props.row)"
             ></q-btn>
-            <q-btn
-              icon="edit"
-              color="primary"
-              class="q-mx-md"
-            ></q-btn>
+            <q-btn icon="edit" color="primary" class="q-mx-md"></q-btn>
           </q-td>
         </template>
         <!-- <template #body-cell-code="props">
@@ -139,7 +123,7 @@
             {{ props.row.note ? props.row.note : 'No note'}}
             </q-td>
         </template> -->
-        <template #body="props" >
+        <template #body="props">
           <q-tr :props="props">
             <q-td auto-width>
               <q-btn
@@ -153,16 +137,13 @@
                 @click="props.row.visible = !props.row.visible"
               />
             </q-td>
-          
+
             <q-td
               class="ra-text-link text-blue text-center"
               key="code"
               :props="props.code"
             >
-              <span
-                class="ra-text-link"
-                @click="onEdit(props.row._id)"
-              >
+              <span class="ra-text-link" @click="onEdit(props.row._id)">
                 {{ props.row.code }}
               </span>
             </q-td>
@@ -173,11 +154,7 @@
             >
               {{ props.row.customerName }}
             </q-td>
-            <q-td
-              class="text-center"
-              key="staffName"
-              :props="props.staffName"
-            >
+            <q-td class="text-center" key="staffName" :props="props.staffName">
               {{ props.row.staffName }}
             </q-td>
             <q-td
@@ -185,48 +162,36 @@
               key="totalAmount"
               :props="props.totalAmount"
             >
-              {{ decimalNumber(props.row.totalAmount, 2)  }} $
+              {{ decimalNumber(props.row.totalAmount, 2) }} $
             </q-td>
             <q-td
               class="text-center"
               key="totalAmount"
               :props="props.totalAmount"
             >
-              {{ decimalNumber(props.row.totalRiel)  }} ៛
+              {{ decimalNumber(props.row.totalRiel) }} ៛
             </q-td>
-            <q-td
-              class="text-center"
-              key="type"
-              :props="props.type"
-            >
-            <span> <q-badge outline align="middle" :color="props.row.type === 'Cash' ? 'teal': 'negative' ">
-                {{ props.row.type }}
-              </q-badge></span>
+            <q-td class="text-center" key="type" :props="props.type">
+              <span>
+                <q-badge
+                  outline
+                  align="middle"
+                  :color="props.row.type === 'Cash' ? 'teal' : 'negative'"
+                >
+                  {{ props.row.type }}
+                </q-badge></span
+              >
             </q-td>
-            <q-td
-              class="text-center"
-              key="note"
-              :props="props.note"
-            >
-              {{ props.row.note ?  props.row.note : 'No Note' }}
+            <q-td class="text-center" key="note" :props="props.note">
+              {{ props.row.note ? props.row.note : "No Note" }}
             </q-td>
-            <q-td
-              class="text-center"
-              key="date"
-              :props="props.date"
-            >
+            <q-td class="text-center" key="date" :props="props.date">
               {{ props.row.date }}
             </q-td>
           </q-tr>
-          <q-tr
-            v-show="props.row.visible"
-            :props="props.row"
-          >
+          <q-tr v-show="props.row.visible" :props="props.row">
             <q-td colspan="100%">
-              <q-markup-table
-                bordered
-                flat
-              >
+              <q-markup-table bordered flat>
                 <thead>
                   <tr>
                     <th class="text-left">No</th>
@@ -236,15 +201,15 @@
                     <th class="text-left">Amount</th>
                   </tr>
                 </thead>
-                <tbody> 
-                   <tr
+                <tbody>
+                  <tr
                     v-for="(item, index) in props.row.productDoc"
-                    :key="index">
-
+                    :key="index"
+                  >
                     <td class="text-left">{{ index + 1 }}</td>
                     <td class="text-left">{{ item.name }}</td>
                     <td class="text-left">{{ item.qty }}</td>
-                    <td class="text-left">{{ item.price }} $ </td>
+                    <td class="text-left">{{ item.price }} $</td>
                     <td class="text-left">{{ item.amount }} $</td>
                   </tr>
                 </tbody>
@@ -260,8 +225,8 @@
           </q-tr>
         </template>
         <!-- :props="props" -->
-        
-        <template v-slot:top >
+
+        <template v-slot:top>
           <q-btn
             color="blue-10"
             icon="add"
@@ -280,66 +245,54 @@
           /> -->
 
           <q-space />
-          <q-input
-            dense
-            debounce="500"
-            outlined
-            v-model="filter"
-            style=""
-          >
+          <q-input dense debounce="500" outlined v-model="filter" style="">
             <template v-slot:append>
               <q-icon name="search" />
             </template>
           </q-input>
         </template>
-        <template>
-          asdasdasd
-        </template>
-
+        <template> asdasdasd </template>
       </q-table>
-      
-     
     </q-card>
-
   </div>
 </template>
 
 <script setup>
-import { success } from '@brenoroosevelt/toast/lib/cjs/toast'
-import { onMounted, ref, watch } from 'vue'
-import toast from '../../Helper/toast'
-import router from '../../router'
-import api from '../../utils/utility'
-import _ from 'lodash'
-import { Loading } from 'quasar'
-import VueJsonPretty from 'vue-json-pretty'
-import { useStore } from 'vuex'
-import decimalNumber from '../../lib/numeral.js'
-const store  = useStore()
+import { success } from "@brenoroosevelt/toast/lib/cjs/toast";
+import { onMounted, ref, watch } from "vue";
+import toast from "../../Helper/toast";
+import router from "../../router";
+import api from "../../utils/utility";
+import _ from "lodash";
+import { Loading } from "quasar";
+import VueJsonPretty from "vue-json-pretty";
+import { useStore } from "vuex";
+import decimalNumber from "../../lib/numeral.js";
+const store = useStore();
 const pagination = ref({
-  sortBy: 'name',
-  descending: false,
+  sortBy: "name",
+  descending: true,
   page: 1,
-  rowsPerPage: 5,
+  rowsPerPage: 10,
   rowsNumber: 0,
-})
-const filter = ref('')
-const loading = ref(false)
-const showId = ref('')
-const diaglogDelete = ref(false)
-const expand =ref(false)
+});
+const filter = ref("");
+const loading = ref(false);
+const showId = ref("");
+const diaglogDelete = ref(false);
+const expand = ref(false);
 const breadcrumbs = ref([
   {
-    label: 'Dashboard / Sale ',
-    icon: 'dashboard',
-    route: '/sale',
+    label: "Dashboard / Sale ",
+    icon: "dashboard",
+    route: "/sale",
   },
   // {
   //     label: 'Car',
   //     icon:'local_shippings',
   //     route:'/car/create'
   // }
-])
+]);
 const columns = [
   // { name: 'index', align: 'center', label: 'Index', field: 'index', sortable: true },
 
@@ -353,135 +306,135 @@ const columns = [
   //     sortable: true
   // },
   {
-    name: 'actions',
-    align: 'center',
-    label: '',
-    field: 'actions',
+    name: "actions",
+    align: "center",
+    label: "",
+    field: "actions",
     sortable: true,
   },
   {
-    name: 'code',
-    align: 'center',
-    label: 'Code',
-    field: 'code',
+    name: "code",
+    align: "center",
+    label: "Code",
+    field: "code",
     sortable: true,
   },
   {
-    name: 'customerName',
-    align: 'center',
-    label: 'Cus_Name',
-    field: 'customerName',
+    name: "customerName",
+    align: "center",
+    label: "Cus_Name",
+    field: "customerName",
     sortable: true,
   },
 
   {
-    name: 'staffName',
-    align: 'center',
-    label: 'Staff_Name',
-    field: 'staffName',
+    name: "staffName",
+    align: "center",
+    label: "Staff_Name",
+    field: "staffName",
     sortable: true,
   },
   {
-    name: 'totalAmount',
-    align: 'center',
-    label: 'TotalAmount',
-    field: 'totalAmount',
+    name: "totalAmount",
+    align: "center",
+    label: "TotalAmount",
+    field: "totalAmount",
     sortable: true,
   },
   {
-    name: 'totalRiel',
-    align: 'center',
-    label: 'totalRiel',
-    field: 'totalRiel',
+    name: "totalRiel",
+    align: "center",
+    label: "totalRiel",
+    field: "totalRiel",
     sortable: true,
   },
   {
-    name: 'type',
-    align: 'center',
-    label: 'Type',
-    field: 'type',
+    name: "type",
+    align: "center",
+    label: "Type",
+    field: "type",
     sortable: true,
   },
   {
-    name: 'note',
-    align: 'center',
-    label: 'Note',
-    field: 'note',
+    name: "note",
+    align: "center",
+    label: "Note",
+    field: "note",
     sortable: true,
   },
-  
+
   {
-    name: 'date',
-    align: 'center',
-    label: 'Date',
-    field: 'date',
+    name: "date",
+    align: "center",
+    label: "Date",
+    field: "date",
     sortable: true,
   },
-]
+];
 watch(
   filter,
   _.debounce(function (val) {
-    Loading.value = false
-    getDataTable()
+    Loading.value = false;
+    getDataTable();
   }, 0)
-)
-const dataTable = ref([])
-const onExpand = ()=>{
-    expand.value  = !expand.value
-    // console.log(expand.value);
-}
+);
+const dataTable = ref([]);
+const onExpand = () => {
+  expand.value = !expand.value;
+  // console.log(expand.value);
+};
 const getDataTable = async () => {
   // loading.value = true
-  dataTable.value = []
-  const { page, rowsPerPage } = pagination.value
+  dataTable.value = [];
+  const { page, rowsPerPage } = pagination.value;
 
-  let data = await api.get('/sale/getSale', {
+  let data = await api.get("/sale/getSale", {
     params: {
       page,
       rowsPerPage,
       search: filter.value,
       branchId: store.state.auth.branchId,
     },
-  })
-  loading.value = false
+  });
+  loading.value = false;
   if (data) {
     // console.log(data.data)
-    dataTable.value = data.data.items
-    pagination.value.rowsNumber = data.data.totalItems
-    for(item in dataTable){
+    dataTable.value = data.data.items;
+    pagination.value.rowsNumber = data.data.totalItems;
+    for (item in dataTable) {
       item.visible = false;
     }
   }
-}
+};
 const onChangePagination = (val) => {
-  pagination.value.page = val.pagination.page
-  pagination.value.rowsPerPage = val.pagination.rowsPerPage
-  getDataTable()
-}
+  pagination.value.page = val.pagination.page;
+  pagination.value.rowsPerPage = val.pagination.rowsPerPage;
+  getDataTable();
+};
 const editCompo = (param) => {
-  showId.value = param
-  router.push({ name: 'car.edit' })
+  showId.value = param;
+  router.push({ name: "car.edit" });
   // console.log(param);
-}
+};
 const onRemove = async (param) => {
-  showId.value = param._id
+  showId.value = param._id;
   removeName.value = param.name;
-  diaglogDelete.value = true
-}
+  diaglogDelete.value = true;
+};
 const onConfirmDelete = async () => {
-  let data = await api.delete('/sale/removeSale/' + showId.value)
+  let data = await api.delete("/sale/removeSale/" + showId.value);
   if (data) {
-    toast.success({ message: '' })
-    getDataTable()
-    diaglogDelete.value = false
+    toast.success({ message: "" });
+    getDataTable();
+    diaglogDelete.value = false;
   } else {
-    toast.error(err.data.status)
+    toast.error(err.data.status);
   }
-}
+};
 const onEdit = async (param) => {
   // console.log(param);
-  router.push({ name: 'sale.edit', params: { id: param } })
-}
+  router.push({ name: "sale.edit", params: { id: param } });
+};
 const exportTable = () => {
   // const content = [columns.map(col => wrapCsvValue(col.label))].concat(
   //             rows.map(row => columns.map(col => wrapCsvValue(
@@ -497,13 +450,13 @@ const exportTable = () => {
   //             content,
   //             'text/csv'
   //             )
-}
+};
 onMounted(() => {
-  getDataTable()
+  getDataTable();
   if (!dataTable) {
-    loading.value = true
+    loading.value = true;
   }
-})
+});
 </script>
 
 <style scoped></style>

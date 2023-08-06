@@ -7,11 +7,7 @@
           ><q-icon name="add"></q-icon> Edit RoleGroup</q-toolbar-title
         >
         <q-space />
-        <q-btn
-          icon="west"
-          outline
-          color="primary"
-          @click="$router.go(-1)"
+        <q-btn icon="west" outline color="primary" @click="$router.go(-1)"
           >Back</q-btn
         >
       </q-toolbar>
@@ -20,14 +16,8 @@
       <q-card-section class="text-grey-15">
         Fill the form below to update new RoleGroup
       </q-card-section>
-      <ValidateForm
-        ref="formRef"
-        :validation-schema="rules"
-      >
-        <q-form
-          @submit.prevent.stop="onSubmit()"
-          class="mt-4 text-center"
-        >
+      <ValidateForm ref="formRef" :validation-schema="rules">
+        <q-form @submit.prevent.stop="onSubmit()" class="mt-4 text-center">
           <q-card-section>
             <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
               <div class="col-xs-12 col-md-12 col-lg-12">
@@ -58,10 +48,7 @@
                           v-model="form.status"
                           name="status"
                         >
-                          <span
-                            class="text-grey-9"
-                            style="padding-right: 8px"
-                          >
+                          <span class="text-grey-9" style="padding-right: 8px">
                             Status *
                           </span>
 
@@ -121,10 +108,7 @@
                             </div>
                           </fieldset>
                           <!-- v-if="!!errorMessage && value.length === 0" -->
-                          <div
-                            class="text-negative"
-                            style="font-size: 11px"
-                          >
+                          <div class="text-negative" style="font-size: 11px">
                             {{ errorMessage }}
                           </div>
                         </validate-field>
@@ -173,74 +157,74 @@
 </template>
 
 <script setup>
-import { Form as ValidateForm, Field as ValidateField } from 'vee-validate'
-import actions from '../../store/actions'
-import toast from '../../Helper/toast.js'
-import { object, string } from 'yup'
-import { ref, onMounted } from 'vue'
+import { Form as ValidateForm, Field as ValidateField } from "vee-validate";
+import actions from "../../store/actions";
+import toast from "../../Helper/toast.js";
+import { object, string } from "yup";
+import { ref, onMounted } from "vue";
 // import store from '../../store/';
 // import api from '../../utils/utility'
-import { useStore } from 'vuex'
-import router from '../../router'
-import dayjs from 'dayjs'
-import api from '../../utils/utility'
-import axios from 'axios'
-import { useRoute } from 'vue-router'
-import _ from 'lodash'
-const formRef = ref('')
-const loading = ref(false)
+import { useStore } from "vuex";
+import router from "../../router";
+import dayjs from "dayjs";
+import api from "../../utils/utility";
+import axios from "axios";
+import { useRoute } from "vue-router";
+import _ from "lodash";
+const formRef = ref("");
+const loading = ref(false);
 const form = ref({
-  name: '',
-  status: '',
+  name: "",
+  status: "",
   role: [],
   checkAll: false,
-})
-const roleOpts = ref([])
+});
+const roleOpts = ref([]);
 const statusOpts = ref([
   {
-    name: 'Inactive',
-    value: 'Inactive',
+    name: "Inactive",
+    value: "Inactive",
   },
   {
-    name: 'Active',
-    value: 'Active',
+    name: "Active",
+    value: "Active",
   },
-])
-const $route = useRoute()
+]);
+const $route = useRoute();
 const rules = object({
-  name: string().required().label('Name'),
+  name: string().required().label("Name"),
   // role: string().required().label('Role'),
-  status: string().required().label('Status'),
-})
-const startCase = (val) => _.startCase(val)
+  status: string().required().label("Status"),
+});
+const startCase = (val) => _.startCase(val);
 
 const checkAllRole = () => {
   // console.log('hi');
   if (form.value.checkAll === true) {
-    form.value.role = []
+    form.value.role = [];
     for (let i = 0; i < roleOpts.value.length; i++) {
-      const roleName = roleOpts.value[i].name
-      form.value.role.push(roleName)
+      const roleName = roleOpts.value[i].name;
+      form.value.role.push(roleName);
     }
   } else {
-    console.log('else')
-    form.value.role = []
+    console.log("else");
+    form.value.role = [];
   }
-}
+};
 const onRemove = async () => {
   await api
-    .delete('/roleGroup/removeById/' + $route.params.roleGroup)
+    .delete("/roleGroup/removeById/" + $route.params.roleGroup)
     .then((res) => {
       if (res) {
-        toast.success('RoleGroup deleted successfully')
-        cancel()
+        toast.success("RoleGroup deleted successfully");
+        cancel();
         // console.log('hi')
       }
     })
     .catch((err) => {
-      toast.error({ message: 'Not Found !!!' })
-      console.log(err)
-    })
+      toast.error({ message: "Not Found !!!" });
+      console.log(err);
+    });
   // if (dataRemove) {
   //   console.log('hi')
   //   toast.error({ message: 'Not found' })
@@ -248,7 +232,7 @@ const onRemove = async () => {
   //   toast.success({ message: 'Not found' })
   //   // cancel()
   // }
-}
+};
 // watch(
 //   () => form.value.role,
 //   (val) => {
@@ -260,64 +244,64 @@ const onRemove = async () => {
 //   },
 //   { deep: true, immediate: true }
 // )
-const showId = ref('')
+const showId = ref("");
 const cancel = () => {
-  showId.value = null
-  form.value.name = ''
-  form.value.address = ''
-  form.value.position = ''
-  form.value.gender = ''
-  form.value.salary = ''
-  form.value.date = ''
-  loading.value = false
-  router.go(-1)
-}
+  showId.value = null;
+  form.value.name = "";
+  form.value.address = "";
+  form.value.position = "";
+  form.value.gender = "";
+  form.value.salary = "";
+  form.value.date = "";
+  loading.value = false;
+  router.go(-1);
+};
 const onUpdate = async () => {
-  const { valid } = await formRef.value.validate()
+  const { valid } = await formRef.value.validate();
   if (valid) {
     // let  methods = 'car/updateCar'
-    loading.value = true
+    loading.value = true;
     const res = await api.put(
       `roleGroup/updateRoleGroup/` + $route.params.roleGroup,
       form.value
-    )
+    );
     if (res) {
-      toast.success({ message: 'Update driver successfully' })
-      cancel()
+      toast.success({ message: "Update role successfully" });
+      cancel();
     } else {
-      toast.error({ message: 'There was somehting wrong to add car' })
-      throw 'There was something wrong !!'
+      toast.error({ message: "There was somehting wrong to add car" });
+      throw "There was something wrong !!";
     }
   }
-}
+};
 const getRoleOpt = async () => {
-  let data = await api.get('/role/getAllRole', [])
+  let data = await api.get("/role/getAllRole", []);
   if (data) {
-    roleOpts.value = data.data
+    roleOpts.value = data.data;
   }
-}
+};
 const findDatabyId = async () => {
-  let id = showId.value
+  let id = showId.value;
   // console.log('find', id);
   let res = await api.get(
     `/roleGroup/getRoleGroupbyId/` + $route.params.roleGroup
-  )
+  );
   if (res) {
     // console.log('data', res)
-    form.value.name = res.data.roleGroup.name
-    form.value.role = res.data.roleGroup.role
-    form.value.status = res.data.roleGroup.status
+    form.value.name = res.data.roleGroup.name;
+    form.value.role = res.data.roleGroup.role;
+    form.value.status = res.data.roleGroup.status;
   }
-}
+};
 onMounted(() => {
-  getRoleOpt()
-  findDatabyId()
+  getRoleOpt();
+  findDatabyId();
   if ($route.params.driver) {
-    showId.value = $route.params.driver
+    showId.value = $route.params.driver;
     // console.log(showId.value);
     // console.log($route.params.car);
   }
-})
+});
 </script>
 
 <style scoped></style>

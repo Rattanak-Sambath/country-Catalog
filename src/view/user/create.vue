@@ -6,33 +6,21 @@
           ><q-icon name="add"></q-icon> Create User</q-toolbar-title
         >
         <q-space />
-        <q-btn
-          icon="west"
-          outline
-          color="primary"
-          @click="$router.go(-1)"
+        <q-btn icon="west" outline color="primary" @click="$router.go(-1)"
           >Back</q-btn
         >
       </q-toolbar>
     </q-card>
     <q-card class="q-my-md">
       <q-card-section class="text-grey-15">
-        Fill the form below to crate new Driver
+        Fill the form below to create new User
       </q-card-section>
-      <ValidateForm
-        ref="formRef"
-        :validation-schema="rules"
-      >
-        <q-form
-          @submit.prevent.stop="onSubmit()"
-          class="mt-4 text-center"
-        >
+      <ValidateForm ref="formRef" :validation-schema="rules">
+        <q-form @submit.prevent.stop="onSubmit()" class="mt-4 text-center">
           <q-card-section>
             <div class="row q-col-gutter-x-xl q-col-gutter-y-md">
               <div class="col-xs-12 col-md-6 col-lg-6">
                 <div class="row q-col-gutter-y-sm">
-                 
-
                   <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
@@ -85,10 +73,7 @@
                   </div>
 
                   <!-- Update  -->
-                  <div
-                    v-if="showId"
-                    class="col-12"
-                  >
+                  <div v-if="showId" class="col-12">
                     <fieldset>
                       <legend>
                         Change Password
@@ -158,54 +143,54 @@
                       </validate-field>
                     </div>
                     <div class="col-12">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.type"
-                      name="type"
-                    >
-                      <q-select
-                        :model-value="value"
-                        :options="statustype"
-                        map-options
-                        emit-value
-                        option-label="name"
-                        option-value="value"
-                        color="orange-14"
-                        type="text"
-                        outlined
-                        label="User Type"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
+                      <validate-field
+                        v-slot="{ value, field, errorMessage }"
+                        v-model="form.type"
+                        name="type"
                       >
-                      </q-select>
-                    </validate-field>
-                  </div>
-                  <div class="col-12" v-show="form.type === 'staff'">
-                    <validate-field
-                      v-slot="{ value, field, errorMessage }"
-                      v-model="form.staffId"
-                      name="staffId"
-                    >
-                      <q-select
-                       clearable
-                        :model-value="value"
-                        :options="staffOpt"
-                        map-options
-                        emit-value
-                        option-label="label"
-                        option-value="_id"
-                        color="orange-14"
-                        type="text"
-                        outlined
-                        label="Select Staff"
-                        v-bind="field"
-                        :error="!!errorMessage"
-                        :error-message="errorMessage"
+                        <q-select
+                          :model-value="value"
+                          :options="statustype"
+                          map-options
+                          emit-value
+                          option-label="name"
+                          option-value="value"
+                          color="orange-14"
+                          type="text"
+                          outlined
+                          label="User Type"
+                          v-bind="field"
+                          :error="!!errorMessage"
+                          :error-message="errorMessage"
+                        >
+                        </q-select>
+                      </validate-field>
+                    </div>
+                    <div class="col-12" v-show="form.type === 'staff'">
+                      <validate-field
+                        v-slot="{ value, field, errorMessage }"
+                        v-model="form.staffId"
+                        name="staffId"
                       >
-                      </q-select>
-                    </validate-field>
-                  </div>
+                        <q-select
+                          clearable
+                          :model-value="value"
+                          :options="staffOpt"
+                          map-options
+                          emit-value
+                          option-label="label"
+                          option-value="_id"
+                          color="orange-14"
+                          type="text"
+                          outlined
+                          label="Select Staff"
+                          v-bind="field"
+                          :error="!!errorMessage"
+                          :error-message="errorMessage"
+                        >
+                        </q-select>
+                      </validate-field>
+                    </div>
 
                     <!-- <div class="col-12">
                       <validate-field
@@ -277,10 +262,7 @@
                         :error-message="errorMessage"
                       >
                         <template v-slot:prepend>
-                          <q-icon
-                            name="engineering"
-                            color="indigo-10"
-                          />
+                          <q-icon name="engineering" color="indigo-10" />
                         </template>
                       </q-select>
                     </validate-field>
@@ -370,10 +352,7 @@
                         </div>
                       </fieldset>
                       <!-- v-if="!!errorMessage && value.length === 0" -->
-                      <div
-                        class="text-negative"
-                        style="font-size: 11px"
-                      >
+                      <div class="text-negative" style="font-size: 11px">
                         {{ errorMessage }}
                       </div>
                     </validate-field>
@@ -421,62 +400,62 @@
 </template>
 
 <script setup>
-import { Form as ValidateForm, Field as ValidateField } from 'vee-validate'
-import actions from '../../store/actions'
-import toast from '../../Helper/toast.js'
-import { object, string } from 'yup'
-import { ref, onMounted, watch } from 'vue'
+import { Form as ValidateForm, Field as ValidateField } from "vee-validate";
+import actions from "../../store/actions";
+import toast from "../../Helper/toast.js";
+import { object, string } from "yup";
+import { ref, onMounted, watch } from "vue";
 
-import { useStore } from 'vuex'
-import router from '../../router'
-import dayjs from 'dayjs'
-import api from '../../utils/utility'
-import axios from 'axios'
-import _, { has } from 'lodash'
+import { useStore } from "vuex";
+import router from "../../router";
+import dayjs from "dayjs";
+import api from "../../utils/utility";
+import axios from "axios";
+import _, { has } from "lodash";
 
 // import { number } from 'yup/lib/locale';
 
-const formRef = ref('')
-const loading = ref(false)
+const formRef = ref("");
+const loading = ref(false);
 const form = ref({
-  type: '',
-  staffId: '',
-  username: 'user',
-  name: '',
-  fullname: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-  allowedBranch: '',
-  roleGroupId: '',
-  expiryDay: '',
-  status: '',
+  type: "",
+  staffId: "",
+  username: "user",
+  name: "",
+  fullname: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  allowedBranch: "",
+  roleGroupId: "",
+  expiryDay: "",
+  status: "",
   roles: [],
-})
-const roleFetch = ref([])
-const allowedBranchOpts = ref([])
-const roleGroupOpts = ref([])
-const statustype = ref ([
+});
+const roleFetch = ref([]);
+const allowedBranchOpts = ref([]);
+const roleGroupOpts = ref([]);
+const statustype = ref([
   {
-    name: 'Owner',
-    value: 'owner'
+    name: "Owner",
+    value: "owner",
   },
   {
-    name: 'Staff',
-    value: 'staff'
-  }
-])
+    name: "Staff",
+    value: "staff",
+  },
+]);
 const statusOpts = ref([
   {
-    name: 'Inactive',
-    value: 'Inactive',
+    name: "Inactive",
+    value: "Inactive",
   },
   {
-    name: 'Active',
-    value: 'Active',
+    name: "Active",
+    value: "Active",
   },
-])
-const staffOpt = ref([])
+]);
+const staffOpt = ref([]);
 // const positionOpt = ref([
 //   {
 //     name: 'Pre-driver',
@@ -491,118 +470,120 @@ const staffOpt = ref([])
 // confirmPassword: '',
 
 const rules = object({
-  name: string().required().label('Name'),
-  type: string().required().label('Type'),
+  name: string().required().label("Name"),
+  type: string().required().label("Type"),
   // staffId: string().required().label('Staff'),
-  fullname: string().required().label('Role'),
-  email: string().required().label('Status'),
-  password: string().required().label('Password'),
-  allowedBranch: string().required().label('Allowed branches'),
-  roleGroupId: string().required().label('Role group'),
-  expiryDay: string().required().label('Expiry day'),
-  status: string().required().label('Status'),
-})
+  fullname: string().required().label("Role"),
+  email: string().required().label("Status"),
+  password: string().required().label("Password"),
+  allowedBranch: string().required().label("Allowed branches"),
+  roleGroupId: string().required().label("Role group"),
+  expiryDay: string().required().label("Expiry day"),
+  status: string().required().label("Status"),
+});
 
-const showId = ref('')
+const showId = ref("");
 const concel = () => {
-  showId.value = null
-  form.value.name = ''
-  form.value.address = ''
-  form.value.position = ''
-  form.value.gender = ''
-  form.value.salary = ''
-  loading.value = false
-}
-const startCase = (val) => _.startCase(val)
+  showId.value = null;
+  form.value.name = "";
+  form.value.address = "";
+  form.value.position = "";
+  form.value.gender = "";
+  form.value.salary = "";
+  loading.value = false;
+};
+const startCase = (val) => _.startCase(val);
 
 const onSubmit = async () => {
-  const { valid } = await formRef.value.validate()
+  const { valid } = await formRef.value.validate();
   // console.log('form', form.value)
   if (valid) {
-    let methods = '/auth/register'
+    let methods = "/auth/register";
     // if(showId.value){
     //   methods = 'driver/updateDriver'
     // }
-       loading.value = true
-    let res = await api.post(methods, form.value)
+    loading.value = true;
+    let res = await api.post(methods, form.value);
     if (res) {
-      toast.success({ message: 'Insert successfully' })
-      router.go(-1)
-      loading.value = false
+      toast.success({ message: "Insert successfully" });
+      router.go(-1);
+      loading.value = false;
     } else {
-      toast.error({ message: 'There was somehting wrong to add car' })
-      throw 'There was something wrong !!'
+      toast.error({ message: "There was somehting wrong to add car" });
+      throw "There was something wrong !!";
     }
   }
-}
+};
 // const val = form.value.roleGroupId
 watch(
   () => form.value.roleGroupId,
   (newValue) => {
     if (newValue) {
       api
-        .get('roleGroup/getRoleGroupbyId/' + newValue)
+        .get("roleGroup/getRoleGroupbyId/" + newValue)
         .then((res) => {
-          roleFetch.value = []
-          roleFetch.value = res.data.roleGroup.role
-          form.value.roles = roleFetch.value
+          roleFetch.value = [];
+          roleFetch.value = res.data.roleGroup.role;
+          form.value.roles = roleFetch.value;
         })
         .catch((err) => {
-          console.log(err)
-        })
+          console.log(err);
+        });
     }
   },
   { deep: true, immediate: true }
-)
+);
 
-watch(()=>form.value.type, (newValue)=>{
-  if(newValue){
-      form.value.staffId = null
+watch(
+  () => form.value.type,
+  (newValue) => {
+    if (newValue) {
+      form.value.staffId = null;
+    }
   }
-})
+);
 const fetchAllowBranch = async () => {
   await api
-    .get('/branch/fetchAllBranch', [])
+    .get("/branch/fetchAllBranch", [])
     .then((res) => {
       // console.log(res.data)
-      allowedBranchOpts.value = res.data
+      allowedBranchOpts.value = res.data;
     })
     .catch((err) => {
-      console.log(err)
-    })
-}
+      console.log(err);
+    });
+};
 const getStaff = async () => {
   await api
-    .get('/staff/getAllStaff', [])
+    .get("/staff/getAllStaff", [])
     .then((res) => {
       // console.log('find staff', res.data);
       // console.log(res.data)
-      staffOpt.value = res.data
+      staffOpt.value = res.data;
     })
     .catch((err) => {
-      console.log(err)
-    })
-}
+      console.log(err);
+    });
+};
 const fetchAllRoleGroups = async () => {
   await api
-    .get('roleGroup/getAllRoleGroup', [])
+    .get("roleGroup/getAllRoleGroup", [])
     .then((res) => {
-      console.log('roleGroup', res.data)
-      roleGroupOpts.value = res.data
+      console.log("roleGroup", res.data);
+      roleGroupOpts.value = res.data;
     })
     .catch((err) => {
-      console.log(err)
-    })
-}
+      console.log(err);
+    });
+};
 const cancel = () => {
-  router.go(-1)
-}
+  router.go(-1);
+};
 onMounted(() => {
-  fetchAllowBranch()
-  getStaff()
-  fetchAllRoleGroups()
- 
-})
+  fetchAllowBranch();
+  getStaff();
+  fetchAllRoleGroups();
+});
 </script>
 
 <style scoped></style>

@@ -90,7 +90,7 @@ const actions = {
     // console.log(credential);
     return new Promise((resolve, reject) => {
       api
-        .post('http://localhost:5000/api/auth/login', credential)
+        .post('http://localhost:5001/api/auth/login', credential)
         .then((response) => {
           // console.log('respone', response)
           commit('SET_AUTHENTICATED', true)

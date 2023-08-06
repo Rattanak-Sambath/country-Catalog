@@ -9,24 +9,12 @@
             background-color: white;
           "
         >
-          <q-btn
-            dense
-            flat
-            round
-            icon="menu"
-            @click="toggleLeftDrawer"
-          />
-          <q-btn
-            dense
-            flat
-            round
-            icon="search"
-            @click="toggleLeftDrawer"
-          />
+          <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+          <q-btn dense flat round icon="search" @click="toggleLeftDrawer" />
           <q-space />
           <div align="left">
             <span class="title text-bold">
-              {{ branchName ? branchName : 'No Branch' }}
+              {{ branchName ? branchName : "No Branch" }}
             </span>
           </div>
           <q-btn
@@ -68,21 +56,9 @@
           />
 
           <!-- <img style="width: 70px;" src="istockphoto-652225546-612x612.jpg" /> -->
-          <q-btn
-            round
-            flat
-            color="black"
-            icon="notifications_active"
-          />
-          <q-btn
-            round
-            flat
-            color="white"
-          >
-            <q-avatar
-              color="primary"
-              class="q-ma-sm"
-            >
+          <q-btn round flat color="black" icon="notifications_active" />
+          <q-btn round flat color="white">
+            <q-avatar color="primary" class="q-ma-sm">
               <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
               <q-menu>
                 <q-list style="min-width: 10px">
@@ -99,40 +75,23 @@
                       <q-item-label
                         >{{ $store.state.auth.user.email }}
                       </q-item-label>
-                      <q-item-label
-                        caption
-                        lines="1"
-                      >
+                      <q-item-label caption lines="1">
                         {{ $store.state.auth.user.location }}</q-item-label
                       >
                     </q-item-section>
                   </q-item>
                   <q-separator />
-                  <q-item
-                    :to="{ name: 'setting' }"
-                    exact
-                  >
+                  <q-item :to="{ name: 'setting' }" exact>
                     <q-item-section avatar>
-                      <q-icon
-                        name="settings"
-                        color="primary"
-                      />
+                      <q-icon name="settings" color="primary" />
                     </q-item-section>
 
                     <q-item-section>Setting</q-item-section>
                   </q-item>
                   <q-separator />
-                  <q-item
-                    clickable
-                    v-ripple
-                    @click="logout()"
-                    exact
-                  >
+                  <q-item clickable v-ripple @click="logout()" exact>
                     <q-item-section avatar>
-                      <q-icon
-                        name="logout "
-                        color="red"
-                      />
+                      <q-icon name="logout " color="red" />
                     </q-item-section>
 
                     <q-item-section>Logout</q-item-section>
@@ -154,11 +113,7 @@
         style="background-color: grey; color: white"
       >
         <q-toolbar class="app-sidebar-header shadow-none">
-          <q-avatar
-            size="50px"
-            font-size="90px"
-            class="q-my-sm"
-          >
+          <q-avatar size="50px" font-size="90px" class="q-my-sm">
             <img
               src="../../public/04100fe4-ab2f-4971-8f95-9b05c778d5a1.jpg-output.png"
               width="50"
@@ -167,30 +122,21 @@
             />
           </q-avatar>
           <q-toolbar-title class="text-white text-subtitle1 text-weight-medium">
-              {{ branch ? branch : 'No Branch' }}
+            {{ branch ? branch : "No Branch" }}
           </q-toolbar-title>
         </q-toolbar>
         <q-scroll-area
           style="height: calc(100% - 20px); margin-top: 0px"
           class="app-sidebar-scroll-area"
         >
-          <q-list
-            padding
-            class="app-menu"
-          >
-            <q-item
-              :to="{ name: 'home' }"
-              exact-active-class="q-item--active "
-            >
+          <q-list padding class="app-menu">
+            <q-item :to="{ name: 'home' }" exact-active-class="q-item--active ">
               <q-item-section avatar>
-                <q-icon
-                  name=" home"
-                  size="16px"
-                />
+                <q-icon name=" home" size="16px" />
               </q-item-section>
 
               <q-item-section>
-                {{ $t('dashboard.title') }}
+                {{ $t("dashboard.title") }}
               </q-item-section>
             </q-item>
 
@@ -202,11 +148,11 @@
               v-if="userIsInRole(['sale'])"
             >
               <q-item-section avatar>
-                <q-icon name="category" />
+                <q-icon name="inventory" />
               </q-item-section>
 
               <q-item-section>
-                {{ $t('sale') }}
+                {{ $t("sale") }}
               </q-item-section>
             </q-item>
 
@@ -230,9 +176,9 @@
               v-if="userIsInRole(['purchase'])"
             >
               <q-item-section avatar>
-                <q-icon name="two_wheeler" />
+                <q-icon name="shopping_cart_checkout" />
               </q-item-section>
-              <q-item-section> {{ $t('purchase') }}</q-item-section>
+              <q-item-section> {{ $t("purchase") }}</q-item-section>
             </q-item>
 
             <!-- <q-item
@@ -254,12 +200,12 @@
               v-if="userIsInRole(['product'])"
             >
               <q-item-section avatar>
-                <q-icon name="local_shipping" />
+                <q-icon name="shopping_cart" />
               </q-item-section>
 
-              <q-item-section> {{ $t('product') }}</q-item-section>
+              <q-item-section> {{ $t("product") }}</q-item-section>
             </q-item>
-           
+
             <!-- <q-expansion-item
               group="link-dialog"
               style="border-radius: 20px"
@@ -304,8 +250,8 @@
                             Car Config
                         </q-item-section>
                     </q-item> -->
-              <!-- </q-card-section> -->
-            <!-- </q-expansion-item> --> 
+            <!-- </q-card-section> -->
+            <!-- </q-expansion-item> -->
             <q-expansion-item
               group="link-dialog"
               expand-separator
@@ -314,7 +260,6 @@
               v-if="userIsInRole(['admin_settings'])"
             >
               <q-card-section>
-                
                 <q-item
                   clickable
                   v-ripple
@@ -326,7 +271,7 @@
                     <q-icon name="description" />
                   </q-item-section>
 
-                  <q-item-section>{{ $t('role') }} </q-item-section>
+                  <q-item-section>{{ $t("role") }} </q-item-section>
                 </q-item>
                 <q-item
                   v-ripple
@@ -338,7 +283,7 @@
                     <q-icon name="person" />
                   </q-item-section>
 
-                  <q-item-section> {{ $t('user') }} </q-item-section>
+                  <q-item-section> {{ $t("user") }} </q-item-section>
                 </q-item>
                 <q-item
                   clickable
@@ -351,7 +296,7 @@
                     <q-icon name="payments" />
                   </q-item-section>
 
-                  <q-item-section> {{ $t('group') }} </q-item-section>
+                  <q-item-section> {{ $t("group") }} </q-item-section>
                 </q-item>
                 <q-item
                   v-if="userIsInRole(['branch'])"
@@ -364,7 +309,7 @@
                     <q-icon name="apartment" />
                   </q-item-section>
 
-                  <q-item-section> {{ $t('branch') }} </q-item-section>
+                  <q-item-section> {{ $t("branch") }} </q-item-section>
                 </q-item>
 
                 <q-item
@@ -378,7 +323,7 @@
                     <q-icon name="badge" />
                   </q-item-section>
 
-                  <q-item-section> {{ $t('staff') }} </q-item-section>
+                  <q-item-section> {{ $t("staff") }} </q-item-section>
                 </q-item>
                 <q-item
                   clickable
@@ -391,68 +336,68 @@
                     <q-icon name="groups_2" />
                   </q-item-section>
 
-                  <q-item-section> {{ $t('customer') }} </q-item-section>
+                  <q-item-section> {{ $t("customer") }} </q-item-section>
                 </q-item>
                 <q-item
-              exact-active-class="q-item--active"
-              v-ripple
-              :to="{ name: 'category.index' }"
-              v-if="userIsInRole(['category'])"
-            >
-              <q-item-section avatar>
-                <q-icon name="category" />
-              </q-item-section>
+                  exact-active-class="q-item--active"
+                  v-ripple
+                  :to="{ name: 'category.index' }"
+                  v-if="userIsInRole(['category'])"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="category" />
+                  </q-item-section>
 
-              <q-item-section> {{ $t('category') }}</q-item-section>
-            </q-item>
-            <q-item
-              exact-active-class="q-item--active"
-              v-ripple
-              :to="{ name: 'brand.index' }"
-              v-if="userIsInRole(['brand'])"
-            >
-              <q-item-section avatar>
-                <q-icon name="workspaces" />
-              </q-item-section>
+                  <q-item-section> {{ $t("category") }}</q-item-section>
+                </q-item>
+                <q-item
+                  exact-active-class="q-item--active"
+                  v-ripple
+                  :to="{ name: 'brand.index' }"
+                  v-if="userIsInRole(['brand'])"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="workspaces" />
+                  </q-item-section>
 
-              <q-item-section>{{ $t('brand') }}</q-item-section>
-            </q-item>
-            <q-item
-              exact-active-class="q-item--active"
-              v-ripple
-              :to="{ name: 'color.index' }"
-              v-if="userIsInRole(['color'])"
-            >
-              <q-item-section avatar>
-                <q-icon name="palette" />
-              </q-item-section>
+                  <q-item-section>{{ $t("brand") }}</q-item-section>
+                </q-item>
+                <q-item
+                  exact-active-class="q-item--active"
+                  v-ripple
+                  :to="{ name: 'color.index' }"
+                  v-if="userIsInRole(['color'])"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="palette" />
+                  </q-item-section>
 
-              <q-item-section>{{ $t('color') }}</q-item-section>
-            </q-item>
-            <q-item
-              exact-active-class="q-item--active"
-              v-ripple
-              :to="{ name: 'model.index' }"
-              v-if="userIsInRole(['model'])"
-            >
-              <q-item-section avatar>
-                <q-icon name="on_device_training" />
-              </q-item-section>
+                  <q-item-section>{{ $t("color") }}</q-item-section>
+                </q-item>
+                <q-item
+                  exact-active-class="q-item--active"
+                  v-ripple
+                  :to="{ name: 'model.index' }"
+                  v-if="userIsInRole(['model'])"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="on_device_training" />
+                  </q-item-section>
 
-              <q-item-section>{{ $t('model') }}</q-item-section>
-            </q-item>
-            <q-item
-              exact-active-class="q-item--active"
-              v-ripple
-              :to="{ name: 'supplier.index' }"
-              v-if="userIsInRole(['supplier'])"
-            >
-              <q-item-section avatar>
-                <q-icon name="inventory" />
-              </q-item-section>
+                  <q-item-section>{{ $t("model") }}</q-item-section>
+                </q-item>
+                <q-item
+                  exact-active-class="q-item--active"
+                  v-ripple
+                  :to="{ name: 'supplier.index' }"
+                  v-if="userIsInRole(['supplier'])"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="inventory" />
+                  </q-item-section>
 
-              <q-item-section>{{ $t('supplier') }}</q-item-section>
-            </q-item>
+                  <q-item-section>{{ $t("supplier") }}</q-item-section>
+                </q-item>
                 <!-- <q-item
                   clickable
                   v-ripple
@@ -527,9 +472,7 @@
                     <q-icon name="description" />
                   </q-item-section>
 
-                  <q-item-section>
-                   Sale
-                  </q-item-section>
+                  <q-item-section> Sale </q-item-section>
                 </q-item>
                 <q-item
                   clickable
@@ -537,31 +480,26 @@
                   exact-active-class="q-item--active"
                   v-if="userIsInRole(['sale_report_detail'])"
                   :to="{ name: 'saleDetailReport' }"
-
                 >
                   <q-item-section avatar>
                     <q-icon name="description" />
                   </q-item-section>
 
-                  <q-item-section>
-                   Sale Report Details
-                  </q-item-section>
+                  <q-item-section> Sale Report Details </q-item-section>
                 </q-item>
-             
+
                 <q-item
                   clickable
                   v-ripple
                   exact-active-class="q-item--active"
                   v-if="userIsInRole(['purchase'])"
-                  :to="{name: 'purchaseReport'}"
+                  :to="{ name: 'purchaseReport' }"
                 >
                   <q-item-section avatar>
                     <q-icon name="description" />
                   </q-item-section>
 
-                  <q-item-section>
-                   Purchase
-                  </q-item-section>
+                  <q-item-section> Purchase </q-item-section>
                 </q-item>
 
                 <q-item
@@ -569,15 +507,13 @@
                   v-ripple
                   exact-active-class="q-item--active"
                   v-if="userIsInRole(['purchase_report_by_detail'])"
-                  :to="{name: 'purchaseDetailReport'}"
+                  :to="{ name: 'purchaseDetailReport' }"
                 >
                   <q-item-section avatar>
                     <q-icon name="description" />
                   </q-item-section>
 
-                  <q-item-section>
-                   Purchase Report By Details
-                  </q-item-section>
+                  <q-item-section> Purchase Report By Details </q-item-section>
                 </q-item>
 
                 <!-- <q-item
@@ -625,9 +561,6 @@
                   Product Report
                   </q-item-section>
                 </q-item> -->
-
-               
-                
               </q-card-section>
             </q-expansion-item>
             <!-- <q-item
@@ -671,14 +604,8 @@
       </q-page>
     </q-page-container> -->
 
-      <q-page-container
-        class=""
-        style=""
-      >
-        <q-page
-          class="q-pa-md"
-          style="margin-top: 50px"
-        >
+      <q-page-container class="" style="">
+        <q-page class="q-pa-md" style="margin-top: 50px">
           <router-view v-slot="{ Component }">
             <transition name="slide">
               <component :is="Component" />
@@ -690,20 +617,20 @@
   </div>
 </template>
 <script setup>
-import { ref, nextTick, onBeforeMount, onMounted, computed } from 'vue'
-import { mapGetters, useStore } from 'vuex'
+import { ref, nextTick, onBeforeMount, onMounted, computed } from "vue";
+import { mapGetters, useStore } from "vuex";
 // import store from '../store'
-import { useI18n } from 'vue-i18n'
-import toast from '../Helper/toast'
-import state from '../store/state'
-import api from '../utils/utility'
-const isTranslate = ref(false)
-const leftDrawerOpen = ref(true)
-const user = ref({})
-const store = useStore()
-const t = useI18n()
-const branchName = ref('')
-const branch = ref('')
+import { useI18n } from "vue-i18n";
+import toast from "../Helper/toast";
+import state from "../store/state";
+import api from "../utils/utility";
+const isTranslate = ref(false);
+const leftDrawerOpen = ref(true);
+const user = ref({});
+const store = useStore();
+const t = useI18n();
+const branchName = ref("");
+const branch = ref("");
 // const transitionName = ref('fade-out')
 //     onMounted(() => {
 
@@ -718,43 +645,43 @@ const branch = ref('')
 // Methods
 const getBranch = async () => {
   await api
-    .get('branch/getCurrentBranch/' + store.state.auth.branchId)
+    .get("branch/getCurrentBranch/" + store.state.auth.branchId)
     .then((res) => {
       // console.log(res.data)
       if (res) {
-        branchName.value = res.data.name + '[ ' + res.data.code + ' ]'
-        branch.value = res.data.name
+        branchName.value = res.data.name + "[ " + res.data.code + " ]";
+        branch.value = res.data.name;
       }
     })
     .catch((err) => {
-      console.log(err)
-    })
-}
+      console.log(err);
+    });
+};
 const userIsInRole = (roles) => {
-  return store.getters['auth/userIsInRoles'](roles)
-}
+  return store.getters["auth/userIsInRoles"](roles);
+};
 const logout = () => {
-  store.dispatch('auth/logout')
-}
+  store.dispatch("auth/logout");
+};
 const toggleLeftDrawer = () => {
-  leftDrawerOpen.value = !leftDrawerOpen.value
-}
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+};
 const changeLanguage = (lang) => {
-  isTranslate.value = !isTranslate.value
+  isTranslate.value = !isTranslate.value;
   nextTick(() => {
-    t.locale.value = lang
-    toast.success({ message: 'Language switch to' + ' ' + lang })
-  })
-}
+    t.locale.value = lang;
+    toast.success({ message: "Language switch to" + " " + lang });
+  });
+};
 // console.log();
 onBeforeMount(() => {
-  getBranch()
+  getBranch();
   // store.dispatch("auth/getCurrentUser").then((res)=>{
   //     console.log(res.data);
   //     user.value = res.data
   //     // console.log(user.value.email);
   // })
-})
+});
 </script>
 <style scoped lang="scss">
 // .active {

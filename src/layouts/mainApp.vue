@@ -325,7 +325,7 @@
 
                   <q-item-section> {{ $t("staff") }} </q-item-section>
                 </q-item>
-                <q-item
+                <!-- <q-item
                   clickable
                   v-ripple
                   exact-active-class="q-item--active"
@@ -337,7 +337,7 @@
                   </q-item-section>
 
                   <q-item-section> {{ $t("customer") }} </q-item-section>
-                </q-item>
+                </q-item> -->
                 <q-item
                   exact-active-class="q-item--active"
                   v-ripple
@@ -472,8 +472,35 @@
                     <q-icon name="description" />
                   </q-item-section>
 
+                  <q-item-section> Stock Report </q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  v-ripple
+                  exact-active-class="q-item--active"
+                  v-if="userIsInRole(['sale'])"
+                  :to="{ name: 'saleReport' }"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="description" />
+                  </q-item-section>
+
+                  <q-item-section> Revenue and Expense </q-item-section>
+                </q-item>
+                <q-item
+                  clickable
+                  v-ripple
+                  exact-active-class="q-item--active"
+                  v-if="userIsInRole(['sale'])"
+                  :to="{ name: 'saleReport' }"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="description" />
+                  </q-item-section>
+
                   <q-item-section> Sale </q-item-section>
                 </q-item>
+                
                 <q-item
                   clickable
                   v-ripple

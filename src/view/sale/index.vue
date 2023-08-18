@@ -147,13 +147,7 @@
                 {{ props.row.code }}
               </span>
             </q-td>
-            <q-td
-              key="customerName"
-              :props="props.customerName"
-              class="text-center"
-            >
-              {{ props.row.customerName }}
-            </q-td>
+           
             <q-td class="text-center" key="staffName" :props="props.staffName">
               {{ props.row.staffName }}
             </q-td>
@@ -319,14 +313,6 @@ const columns = [
     field: "code",
     sortable: true,
   },
-  {
-    name: "customerName",
-    align: "center",
-    label: "Cus_Name",
-    field: "customerName",
-    sortable: true,
-  },
-
   {
     name: "staffName",
     align: "center",

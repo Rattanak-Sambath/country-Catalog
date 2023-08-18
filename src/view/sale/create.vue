@@ -89,7 +89,7 @@
                       </q-input>
                     </validate-field>
                   </div>
-                  <div class="col-12">
+                  <!-- <div class="col-12">
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
                       v-model="form.customerId"
@@ -112,7 +112,7 @@
                       >
                       </q-select>
                     </validate-field>
-                  </div>   
+                  </div>    -->
                   <div class="col-12 q-my-sm text-left bg-blue-grey-2 text-gray-4 q-pa-md rounded-borders" >
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
@@ -439,7 +439,6 @@ const formDetail = ref([
 )
 const form = ref({
   code: Date.now() + Math.random().toString(36).substring(2, 3).toUpperCase(),
-  customerId: '',
   staffId: '',
   type: '',
   note: '',
@@ -452,11 +451,11 @@ const roleFetch = ref([])
 const roleGroupOpts = ref([])
 const staffOpt = ref([])
 const modelOpt = ref([])
-const customerOpt = ref([])
+// const customerOpt = ref([])
 const dataDoc = ref([]);
 const finalData = ref([]); 
 const rules = object({
-  customerId: string().required().label('Customer'),
+  // customerId: string().required().label('Customer'),
   staffId: string().required().label('Staff'),
   type: string().required().label('Type'),
   code: string().required().label('Code'),
@@ -581,89 +580,59 @@ const countSale = async()=>{
 }
 const onSubmit = async () => {
   const { valid } = await formRef.value.validate()
-  // console.log('form', form.value)
     dataDoc.value = []
     // check if productId is select
     formDetail.value.forEach((item)=>{
       if(item.productId){
         dataDoc.value.push(item)
       }
-      // else {
-      //   formDetail.value.splice(item, )
-      // }
       if(formDetail.value.length < 1  || formDetail.value[0].productId === "" ){
         toast.error({message: 'Please Check Product Again !!'})
       }
-    })
-        // console.log(form.value, dataDoc.value);
-
-    // dataDoc.value.forEach((item)=>{
-    //   if(item.productId){
-    //     // console.log('item', item);
-    //             if(!finalData.value.length){
-    //                   finalData.value.push(item)
-    //               }
-    //               else {
-    //                 finalData.value.find((it)=> {
-    //                   // console.log('it', it)
-    //                   // console.log('item', item);
-    //                   if(it.productId === item.productId){
-    //                     it.qty ++;
-    //                   }else {
-    //                     finalData.value.push(item)
-    //                   }
-    //                 })
-                        
-                    
-    //               }
-    //         }
-    //       });
-          // console.log('data', finalData.value);\
+    })   
           const arrData = [];
           const arrLen = dataDoc.value.length;
           // const isFound = {}
             for (let i = 0;  i < arrLen; i ++ )  {
-              const item = dataDoc.value[i];
-             
-              if(item.productId) {
-
-               const  isFound = arrData.find((it) => it.productId == item.productId);
-              if(isFound) {
-                isFound.qty++;
-              } else {
-                arrData.push(item);
-              }          
-              }
+              const item = dataDoc.value[i];            
+                if(item.productId) {
+                    const  isFound = arrData.find((it) => it.productId == item.productId);
+                    if(isFound) {
+                      isFound.qty = isFound.qty + item.qty ;
+                    } else {
+                      arrData.push(item);
+                    }          
+                }
             }
-            // console.log(arrData,'data');
-  if(dataDoc.value.length){
-      if (valid) {
-        
-      form.value.branchId = store.state.auth.branchId
-      const res = await api.post('/sale/createSale',
-        {
-        form: form.value, details: arrData
-        }
-        ).then((res)=>{
-          if(res){  
-            router.push({name:'print', params:{id: res.data.createSale._id}})
-            toast.success({ message: 'Insert successfully' })
-            // router.go(-1) 
-        loading.value = false
-          }
-        }).catch((err)=>{
-          toast.error({message: err})
-          console.log('err', err);
-        })
-        // if (res) {
-          
-       
-      // } else {
-      //   toast.error({ message: 'There was somehting wrong to add car' })
-      //   throw 'There was something wrong !!'
-      // }
-    }
-  }
+            console.log(arrData,'data');
+              if(dataDoc.value.length){
+                  if (valid) {
+                    
+                  form.value.branchId = store.state.auth.branchId
+                  const res = await api.post('/sale/createSale',
+                    {
+                    form: form.value, details: arrData
+                    }
+                    ).then((res)=>{
+                      if(res){  
+                        router.push({name:'print', params:{id: res.data.createSale._id}})
+                        toast.success({ message: 'Insert successfully' })
+                        // router.go(-1) 
+                    loading.value = false
+                      }
+                    }).catch((err)=>{
+                      toast.error({message: err})
+                      console.log('err', err);
+                    })
+                    // if (res) {
+                      
+                  
+                  // } else {
+                  //   toast.error({ message: 'There was somehting wrong to add car' })
+                  //   throw 'There was something wrong !!'
+                  // }
+                }
+              }
 
 
 }
@@ -706,22 +675,22 @@ const getStaff = async () => {
       console.log(err)
     })
 }
-const getCustomer = async () => {
-  await api
-    .get('customer/getAllStaff', {
-      params:{
-        branchId: store.state.auth.branchId,
-        status: 'Active'
-      }
-    })
-    .then((res) => {
-      // console.log('find customer', res.data);
-      customerOpt.value = res.data
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
+// const getCustomer = async () => {
+//   await api
+//     .get('customer/getAllStaff', {
+//       params:{
+//         branchId: store.state.auth.branchId,
+//         status: 'Active'
+//       }
+//     })
+//     .then((res) => {
+//       // console.log('find customer', res.data);
+//       customerOpt.value = res.data
+//     })
+//     .catch((err) => {
+//       console.log(err)
+//     })
+// }
 
 // get product
 const getProduct = async () => {
@@ -765,7 +734,7 @@ onMounted(() => {
   getProduct()
   getStaff()
   fetchAllRoleGroups()
-  getCustomer()
+  // getCustomer()  
   countSale()
  
 })

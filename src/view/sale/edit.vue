@@ -93,24 +93,17 @@
                       v-model="form.customerId"
                       name="customerId"
                     >
-                    <q-select
+                    <q-input
+                       type="text"
                         :model-value="value"
-                        :options="customerOpt"
-                        map-options
-                        emit-value
-                        option-label="label"
-                        option-value="_id"
-                        color="orange-14"
-                        type="text"
+                        label="Customer Note *"
                         outlined
-                        label="Customer *"
                         v-bind="field"
                         :error="!!errorMessage"
                         :error-message="errorMessage"
-                      >
-                      </q-select>
+                      />
                     </validate-field>
-                  </div>   
+                  </div>    
                   <div class="col-12 q-my-sm text-left bg-blue-grey-2 text-gray-4 q-pa-md rounded-borders" >
                     <validate-field
                       v-slot="{ value, field, errorMessage }"
@@ -658,13 +651,13 @@ const findDatabyId = async () => {
   let res = await api.get("/sale/getSaleById/" + $route.params.id)
   if (res) {
     console.log('by id ', res.data)
-    removeName.value = res.data.sale.name
-    form.value.code = res.data.sale.code
-    form.value.date= res.data.sale.date
-    form.value.customerId = res.data.sale.customerId
-    form.value.staffId = res.data.sale.staffId
-    form.value.type = res.data.sale.type
-    form.value.note = res.data.sale.note
+    removeName.value = res.data.sale[0].name
+    form.value.code = res.data.sale[0].code
+    form.value.date= res.data.sale[0].date
+    form.value.customerId = res.data.sale[0].customerId
+    form.value.staffId = res.data.sale[0].staffId
+    form.value.type = res.data.sale[0].type
+    form.value.note = res.data.sale[0].note
     formDetail.value = res.data.detail
    
   }

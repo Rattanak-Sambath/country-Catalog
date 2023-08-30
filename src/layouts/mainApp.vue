@@ -466,7 +466,7 @@
                   v-ripple
                   exact-active-class="q-item--active"
                   v-if="userIsInRole(['sale'])"
-                  :to="{ name: 'saleReport' }"
+                  :to="{ name: 'reportStock' }"
                 >
                   <q-item-section avatar>
                     <q-icon name="description" />

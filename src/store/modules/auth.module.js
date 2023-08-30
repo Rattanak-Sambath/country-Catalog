@@ -7,6 +7,7 @@ import router from '../../router/index'
 
 const state = {
   authenticated: false,
+  staffId: null,
   user: {
     id: null,
     firstName: null,
@@ -45,6 +46,9 @@ const getters = {
     if (intersection(user.roles, roles).length) return true
     return false
   },
+  staffId(state){
+    return state.staffId;
+  }
 }
 const mutations = {
   SET_AUTH_USER(state, value) {
@@ -66,8 +70,16 @@ const mutations = {
   SET_AUTHENTICATED(state, value) {
     state.authenticated = value
   },
+  SET_STAFFID(state, value){
+    // console.log('value', value);
+    state.staffId = value
+  },
   REMOVE_AUTH_TOKEN(state) {
     state.accessToken = null
+    // console.log('remove token')
+  },
+  REMOVE_STAFFID(state) {
+    state.staffId = null
     // console.log('remove token')
   },
   REMOVE_AUTH_USER(state) {
@@ -97,6 +109,7 @@ const actions = {
           commit('SET_AUTH_EMAIL', response.data.user.email)
           commit('SET_AUTH_TOKEN', response.data)
           commit('SET_AUTH_USER', response.data.user)
+          commit('SET_STAFFID', response.data.user.staffId)
           commit('SET_BRANCH_ID', response.data.user.allowedBranch)
           resolve(response)
 
@@ -148,6 +161,7 @@ const actions = {
     commit('REMOVE_AUTH_USER')
     commit('REMOVE_BRANCH_ID')
     commit('REMOVE_AUTH_EMAIL')
+    commit('REMOVE_STAFFID')
     router.push({ name: 'login' })
     // router.replace({ name: 'login' })
   },
@@ -157,6 +171,7 @@ const actions = {
       commit('REMOVE_AUTH_TOKEN')
       commit('REMOVE_BRANCH_ID')
       commit('REMOVE_AUTH_EMAIL')
+      commit('REMOVE_STAFFID')
       router.push({ name: 'login' })
       resolve()
     })

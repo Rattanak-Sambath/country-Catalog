@@ -128,6 +128,7 @@
                         unchecked-icon="panorama_fish_eye"
                         val="Cash"
                         label="Cash"
+                        
                       />
                       <q-radio
                         :model-value="value"
@@ -145,7 +146,24 @@
                         {{ errorMessage }}
                       </div>
                     </validate-field>
-                  </div>              
+                  </div>     
+                  <div class="col-12">
+                    <validate-field
+                      v-slot="{ value, field, errorMessage }"
+                      v-model="form.customerId"
+                      name="customerId"
+                    >
+                    <q-input
+                       type="text"
+                        :model-value="value"
+                        label="Customer Note *"
+                        outlined
+                        v-bind="field"
+                        :error="!!errorMessage"
+                        :error-message="errorMessage"
+                      />
+                    </validate-field>
+                  </div>           
                 </div>
               </div>
 
@@ -158,6 +176,7 @@
                       name="staffId"
                     >
                     <q-select
+                         :disable="showDisable"
                         :model-value="value"
                         :options="staffOpt"
                         map-options
@@ -192,7 +211,10 @@
                         :error-message="errorMessage"
                       />
                     </validate-field>
-                  </div>   
+                  </div>  
+                  
+                  <!-- customer -->
+                 
                 </div>
               </div>
   
@@ -202,114 +224,108 @@
             <!-- item detail  -->
             <div class="q-my-md ">
               <q-markup-table
-    flat
-    bordered
-  >
-    <thead>
-      <tr class="bg-primary text-white">
-        <template
-          v-for="(it, i) in titles"
-          :key="i"
-        >
-          <th :class="it.class">{{ it.label }}</th>
-        </template>
-      </tr>
-    </thead>
-    <tbody>
-        <tr
-        v-for="(it, index) in formDetail"
-        :key="index"
-      >
-        <td
-          class="text-left"
-          style="width: 30px"
-        >
-          {{  index + 1 }}
-        </td>
-        <td
-          class="text-left"
-          style="width: 450px"
-        >
-          <q-select
-            v-model="it.productId"
-            :options="productOpt"
-            map-options
-            emit-value
-            clearable
-            option-label="label"
-            option-value="_id"
-            dense
-            outlined
-            @update:model-value="rowChange(it, 'productId')"
-          />
-        </td>
-        <td
-          class="text-left"
-          style="width: 250px"
-        >
-        <q-input
-            v-model.number="it.qty"
-            type="number"
-            dense
-            outlined
-            @update:model-value="rowChange(it, 'qty')"
-          />
-       <!-- <q-input
-            readonly
-            v-model="it.oilName"
-            outlined
-            dense
-            @update:model-value="rowChange(it, 'oil')"
-          />  -->
-        </td>
-        
-        <td
-          class="text-left"
-          style="width: 180px"
-        >
-          <q-input
-            
-            v-model.number="it.price"
-            type="number"
-            dense
-            outlined
-            @update:model-value="rowChange(it, 'price')"
-          />
-        </td>
-        
-         <td
-          class="text-left"
-          style="width: 180px"
-        >
-          <span>{{ it.amount }} $</span>
-        </td> 
-         <td
-          class="text-left q-gutter-x-md"
-          style="width: 30px"
-        >
-        <!-- v-show="visibleRemove() && disableSubmit" -->
-          <q-btn
-            v-show="formDetail.length > 1"
-            icon="delete"
-            round
-            color="negative"
-            size="8px"
-            @click="onRemoveRow(it, index)"
-          />
-          <!-- v-show="visibleAdd(index) && disableSubmit" -->
-          <q-btn
-            icon="add"
-            color="green"
-            dense
-            round
-            no-caps
-            size="8px"
-            @click="addEmptyRow"
-          />
-        </td>
-      </tr> 
-    </tbody>
-  </q-markup-table>
+                flat
+                bordered
+              >
+                <thead>
+                  <tr class="bg-primary text-white">
+                    <template
+                      v-for="(it, i) in titles"
+                      :key="i"
+                    >
+                      <th :class="it.class">{{ it.label }}</th>
+                    </template>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr
+                    v-for="(it, index) in formDetail"
+                    :key="index"
+                  >
+                    <td
+                      class="text-left"
+                      style="width: 30px"
+                    >
+                      {{  index + 1 }}
+                    </td>
+                    <td
+                      class="text-left"
+                      style="width: 450px"
+                    >
+                      <q-select
+                        v-model="it.productId"
+                        :options="productOpt"
+                        map-options
+                        emit-value
+                        clearable
+                        option-label="label"
+                        option-value="_id"
+                        dense
+                        outlined
+                        @update:model-value="rowChange(it, 'productId')"
+                      />
+                    </td>
+                    <td
+                      class="text-left"
+                      style="width: 250px"
+                    >
+                    <q-input
+                        v-model.number="it.qty"
+                        type="number"
+                        dense
+                        outlined
+                        @update:model-value="rowChange(it, 'qty')"
+                      />
+                
+                    </td>
+                    
+                    <td
+                      class="text-left"
+                      style="width: 180px"
+                    >
+                      <q-input
+                        
+                        v-model.number="it.price"
+                        type="number"
+                        dense
+                        outlined
+                        @update:model-value="rowChange(it, 'price')"
+                      />
+                    </td>
+                    
+                    <td
+                      class="text-left"
+                      style="width: 180px"
+                    >
+                      <span>{{ it.amount }} $</span>
+                    </td> 
+                    <td
+                      class="text-left q-gutter-x-md"
+                      style="width: 30px"
+                    >
+                    <!-- v-show="visibleRemove() && disableSubmit" -->
+                      <q-btn
+                        v-show="formDetail.length > 1"
+                        icon="delete"
+                        round
+                        color="negative"
+                        size="8px"
+                        @click="onRemoveRow(it, index)"
+                      />
+                      <!-- v-show="visibleAdd(index) && disableSubmit" -->
+                      <q-btn
+                        icon="add"
+                        color="green"
+                        dense
+                        round
+                        no-caps
+                        size="8px"
+                        @click="addEmptyRow"
+                      />
+                    </td>
+                  </tr> 
+                </tbody>
+              </q-markup-table>
             </div>
             <!-- total sub -->
             <div>
@@ -349,21 +365,7 @@
                   {{ decimalNumber(form.totalRiel, 2)}} ៛
                 </q-item-section>
               </q-item>
-              <!-- <q-item>
-                <q-item-section avatar>
-                  <q-icon
-                    name="payments"
-                    color="green"
-                  />
-                </q-item-section>
-                <q-item-section class="text-subtitle2">Balance:</q-item-section>
-                <q-item-section
-                  side
-                  class="text-black"
-                >
-                  {{ balance }}
-                </q-item-section>
-              </q-item> -->
+              
             </q-list>
           </div>
         </div>
@@ -426,6 +428,7 @@ const formRef = ref('')
 const loading = ref(false)
 const productOpt = ref([])
 const currentExchage = 4100;
+const showDisable = ref(false)
 // const categoryOpt = ref([])
 const formDetail = ref([
   {
@@ -439,12 +442,13 @@ const formDetail = ref([
 )
 const form = ref({
   code: Date.now() + Math.random().toString(36).substring(2, 3).toUpperCase(),
-  staffId: '',
-  type: '',
+  staffId: store.state.auth.staffId,
+  type: 'Cash',
   note: '',
   date:  dayjs(new Date()).format('YYYY-MM-DD'),
   totalAmount: 0,
-  totalRiel: 0
+  totalRiel: 0,
+  customerId: ''
   
 })
 const roleFetch = ref([])
@@ -458,6 +462,7 @@ const rules = object({
   // customerId: string().required().label('Customer'),
   staffId: string().required().label('Staff'),
   type: string().required().label('Type'),
+  customerId: string().required().label('Customer'),
   code: string().required().label('Code'),
   date: date().required().label('Date'),
 })
@@ -604,7 +609,7 @@ const onSubmit = async () => {
                     }          
                 }
             }
-            console.log(arrData,'data');
+            // console.log(arrData,'data');
               if(dataDoc.value.length){
                   if (valid) {
                     
@@ -661,14 +666,14 @@ watch(
 // get staff
 const getStaff = async () => {
   await api
-    .get('staff/getAllStaff', {
+    .get('/staff/getAllStaff', {
       params:{
         branchId: store.state.auth.branchId,
         status: 'Active'
       }
     })
     .then((res) => {
-      // console.log('find staff', res.data);
+      console.log('find staff', res.data);
       staffOpt.value = res.data
     })
     .catch((err) => {
@@ -731,6 +736,9 @@ const cancel = () => {
   router.go(-1)
 }
 onMounted(() => {
+  if(form.value.staffId != null){ 
+      showDisable.value = true
+  }
   getProduct()
   getStaff()
   fetchAllRoleGroups()

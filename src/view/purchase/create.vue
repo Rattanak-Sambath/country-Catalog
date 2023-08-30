@@ -158,6 +158,7 @@
                       name="staffId"
                     >
                     <q-select
+                         :disable="showDisable"
                         :model-value="value"
                         :options="staffOpt"
                         map-options
@@ -174,7 +175,7 @@
                       >
                       </q-select>
                     </validate-field>
-                  </div>   
+                  </div>  
 
                   <div class="col-12">
                     <validate-field
@@ -426,6 +427,7 @@ const formRef = ref('')
 const loading = ref(false)
 const productOpt = ref([])
 const currentExchage = 4100;
+const showDisable = ref(false)
 // const categoryOpt = ref([])
 const formDetail = ref([
   {
@@ -442,8 +444,8 @@ const formDetail = ref([
 const form = ref({
   code: Date.now() + Math.random().toString(36).substring(2, 3).toUpperCase(),
   supplierId: '',
-  staffId: '',
-  type: '',
+  staffId: store.state.auth.staffId,
+  type: 'Cash',
   note: '',
   date:  dayjs(new Date()).format('YYYY-MM-DD'),
   totalAmount: 0,
@@ -717,6 +719,9 @@ const cancel = () => {
   router.go(-1)
 }
 onMounted(() => {
+  if(form.value.staffId != null){ 
+      showDisable.value = true
+  }
   getProduct()
   getStaff()
   fetchAllRoleGroups()

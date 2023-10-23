@@ -201,7 +201,7 @@ const showId = ref('')
 const diaglogDelete = ref(false)
 const breadcrumbs = ref([
   {
-    label: 'Dashboard / User',
+    label: 'Country Catalog',
     icon: 'dashboard',
     route: '/dashboard',
   },

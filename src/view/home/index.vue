@@ -57,7 +57,7 @@
                             <div v-if="props.row.name.nativeName">
                                 <p v-for ="native in props.row.name.nativeName "> 
                                   
-                                    Native : [ {{ native.official  }} ]
+                                    <!-- Native : [ {{ native.official  }} ] -->
                                  
                                 </p>
                              </div> 
@@ -93,11 +93,7 @@
 </template>
 
 <script setup>
-import { success } from "@brenoroosevelt/toast/lib/cjs/toast";
 import { onMounted, ref, watch } from "vue";
-import toast from "../../Helper/toast";
-import router from "../../router";
-import api from "../../utils/utility";
 import _ from "lodash";
 import { Loading } from "quasar";
 import { useStore } from "vuex";
@@ -195,7 +191,6 @@ const columns = [
 const rows = ref([]);
 const filter = ref("");
 const loading = ref(false);
-const showId = ref("");
 const breadcrumbs = ref([
   {
     label: "Country Catalog",

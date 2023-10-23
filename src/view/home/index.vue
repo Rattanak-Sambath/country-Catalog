@@ -1,38 +1,6 @@
 <template>
   <div>
-    
     <q-card class="q-my-sm q-pa-md">
-      <!-- <q-input dense debounce="500" outlined v-model="filter" label="Country Name !" style="width: 100%;" /> -->
-      <!-- <q-scroll-area
-                          class=""
-                          style="width: auto; height:80vh;"
-                        >
-                   
-                          <div  :class="$q.screen.lt.md ? 'col-xs-4 col-md-2 col-lg-2 flex justify-center items-center': 'col-xs-4 col-md-2 col-lg-2 flex  justify-start items-center '"  >
-                              <div v-for="(items, index) in dataTable" >           
-                                  <q-card class=" cursor-pointer q-ma-sm my-card  bg-gray-3 " @click="addEmptyRow(items)" :style=" $q.screen.lt.md ? 'width: 300px' : '156px' ,  $q.screen.lt.md ? '150px' : 'height: 200px'"  v-ripple>
-                                      <q-card-section class="round">
-                                          <img :src=" `${constant.BASE_URL}` + items.avatar"  style="height: 200px; width: 220px; object-fit: cover; border-radius: 5px;" alt="" srcset="">
-                                    
-                                      </q-card-section>  
-                                      <div class="q-my-auto q-pa-md">
-                                          <div class="text-bold text-subtitle2 my-text " style="font-size: 15px;">
-                                            
-                                            {{ items.name }}
-                                          </div>
-                                          <div class="text-bold text-subtitle3 my-text text-center ">
-                                            $ {{ items.price }}  - {{ items.size }}
-                                          </div>
-                                      </div>       
-                                  </q-card>     
-                              </div>
-                                                    
-
-                          </div>
-
-                   
-                  </q-scroll-area> -->
-                <!-- </q-dialog> -->
                   <q-table
                     title="Cars"
                     :rows="rows"
@@ -47,25 +15,26 @@
                     grid-header
                   >
                   <template v-slot:item="props">
-                    <div class="q-pa-xs  col-xs-12 col-sm-4 col-md-3">
-                      <q-card class="max-height: 400px">
+                    <div class="q-pa-xs  col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                      <q-card  style="min-height: 480px;">
                         <img :src="props.row.flags.png" style="width: 100%; height: 200px;" alt="" set="">
-                        <h6 class="text-center">{{ props.row.name.official }}</h6>
+                        <q-card-section>
+                           <div class="text-h6 text-center">{{ props.row.name.official }}</div>
+                        </q-card-section>
+                        <!-- <h6 class="text-center "></h6> -->
                         <div class="q-px-md q-pb-md" > 
-                            <p>Two Charactor : {{ props.row.cca2 }}</p>
-                            <p>Two Charactor : {{ props.row.cca3 }}</p>
+                            <p ><span class="text-bold">Two Charactor : </span>{{ props.row.cca2 }}</p>
+                            <p><span class="text-bold">Two Charactor : </span>{{ props.row.cca3 }}</p>
                             <div v-if="props.row.name.nativeName">
-                                <p v-for ="native in props.row.name.nativeName "> 
-                                  
-                                    <!-- Native : [ {{ native.official  }} ] -->
-                                 
+                                <p v-for ="native in props.row.name.nativeName[1] ">                                 
+                                    Native : [ {{ native }} ]                       
                                 </p>
                              </div> 
                              <div v-else>
-                                <p>Native : [ No Native ]</p>
+                                <p><span class="text-bold">Native :</span>  No Native </p>
                              </div>                          
-                            <p>Alternative : {{ props.row.altSpellings[0] }}</p>
-                            <p>Calling-Code : {{ props.row.idd.root ? props.row.idd.root : 'No Calling Code' }}</p>
+                            <p><span class="text-bold">Alternative : </span>{{ props.row.altSpellings[0] }}</p>
+                            <p><span class="text-bold">Calling-Code :</span> {{ props.row.idd.root ? props.row.idd.root : 'No Calling Code' }}</p>
                         </div>
                       </q-card>
                      
